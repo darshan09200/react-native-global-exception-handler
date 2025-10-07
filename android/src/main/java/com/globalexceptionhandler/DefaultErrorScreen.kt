@@ -27,26 +27,27 @@ class DefaultErrorScreen : Activity() {
     fun doRestart(context: Context?) {
       try {
         context?.let { c ->
-          val pm = c.packageManager
-          pm?.let {
-            val startActivity = it.getLaunchIntentForPackage(c.packageName)
-            startActivity?.let { intent ->
-              intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-              val pendingIntentId = 654311
-              val pendingIntent = PendingIntent.getActivity(
-                c,
-                pendingIntentId,
-                intent,
-                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
-              )
-              val alarmManager = c.getSystemService(ALARM_SERVICE) as AlarmManager
-              alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 100, pendingIntent)
-              System.exit(0)
-            } ?: throw Exception("Was not able to restart application, startActivity null")
-          } ?: throw Exception("Was not able to restart application, PackageManager null")
-        } ?: throw Exception("Was not able to restart application, Context null")
+          Log.d(TAG, "Attempting to restart app using makeRestartActivityTask...")
+
+          val packageManager = c.packageManager
+          val intent = packageManager.getLaunchIntentForPackage(c.packageName)
+          val componentName = intent?.component
+
+          if (componentName != null) {
+            val mainIntent = Intent.makeRestartActivityTask(componentName)
+            Log.d(TAG, "Starting restart activity task for component: $componentName")
+            c.startActivity(mainIntent)
+            Runtime.getRuntime().exit(0)
+          } else {
+            throw Exception("Could not get component name for restart")
+          }
+        } ?: throw Exception("Context is null")
       } catch (ex: Exception) {
-        Log.e(TAG, "Was not able to restart application", ex)
+        Log.e(TAG, "Was not able to restart application: ${ex.message}", ex)
+        // Fallback: just kill the process (user can manually restart)
+        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+          android.os.Process.killProcess(android.os.Process.myPid())
+        }, 100)
       }
     }
   }
@@ -97,7 +98,9 @@ class DefaultErrorScreen : Activity() {
     }
 
     relaunchButton.setOnClickListener {
-      doRestart(applicationContext)
+      // Use the more reliable makeRestartActivityTask approach
+      Log.d(TAG, "Restart button clicked, attempting restart...")
+      doRestart(this)
     }
 
     quitButton.setOnClickListener {
