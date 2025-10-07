@@ -3,9 +3,18 @@ import { TurboModuleRegistry, type TurboModule } from 'react-native';
 export type ExceptionHandlerCallback = (errorMessage: string) => void;
 
 export type ExceptionHandlerOptions = {
-  // iOS-specific option
+  /**
+   * If true, the previously defined native exception handler will be called after the custom handler.
+   *
+   * @platform Android, iOS
+   */
   callPreviouslyDefinedHandler?: boolean;
-  // Android-specific option
+
+  /**
+   * If true, the app will be forced to quit after the custom handler is called.
+   *
+   * @platform Android
+   */
   forceAppToQuit?: boolean;
 };
 
