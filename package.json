@@ -36,9 +36,12 @@
     "test": "jest",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
-    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "clean": "del-cli android/build android/app/build ios/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
-    "release": "release-it --only-version"
+    "release": "release-it --only-version",
+    "codegen:generate:ios": "npx @react-native-community/cli codegen --platform ios --outputPath ios/",
+    "codegen:generate:android": "npx @react-native-community/cli codegen --platform android",
+    "codegen:generate": "yarn codegen:generate:ios; yarn codegen:generate:android"
   },
   "keywords": [
     "react-native",
