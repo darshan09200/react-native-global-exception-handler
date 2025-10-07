@@ -100,22 +100,22 @@ export async function setNativeExceptionHandler(
     return;
   }
 
-  let options: ExceptionHandlerOptions = {};
-
-  // Handle legacy API (second param is boolean)
-  if (typeof optionsOrForceQuit === 'boolean') {
-    const forceApplicationToQuit = optionsOrForceQuit;
-    options = {
-      forceAppToQuit: forceApplicationToQuit,
-      callPreviouslyDefinedHandler: executeDefaultHandler || false,
-    };
-  }
-  // Handle new API (second param is options object)
-  else if (optionsOrForceQuit && typeof optionsOrForceQuit === 'object') {
-    options = optionsOrForceQuit;
-  }
-
   if (Platform.OS === 'ios' || Platform.OS === 'android') {
+    let options: ExceptionHandlerOptions = {};
+
+    // Handle legacy API (second param is boolean)
+    if (typeof optionsOrForceQuit === 'boolean') {
+      const forceApplicationToQuit = optionsOrForceQuit;
+      options = {
+        forceAppToQuit: forceApplicationToQuit,
+        callPreviouslyDefinedHandler: executeDefaultHandler || false,
+      };
+    }
+    // Handle new API (second param is options object)
+    else if (optionsOrForceQuit && typeof optionsOrForceQuit === 'object') {
+      options = optionsOrForceQuit;
+    }
+
     GlobalExceptionHandler.setHandlerForNativeException(
       customErrorHandler,
       options
