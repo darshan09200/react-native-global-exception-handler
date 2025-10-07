@@ -1,22 +1,18 @@
 import { Platform } from 'react-native';
+
 import GlobalExceptionHandler, {
-  type CrashType,
   type ExceptionHandlerOptions,
 } from './NativeGlobalExceptionHandler';
+import {
+  CrashType,
+  type ErrorUtilsType,
+  type JSExceptionHandler,
+  type NativeExceptionHandler,
+} from './types';
 
 function noop() {}
 
-// Type definitions for global ErrorUtils
-interface ErrorUtilsType {
-  setGlobalHandler: (handler: JSExceptionHandler) => void;
-  getGlobalHandler: () => JSExceptionHandler | undefined;
-  reportError: (error: any) => void;
-}
-
 declare const ErrorUtils: ErrorUtilsType;
-
-export type JSExceptionHandler = (error: Error, isFatal: boolean) => void;
-export type NativeExceptionHandler = (exceptionMsg: string) => void;
 
 export function setJSExceptionHandler(
   customHandler: JSExceptionHandler = noop,
@@ -143,7 +139,7 @@ export function setHandlerForNativeException(
 }
 
 export function simulateNativeCrash(
-  crashType: CrashType = 'nsexception'
+  crashType: CrashType = CrashType.nsexception
 ): void {
   console.log('simulating crash', crashType);
   if (Platform.OS === 'ios' || Platform.OS === 'android') {
@@ -154,10 +150,7 @@ export function simulateNativeCrash(
   }
 }
 
-export type {
-  CrashType,
-  ExceptionHandlerOptions,
-} from './NativeGlobalExceptionHandler';
+export * from './types';
 
 export default {
   setJSExceptionHandler,
