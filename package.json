@@ -120,8 +120,32 @@
     },
     "plugins": {
       "@release-it/conventional-changelog": {
+        "infile": "CHANGELOG.md",
         "preset": {
-          "name": "angular"
+          "header": "# Changelog",
+          "name": "conventionalcommits",
+          "types": [
+            {
+              "type": "feat",
+              "section": "✨ Features"
+            },
+            {
+              "type": "fix",
+              "section": "🐛 Bug Fixes"
+            },
+            {
+              "type": "chore",
+              "section": "🧹 Chores"
+            },
+            {
+              "type": "docs",
+              "section": "📚 Documentation"
+            },
+            {
+              "type": "test",
+              "section": "🧪 Tests"
+            }
+          ]
         }
       }
     }
@@ -163,5 +187,8 @@
     "languages": "kotlin-objc",
     "type": "turbo-module",
     "version": "0.54.5"
+  },
+  "resolutions": {
+    "conventional-changelog-conventionalcommits": "8.0.0"
   }
 }
