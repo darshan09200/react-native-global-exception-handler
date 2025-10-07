@@ -1,6 +1,6 @@
 {
   "name": "react-native-global-exception-handler",
-  "version": "0.1.0",
+  "version": "1.0.0-alpha.0",
   "description": "Capture uncaught JS & native exceptions in React Native with a modern global handler, fallback UI, and optional app restart.",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
