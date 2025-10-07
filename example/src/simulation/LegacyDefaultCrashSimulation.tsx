@@ -24,6 +24,7 @@ const LegacyDefaultCrashSimulation = ({
 
   useEffect(() => {
     if (handlerName === HandlerName.legacyDefault) onPress();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <Button label="Legacy Default Exception Handler" onPress={onPress} />;

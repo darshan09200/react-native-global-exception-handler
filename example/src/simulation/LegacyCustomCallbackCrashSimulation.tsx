@@ -26,6 +26,7 @@ const LegacyCustomCallbackCrashSimulation = ({
 
   useEffect(() => {
     if (handlerName === HandlerName.legacyCustomCallback) onPress();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

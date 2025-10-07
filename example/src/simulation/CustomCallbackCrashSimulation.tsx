@@ -29,6 +29,7 @@ const CustomCallbackCrashSimulation = ({
 
   useEffect(() => {
     if (handlerName === HandlerName.customCallback) onPress();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <Button label="Custom Callback Exception Handler" onPress={onPress} />;
