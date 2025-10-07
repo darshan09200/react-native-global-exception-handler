@@ -10218,7 +10218,7 @@ __metadata:
     react-native: 0.81.1
     react-native-builder-bob: ^0.40.13
     react-native-monorepo-config: ^0.1.9
-    react-native-safe-area-context: ^5.5.2
+    react-native-safe-area-context: ^5.6.1
   languageName: unknown
   linkType: soft
 
@@ -10266,7 +10266,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-safe-area-context@npm:^5.5.2":
+"react-native-safe-area-context@npm:^5.6.1":
   version: 5.6.1
   resolution: "react-native-safe-area-context@npm:5.6.1"
   peerDependencies:

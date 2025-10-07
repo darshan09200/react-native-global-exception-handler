@@ -68,7 +68,7 @@ export function getJSExceptionHandler() {
  * });
  */
 export async function setNativeExceptionHandler(
-  customErrorHandler: NativeExceptionHandler,
+  customErrorHandler?: NativeExceptionHandler,
   options?: ExceptionHandlerOptions
 ): Promise<void>;
 
@@ -79,7 +79,7 @@ export async function setNativeExceptionHandler(
  * setNativeExceptionHandler(handler, true, false);
  */
 export async function setNativeExceptionHandler(
-  customErrorHandler: NativeExceptionHandler,
+  customErrorHandler?: NativeExceptionHandler,
   forceApplicationToQuit?: boolean,
   executeDefaultHandler?: boolean
 ): Promise<void>;
