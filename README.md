@@ -35,6 +35,12 @@ This library provides:
 3. **App Recovery**: Built-in restart functionality for better user experience
 4. **Development Tools**: Crash simulation for testing error handling
 
+## Demo
+
+| iOS | Android |
+| -- | -- |
+| <video src="./docs/assets/iOS_demo.mp4" width="350"/> | <video src="./docs/assets/android_demo.mp4" width="350"/> |
+
 ## Installation
 
 ```sh
