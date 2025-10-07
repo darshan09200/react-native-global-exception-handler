@@ -6,7 +6,9 @@ import android.util.Log
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.Callback
+import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.module.annotations.ReactModule
+import kotlin.system.exitProcess
 
 @ReactModule(name = GlobalExceptionHandlerModule.NAME)
 class GlobalExceptionHandlerModule(reactContext: ReactApplicationContext) :
@@ -37,17 +39,8 @@ class GlobalExceptionHandlerModule(reactContext: ReactApplicationContext) :
 
   @ReactMethod
   override fun setHandlerForNativeException(
-    executeOriginalUncaughtExceptionHandler: Boolean,
-    callback: Callback
-  ) {
-    setHandlerForNativeException(executeOriginalUncaughtExceptionHandler, true, callback)
-  }
-
-  @ReactMethod
-  fun setHandlerForNativeException(
-    executeOriginalUncaughtExceptionHandler: Boolean,
-    forceToQuit: Boolean,
-    callback: Callback
+    callback: Callback,
+    options: ReadableMap?
   ) {
     callbackHolder = callback
     originalHandler = Thread.getDefaultUncaughtExceptionHandler()
@@ -59,7 +52,7 @@ class GlobalExceptionHandlerModule(reactContext: ReactApplicationContext) :
       if (nativeExceptionHandler != null) {
         nativeExceptionHandler!!.handleNativeException(thread, throwable, originalHandler)
       } else {
-        val activity = getCurrentActivity()
+        val activity = this.reactApplicationContext.currentActivity
         if (activity != null) {
           val intent = Intent().apply {
             setClass(activity, errorIntentTargetClass)
@@ -71,12 +64,20 @@ class GlobalExceptionHandlerModule(reactContext: ReactApplicationContext) :
           activity.finish()
         }
 
-        if (executeOriginalUncaughtExceptionHandler && originalHandler != null) {
+        val callPreviouslyDefinedHandler =
+          options?.getBoolean("callPreviouslyDefinedHandler") ?: false
+
+        if (callPreviouslyDefinedHandler && originalHandler != null) {
           originalHandler!!.uncaughtException(thread, throwable)
         }
 
-        if (forceToQuit) {
-          System.exit(0)
+        val forceAppToQuit = if (options?.hasKey("forceAppToQuit") == true) {
+          options.getBoolean("forceAppToQuit")
+        } else {
+          true // Default to true for backward compatibility
+        }
+        if (forceAppToQuit) {
+          exitProcess(0)
         }
       }
     }

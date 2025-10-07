@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.view.isVisible
+import kotlin.system.exitProcess
 
 class DefaultErrorScreen : Activity() {
 
@@ -83,7 +84,7 @@ class DefaultErrorScreen : Activity() {
     }
 
     quitButton.setOnClickListener {
-      System.exit(0)
+      exitProcess(0)
     }
   }
 }

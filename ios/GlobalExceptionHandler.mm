@@ -2,6 +2,7 @@
 #import <React/RCTBridgeModule.h>
 #import <execinfo.h>
 #import <atomic>
+#import <optional>
 
 // CONSTANTS
 NSString * const RNUncaughtExceptionHandlerSignalExceptionName = @"RNUncaughtExceptionHandlerSignalExceptionName";
@@ -64,14 +65,18 @@ void (^defaultNativeErrorCallbackBlock)(NSException *exception, NSString *readab
 // ====================================
 
 // METHOD TO INITIALIZE THE EXCEPTION HANDLER AND SET THE JS CALLBACK BLOCK
-- (void)setHandlerForNativeException:(BOOL)callPreviouslyDefinedHandler callback:(RCTResponseSenderBlock)callback
+- (void)setHandlerForNativeException:(RCTResponseSenderBlock)callback
+                             options:(JS::NativeGlobalExceptionHandler::ExceptionHandlerOptions &)options
 {
   jsErrorCallbackBlock = ^(NSException *exception, NSString *readableException){
     callback(@[readableException]);
   };
   
   previousNativeErrorCallbackBlock = NSGetUncaughtExceptionHandler();
-  callPreviousNativeErrorCallbackBlock = callPreviouslyDefinedHandler;
+  
+  // Extract iOS-specific option (callPreviouslyDefinedHandler)
+  std::optional<bool> callPreviouslyDefinedHandlerOpt = options.callPreviouslyDefinedHandler();
+  callPreviousNativeErrorCallbackBlock = callPreviouslyDefinedHandlerOpt.value_or(false);
   
   NSSetUncaughtExceptionHandler(&HandleException);
   signal(SIGABRT, SignalHandler);
