@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.0-alpha.2](https://github.com/darshan09200/react-native-global-exception-handler/compare/v1.0.0-alpha.0...v1.0.0-alpha.2) (2025-10-14)
+
+### 📚 Documentation
+
+* add demo section with iOS and Android videos ([72c3d2e](https://github.com/darshan09200/react-native-global-exception-handler/commit/72c3d2e27be9a4685ddb40808f644ae7c3a1e104))
+
 ## 1.0.0-alpha.0 (2025-10-07)
 
 ### ✨ Features
