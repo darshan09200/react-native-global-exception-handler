@@ -21,7 +21,7 @@ const LegacyCustomCallbackCrashSimulation = ({
     setNativeExceptionHandler(nativeExceptionHandler, FORCE_APP_QUIT, true);
 
     setHandlerName(HandlerName.legacyCustomCallback);
-    console.log('Exception handlers set');
+    console.log('Legacy custom callback exception handlers set');
   };
 
   useEffect(() => {

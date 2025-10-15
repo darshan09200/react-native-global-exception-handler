@@ -23,7 +23,7 @@ const DefaultCrashSimulation = ({
     });
 
     setHandlerName(HandlerName.default);
-    console.log('Exception handlers set');
+    console.log('Default exception handlers set');
   };
 
   useEffect(() => {

@@ -24,7 +24,7 @@ const CustomCallbackCrashSimulation = ({
     });
 
     setHandlerName(HandlerName.customCallback);
-    console.log('Exception handlers set');
+    console.log('Custom error callback exception handlers set');
   };
 
   useEffect(() => {

@@ -19,7 +19,7 @@ const LegacyDefaultCrashSimulation = ({
     setNativeExceptionHandler(undefined, FORCE_APP_QUIT, true);
 
     setHandlerName(HandlerName.legacyDefault);
-    console.log('Exception handlers set');
+    console.log('Legacy default exception handlers set');
   };
 
   useEffect(() => {
