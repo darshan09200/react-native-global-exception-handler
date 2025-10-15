@@ -1,14 +1,14 @@
 import { Platform } from 'react-native';
 
-import GlobalExceptionHandler, {
-  type ExceptionHandlerOptions,
-} from './NativeGlobalExceptionHandler';
+import { type ExceptionHandlerOptions } from './NativeGlobalExceptionHandler';
 import {
   CrashType,
   type ErrorUtilsType,
   type JSExceptionHandler,
   type NativeExceptionHandler,
 } from './types';
+
+import GlobalExceptionHandler from './GlobalExceptionHandler';
 
 function noop() {}
 
@@ -117,8 +117,8 @@ export async function setNativeExceptionHandler(
     }
 
     GlobalExceptionHandler.setHandlerForNativeException(
-      customErrorHandler,
-      options
+      options,
+      customErrorHandler
     );
   } else {
     console.log('setNativeExceptionHandler is not supported on this platform.');
@@ -135,7 +135,7 @@ export function setHandlerForNativeException(
   const options: ExceptionHandlerOptions = {
     callPreviouslyDefinedHandler,
   };
-  GlobalExceptionHandler.setHandlerForNativeException(callback, options);
+  GlobalExceptionHandler.setHandlerForNativeException(options, callback);
 }
 
 export function simulateNativeCrash(

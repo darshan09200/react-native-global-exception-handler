@@ -32,8 +32,8 @@ export type CrashType =
 
 export interface Spec extends TurboModule {
   setHandlerForNativeException(
-    callback: ExceptionHandlerCallback,
-    options?: ExceptionHandlerOptions
+    options: ExceptionHandlerOptions,
+    callback: ExceptionHandlerCallback
   ): void;
 
   simulateNativeCrash(crashType: CrashType): void;

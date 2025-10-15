@@ -1,8 +1,4 @@
 #import "GlobalExceptionHandler.h"
-#import <React/RCTBridgeModule.h>
-#import <execinfo.h>
-#import <atomic>
-#import <optional>
 
 // CONSTANTS
 NSString * const RNUncaughtExceptionHandlerSignalExceptionName = @"RNUncaughtExceptionHandlerSignalExceptionName";
@@ -41,7 +37,6 @@ void (^jsErrorCallbackBlock)(NSException *exception, NSString *readableException
 //variable that holds the default native error handler
 void (^defaultNativeErrorCallbackBlock)(NSException *exception, NSString *readableException) =
 ^(NSException *exception, NSString *readableException){
-  
   UIAlertController* alert = [UIAlertController
                               alertControllerWithTitle:@"Unexpected error occured"
                               message:[NSString stringWithFormat:@"%@\n%@",
@@ -65,8 +60,21 @@ void (^defaultNativeErrorCallbackBlock)(NSException *exception, NSString *readab
 // ====================================
 
 // METHOD TO INITIALIZE THE EXCEPTION HANDLER AND SET THE JS CALLBACK BLOCK
-- (void)setHandlerForNativeException:(RCTResponseSenderBlock)callback
-                             options:(JS::NativeGlobalExceptionHandler::ExceptionHandlerOptions &)options
+#if RCT_NEW_ARCH_ENABLED
+
+- (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
+(const facebook::react::ObjCTurboModule::InitParams &)params
+{
+  return std::make_shared<facebook::react::NativeGlobalExceptionHandlerSpecJSI>(params);
+}
+
++ (NSString *)moduleName
+{
+  return @"GlobalExceptionHandler";
+}
+
+- (void)setHandlerForNativeException:(JS::NativeGlobalExceptionHandler::ExceptionHandlerOptions &)options
+                            callback:(RCTResponseSenderBlock)callback
 {
   jsErrorCallbackBlock = ^(NSException *exception, NSString *readableException){
     callback(@[readableException]);
@@ -98,7 +106,47 @@ void (^defaultNativeErrorCallbackBlock)(NSException *exception, NSString *readab
   dispatch_async(dispatch_get_main_queue(), ^{
     [self performCrash:crashType];
   });
+  
 }
+#else
+// Old arch registration
+RCT_EXPORT_MODULE()
+
+// Function args should be at the end after all non-function args
+RCT_EXPORT_METHOD(setHandlerForNativeException:(NSDictionary *)options
+                  callback:(RCTResponseSenderBlock)callback)
+{
+  
+  jsErrorCallbackBlock = ^(NSException *exception, NSString *readableException){
+    callback(@[readableException]);
+  };
+  
+  previousNativeErrorCallbackBlock = NSGetUncaughtExceptionHandler();
+  NSNumber *callPrev = options[@"callPreviouslyDefinedHandler"];
+  callPreviousNativeErrorCallbackBlock = callPrev ? [callPrev boolValue] : false;
+  
+  NSSetUncaughtExceptionHandler(&HandleException);
+  signal(SIGABRT, SignalHandler);
+  signal(SIGILL, SignalHandler);
+  signal(SIGSEGV, SignalHandler);
+  signal(SIGFPE, SignalHandler);
+  signal(SIGBUS, SignalHandler);
+  //signal(SIGPIPE, SignalHandler);
+  //Removing SIGPIPE as per https://github.com/master-atul/react-native-exception-handler/issues/32
+  NSLog(@"REGISTERED RN EXCEPTION HANDLER");
+}
+
+RCT_EXPORT_METHOD(simulateNativeCrash:(NSString *)crashType)
+{
+  NSLog(@"SIMULATING CRASH TYPE: %@", crashType);
+  
+  // Use dispatch_async to ensure the crash happens outside the TurboModule call context
+  // This allows our exception handler to catch it properly
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self performCrash:crashType];
+  });
+}
+#endif
 
 - (void)performCrash:(NSString *)crashType {
   if ([crashType isEqualToString:@"nsexception"] || crashType == nil || [crashType length] == 0) {
@@ -250,17 +298,6 @@ void (^defaultNativeErrorCallbackBlock)(NSException *exception, NSString *readab
   free(strs);
   
   return backtrace;
-}
-
-- (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
-(const facebook::react::ObjCTurboModule::InitParams &)params
-{
-  return std::make_shared<facebook::react::NativeGlobalExceptionHandlerSpecJSI>(params);
-}
-
-+ (NSString *)moduleName
-{
-  return @"GlobalExceptionHandler";
 }
 
 @end
