@@ -3,19 +3,17 @@ package com.globalexceptionhandler
 import android.app.Activity
 import android.content.Intent
 import android.util.Log
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.Callback
+import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableMap
-import com.facebook.react.module.annotations.ReactModule
 import kotlin.system.exitProcess
 
-@ReactModule(name = GlobalExceptionHandlerModule.NAME)
-class GlobalExceptionHandlerModule(reactContext: ReactApplicationContext) :
-  NativeGlobalExceptionHandlerSpec(reactContext) {
+class GlobalExceptionHandlerImplementation(val reactContext: ReactApplicationContext) {
+  private val currentActivity: Activity
+    get() = reactContext.currentActivity!!
 
   private var callbackHolder: Callback? = null
-  private var originalHandler: Thread.UncaughtExceptionHandler? = null
+  private var originalHandler = Thread.getDefaultUncaughtExceptionHandler()
 
   companion object {
     const val NAME = "GlobalExceptionHandler"
@@ -33,36 +31,36 @@ class GlobalExceptionHandlerModule(reactContext: ReactApplicationContext) :
     }
   }
 
-  override fun getName(): String {
-    return NAME
-  }
 
-  @ReactMethod
-  override fun setHandlerForNativeException(
-    callback: Callback,
-    options: ReadableMap?
+  fun setHandlerForNativeException(
+    options: ReadableMap,
+    callback: Callback
   ) {
+
     callbackHolder = callback
-    originalHandler = Thread.getDefaultUncaughtExceptionHandler()
 
     Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+
       val stackTraceString = Log.getStackTraceString(throwable)
       callbackHolder?.invoke(stackTraceString)
 
       if (nativeExceptionHandler != null) {
         nativeExceptionHandler!!.handleNativeException(thread, throwable, originalHandler)
       } else {
-        val activity = this.reactApplicationContext.currentActivity
-        if (activity != null) {
-          val intent = Intent().apply {
-            setClass(activity, errorIntentTargetClass)
-            putExtra("stack_trace_string", stackTraceString)
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-          }
-
-          activity.startActivity(intent)
-          activity.finish()
+        val activity = currentActivity
+        val intent = Intent().apply {
+          setClass(activity, errorIntentTargetClass)
+          putExtra("stack_trace_string", stackTraceString)
+          addFlags(
+            Intent.FLAG_ACTIVITY_NEW_TASK or
+              Intent.FLAG_ACTIVITY_CLEAR_TASK or
+              Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS or
+              Intent.FLAG_ACTIVITY_NO_ANIMATION
+          )
         }
+
+        activity.startActivity(intent)
+        activity.finish()
 
         val callPreviouslyDefinedHandler =
           options?.getBoolean("callPreviouslyDefinedHandler") ?: false
@@ -71,11 +69,7 @@ class GlobalExceptionHandlerModule(reactContext: ReactApplicationContext) :
           originalHandler!!.uncaughtException(thread, throwable)
         }
 
-        val forceAppToQuit = if (options?.hasKey("forceAppToQuit") == true) {
-          options.getBoolean("forceAppToQuit")
-        } else {
-          true // Default to true for backward compatibility
-        }
+        val forceAppToQuit = options?.getBoolean("forceAppToQuit") ?: true
         if (forceAppToQuit) {
           exitProcess(0)
         }
@@ -83,8 +77,7 @@ class GlobalExceptionHandlerModule(reactContext: ReactApplicationContext) :
     }
   }
 
-  @ReactMethod
-  override fun simulateNativeCrash(crashType: String) {
+  fun simulateNativeCrash(crashType: String) {
     // Schedule crash on next loop iteration to avoid TurboModule context issues
     android.os.Handler(android.os.Looper.getMainLooper()).post {
       performCrash(crashType)
@@ -115,7 +108,7 @@ class GlobalExceptionHandlerModule(reactContext: ReactApplicationContext) :
       }
 
       "abort" -> {
-        System.exit(-1)
+        exitProcess(-1)
       }
 
       "stack_overflow" -> {

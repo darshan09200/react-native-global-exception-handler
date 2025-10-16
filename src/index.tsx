@@ -129,7 +129,7 @@ export async function setNativeExceptionHandler(
  * @deprecated Use setNativeExceptionHandler instead
  */
 export function setHandlerForNativeException(
-  callback: NativeExceptionHandler,
+  callback: NativeExceptionHandler = noop,
   callPreviouslyDefinedHandler: boolean = false
 ): void {
   const options: ExceptionHandlerOptions = {
