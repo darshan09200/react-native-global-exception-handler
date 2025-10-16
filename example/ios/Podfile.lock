@@ -4,7 +4,7 @@ PODS:
   - fast_float (8.0.0)
   - FBLazyVector (0.81.1)
   - fmt (11.0.2)
-  - GlobalExceptionHandler (1.0.0-alpha.0):
+  - GlobalExceptionHandler (1.0.0-alpha.3):
     - boost
     - DoubleConversion
     - fast_float
@@ -2607,7 +2607,7 @@ SPEC CHECKSUMS:
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: b8f1312d48447cca7b4abc21ed155db14742bd03
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
-  GlobalExceptionHandler: 3f93eaf4842f7e1f8b934534317e17b80ed68111
+  GlobalExceptionHandler: f6913f0e5b4053700a96d2edf849abd62e5fd96d
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   hermes-engine: 4f8246b1f6d79f625e0d99472d1f3a71da4d28ca
   RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669

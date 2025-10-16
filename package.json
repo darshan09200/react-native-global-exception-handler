@@ -1,6 +1,6 @@
 {
   "name": "react-native-global-exception-handler",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "description": "Capture uncaught JS & native exceptions in React Native with a modern global handler, fallback UI, and optional app restart.",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/module/src/index.d.ts",
@@ -44,8 +44,8 @@
     "clean": "del-cli android/build android/app/build ios/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
     "release": "release-it --only-version",
-    "codegen:generate:ios": "npx @react-native-community/cli codegen --platform ios --outputPath ios/",
-    "codegen:generate:android": "npx @react-native-community/cli codegen --platform android",
+    "codegen:generate:ios": "npx @react-native-community/cli codegen --platform ios --outputPath ios/ --source library",
+    "codegen:generate:android": "npx @react-native-community/cli codegen --platform android --source library",
     "codegen:generate": "yarn codegen:generate:ios; yarn codegen:generate:android"
   },
   "keywords": [
