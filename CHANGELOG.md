@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.0-alpha.4](https://github.com/darshan09200/react-native-global-exception-handler/compare/v1.0.0-alpha.2...v1.0.0-alpha.4) (2025-10-16)
+
+### ✨ Features
+
+* add support for react native old arch on android ([ca75daa](https://github.com/darshan09200/react-native-global-exception-handler/commit/ca75daaade7d550c23e700a6020641001ae5a4be))
+* add support for react native old arch on ios ([d10c3ed](https://github.com/darshan09200/react-native-global-exception-handler/commit/d10c3edb075dc3c747088deb1fef8204564dbd21))
+
+### 🧹 Chores
+
+* update dependencies for improved compatibility ([2b79a56](https://github.com/darshan09200/react-native-global-exception-handler/commit/2b79a5692489d56087340d3f213434347c7e1672))
+* update react-native version to 0.81.4 ([fc34a95](https://github.com/darshan09200/react-native-global-exception-handler/commit/fc34a95e8ccdbc586ca0bb1f6df455e336868174))
+
 ## [1.0.0-alpha.2](https://github.com/darshan09200/react-native-global-exception-handler/compare/v1.0.0-alpha.0...v1.0.0-alpha.2) (2025-10-14)
 
 ### 📚 Documentation
