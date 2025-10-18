@@ -20,9 +20,15 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/intro"
+            to="/docs/getting-started"
           >
-            Docusaurus Tutorial - 5min ⏱️
+            Get Started
+          </Link>
+          <Link
+            className="button button--primary button--lg margin-left--sm"
+            to="/docs/api"
+          >
+            API Reference
           </Link>
         </div>
       </div>
@@ -31,11 +37,10 @@ function HomepageHeader() {
 }
 
 export default function Home(): ReactNode {
-  const { siteConfig } = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />"
+      title={`Global Exception Handling for React Native`}
+      description="Capture and report fatal JS and native crashes in React Native apps."
     >
       <HomepageHeader />
       <main>
