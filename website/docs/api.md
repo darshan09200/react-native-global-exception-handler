@@ -48,7 +48,7 @@ Sets a handler for native exceptions with platform-specific options.
 ```ts
 import { setNativeExceptionHandler } from 'react-native-global-exception-handler';
 
-await setNativeExceptionHandler((errorString) => {
+setNativeExceptionHandler((errorString) => {
   console.log('Native error:', errorString);
   // Send to error reporting service
 }, {
@@ -61,12 +61,14 @@ await setNativeExceptionHandler((errorString) => {
 
 ```ts
 // Old signature still works but is deprecated
-await setNativeExceptionHandler(
+setNativeExceptionHandler(
   handler,
   forceApplicationToQuit,  // boolean
   executeDefaultHandler    // boolean
 );
 ```
+
+> Migrating from the old positional signature? See the [Migration Guide](./migration/migration.md) for step-by-step update instructions.
 
 ### `setHandlerForNativeException(callback, callPreviouslyDefinedHandler)` ⚠️ Deprecated
 
@@ -91,6 +93,8 @@ import { simulateNativeCrash, CrashType } from 'react-native-global-exception-ha
 
 // Simulate crash
 simulateNativeCrash(CrashType.nsexception);
+
+// Avoid calling in production builds
 ```
 
 ## Types
@@ -112,8 +116,8 @@ type NativeExceptionHandler = (errorMessage: string) => void;
 The `options` object allows you to control native crash handling behavior:
 
 - `forceAppToQuit` (`boolean`, Android only, default: `true`):
-  - If `true`, the app will be force-closed after your handler runs. Useful for ensuring a clean state after a fatal native crash.
-  - If `false` (default), the app will attempt to continue running after the handler.
+  - If `true` (default), the app will be force-closed after your handler runs. Useful for ensuring a clean state after a fatal native crash.
+  - If `false`, the app will attempt to continue running after the handler.
 - `callPreviouslyDefinedHandler` (`boolean`, iOS & Android, default: `false`):
   - If `true`, any previously registered native exception handler will be called after your handler.
   - If `false` (default), only your handler is called.
@@ -151,16 +155,4 @@ enum CrashType {
   sigill = 'sigill',
   sigbus = 'sigbus',
 }
-```
-
-## Default Export
-
-The library also exports a default object with all functions:
-
-```ts
-import GlobalExceptionHandler from 'react-native-global-exception-handler';
-
-GlobalExceptionHandler.setJSExceptionHandler(/* ... */);
-GlobalExceptionHandler.setNativeExceptionHandler(/* ... */);
-GlobalExceptionHandler.simulateNativeCrash(/* ... */);
 ```

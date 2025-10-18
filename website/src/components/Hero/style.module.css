@@ -1,0 +1,333 @@
+/* Hero.module.css */
+.heroRoot {
+  padding: 4.5rem 1rem 3.5rem;
+  background: linear-gradient(
+    135deg,
+    var(--ifm-color-primary) 0%,
+    #0fbfa2 40%,
+    #0aa58c 100%
+  );
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroInner {
+  max-width: 960px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.headline {
+  font-size: clamp(2.2rem, 5vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.05;
+  margin: 0 0 1.75rem;
+  letter-spacing: -0.5px;
+}
+
+.headline span.accent {
+  background: linear-gradient(90deg, #fff, #d7fff6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: 800;
+}
+
+.subhead {
+  font-size: 1.15rem;
+  max-width: 760px;
+  margin: 0 auto 2.25rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+/* Package name pill */
+.pkgWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: #fff;
+  padding: 0.55rem 0.85rem;
+  border-radius: 999px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  margin: 0 0 1.75rem;
+  font-size: 0.75rem;
+  position: relative;
+}
+.pkgName {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.25px;
+  color: #1a3a32;
+  background: none;
+  border: none;
+}
+.copyBtn {
+  background: linear-gradient(135deg, #0fbfa2 60%, #0aa58c 100%);
+  color: #fff;
+  border: none;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+.copyBtn:hover,
+.copyBtn:focus-visible {
+  background: linear-gradient(135deg, #099e83 60%, #0fbfa2 100%);
+  transform: translateY(-2px);
+  outline: none;
+}
+.installHint {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, 6px);
+  background: #222;
+  color: #fff;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.5px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+  z-index: 2;
+}
+.pkgWrap:hover .installHint,
+.pkgWrap:focus-within .installHint {
+  opacity: 1;
+  transform: translate(-50%, 0px);
+}
+.pkgName {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.25px;
+  color: #1a3a32;
+  background: none;
+}
+.copyBtn {
+  background: linear-gradient(135deg, #0fbfa2 60%, #0aa58c 100%);
+  color: #fff;
+  border: none;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+.copyBtn:hover,
+.copyBtn:focus-visible {
+  background: linear-gradient(135deg, #099e83 60%, #0fbfa2 100%);
+  transform: translateY(-2px);
+  outline: none;
+}
+.installHint {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, 6px);
+  background: #222;
+  color: #fff;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.5px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+  z-index: 2;
+}
+.pkgWrap:hover .installHint,
+.pkgWrap:focus-within .installHint {
+  opacity: 1;
+  transform: translate(-50%, 0px);
+}
+
+.ctaRow {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.badgeRow {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.badge {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.badge:hover,
+.badge:focus-visible {
+  background: rgba(255, 255, 255, 0.28);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  outline: none;
+}
+
+.codeBar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 18px;
+  margin: -0.25rem 0 0.75rem;
+  padding: 0 4px;
+}
+
+.codeBar .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ff5f56;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+.codeBar .dot:nth-child(2) {
+  background: #ffbd2e;
+}
+.codeBar .dot:nth-child(3) {
+  background: #27c93f;
+}
+
+.fileLabel {
+  margin-left: auto;
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  opacity: 0.8;
+  color: #fff;
+}
+
+.codeShell {
+  background: rgba(17, 25, 23, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.85rem;
+  text-align: left;
+  max-width: 760px;
+  margin: 0 auto;
+  color: #222;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  position: relative;
+}
+.codeLines {
+  white-space: pre;
+  overflow: hidden;
+  color: #222;
+}
+html[data-theme='dark'] .codeLines {
+  color: #e9fff8;
+}
+
+.codeShell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0)
+  );
+  pointer-events: none;
+}
+
+.codeLines {
+  white-space: pre;
+  overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  .heroRoot {
+    padding: 3.5rem 1rem 2.75rem;
+  }
+  .headline {
+    font-size: 2.2rem;
+  }
+  .subhead {
+    font-size: 1rem;
+  }
+  .codeShell {
+    font-size: 0.75rem;
+  }
+  .pkgWrap {
+    font-size: 0.7rem;
+    padding: 0.45rem 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .copyBtn {
+    padding: 0.35rem 0.55rem;
+    font-size: 0.6rem;
+  }
+}
+
+/* Dark mode adjustments */
+html[data-theme='dark'] .heroRoot {
+  background: linear-gradient(135deg, #0fbfa2 0%, #099e83 50%, #077965 100%);
+}
+
+html[data-theme='dark'] .badge {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+html[data-theme='dark'] .badge:hover,
+html[data-theme='dark'] .badge:focus-visible {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+html[data-theme='dark'] .codeShell {
+  background: rgba(12, 20, 18, 0.55);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+html[data-theme='dark'] .pkgWrap {
+  background: #222;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
+}
+html[data-theme='dark'] .pkgName {
+  color: #e9fff8;
+}
+html[data-theme='dark'] .copyBtn {
+  background: linear-gradient(135deg, #0fbfa2 60%, #099e83 100%);
+  color: #fff;
+}
+html[data-theme='dark'] .copyBtn:hover,
+html[data-theme='dark'] .copyBtn:focus-visible {
+  background: linear-gradient(135deg, #099e83 60%, #0fbfa2 100%);
+}
+html[data-theme='dark'] .installHint {
+  background: #111;
+  color: #e9fff8;
+}

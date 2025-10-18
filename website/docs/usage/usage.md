@@ -4,6 +4,27 @@ sidebar_position: 3
 title: Usage
 ---
 
+## Understanding Error Types
+
+Before diving into usage, it's important to understand the two types of errors in a React Native app:
+
+### JavaScript Exceptions
+
+- Errors produced by your JavaScript/React code
+- Can show UI dialogs, alerts, and perform async operations
+- Can capture and handle gracefully before app crashes
+- Examples: undefined variables, network errors, logic errors
+
+### Native Exceptions
+
+- Errors produced by native modules (iOS/Android)
+- **Cannot** show JS alerts or update UI via JS code
+- Must use native UI for error screens
+- **Much more critical** - leave app in unstable state
+- Examples: null pointer exceptions, memory access violations
+
+> **Important**: Native exceptions are handled via native code. You cannot show React components or JS alerts when a native crash occurs. The handler runs just before the app terminates.
+
 ## JavaScript Exception Handling
 
 Set up a global handler for JavaScript exceptions in your app's entry point (`index.js` or `App.tsx`):
@@ -33,7 +54,7 @@ Handle native crashes on iOS and Android:
 ```ts
 import { setNativeExceptionHandler } from 'react-native-global-exception-handler';
 
-await setNativeExceptionHandler((errorString) => {
+setNativeExceptionHandler((errorString) => {
   // errorString contains the native error message
   console.log('Native Exception:', errorString);
   
@@ -49,18 +70,17 @@ await setNativeExceptionHandler((errorString) => {
 - `forceAppToQuit` (Android only): Force app to quit after handler runs
 - `callPreviouslyDefinedHandler`: Chain with previous native exception handler
 
+> Note: The native exception handler only activates in production (bundled) builds. In development you'll still see the Red Screen.
+
 ## Complete Setup Example
 
 In your `index.js`:
 
 ```ts
-import { AppRegistry } from 'react-native';
 import { 
   setJSExceptionHandler, 
   setNativeExceptionHandler 
 } from 'react-native-global-exception-handler';
-import App from './App';
-import { name as appName } from './app.json';
 
 // JavaScript exception handler
 setJSExceptionHandler((error, isFatal) => {
@@ -77,7 +97,6 @@ setNativeExceptionHandler((errorString) => {
   callPreviouslyDefinedHandler: false
 });
 
-AppRegistry.registerComponent(appName, () => App);
 ```
 
 ## Development vs Production
@@ -105,3 +124,7 @@ import { getJSExceptionHandler } from 'react-native-global-exception-handler';
 
 const currentHandler = getJSExceptionHandler();
 ```
+
+## Migration Guide
+
+If you're upgrading from the original `react-native-exception-handler`, see the dedicated [Migration Guide](../migration/migration.md) for differences, legacy API notes, and step-by-step update instructions.

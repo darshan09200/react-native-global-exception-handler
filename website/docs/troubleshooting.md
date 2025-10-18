@@ -8,35 +8,6 @@ Common issues and solutions when working with `react-native-global-exception-han
 
 ## Installation Issues
 
-### TurboModule Not Found
-
-**Error:**
-
-```
-TurboModuleRegistry.getEnforcing called for module 'GlobalExceptionHandler' but it is not registered
-```
-
-**Solution:**
-
-1. Ensure you're using React Native 0.68 or higher
-2. Clear metro cache:
-
-   ```bash
-   npx react-native start --reset-cache
-   ```
-
-3. Clean and rebuild:
-
-   ```bash
-   # iOS
-   cd ios && rm -rf Pods && pod install && cd ..
-   npx react-native run-ios
-   
-   # Android
-   cd android && ./gradlew clean && cd ..
-   npx react-native run-android
-   ```
-
 ### iOS Pod Installation Fails
 
 **Error:**
@@ -92,6 +63,37 @@ Could not determine the dependencies of task ':app:compileDebugJavaWithJavac'
    cd ..
    ```
 
+### TurboModule Not Found
+
+> Only for React Native New architecture
+
+**Error:**
+
+```
+TurboModuleRegistry.getEnforcing called for module 'GlobalExceptionHandler' but it is not registered
+```
+
+**Solution:**
+
+1. Ensure you're using React Native 0.68 or higher
+2. Clear metro cache:
+
+   ```bash
+   npx react-native start --reset-cache
+   ```
+
+3. Clean and rebuild:
+
+   ```bash
+   # iOS
+   cd ios && rm -rf Pods && pod install && cd ..
+   npx react-native run-ios
+   
+   # Android
+   cd android && ./gradlew clean && cd ..
+   npx react-native run-android
+   ```
+
 ## Runtime Issues
 
 ### Handler Not Called in Development
@@ -143,6 +145,36 @@ setNativeExceptionHandler((errorString) => {
 ```
 
 For iOS, you must use a custom error screen as iOS doesn't allow programmatic restart.
+
+### When to Use `forceAppToQuit: false`
+
+**Issue:** Using navigation libraries like react-native-navigation (Wix), and the app quits unexpectedly on errors.
+
+**Why:** Some navigation libraries recreate the application stack after errors. If `forceAppToQuit` is `true`, the app will quit before the navigation library can handle the error properly.
+
+**Solution:**
+
+Set `forceAppToQuit: false` to allow the navigation library to handle the error:
+
+```js
+setNativeExceptionHandler((errorString) => {
+  // Log error for debugging
+  console.log('Native error:', errorString);
+  // Send to analytics
+  reportToAnalytics(errorString);
+}, {
+  forceAppToQuit: false,  // Let the navigation library handle recovery
+  callPreviouslyDefinedHandler: true  // Chain with navigation's handler
+});
+```
+
+**Use cases for `forceAppToQuit: false`:**
+
+- Using react-native-navigation (Wix) or similar navigation libraries
+- You have custom recovery logic in native code
+- You want to allow the app to attempt recovery instead of forcing quit
+
+**Note:** In most cases, `forceAppToQuit: true` (default) is recommended for clean crash handling.
 
 ### Errors Not Reaching Analytics Service
 
@@ -310,8 +342,8 @@ const options: ExceptionHandlerOptions = {
   callPreviouslyDefinedHandler: false
 };
 
-setNativeExceptionHandler((error) => {
-  console.log(error);
+setNativeExceptionHandler((errorString) => {
+  console.log(errorString);
 }, options);
 ```
 
@@ -412,4 +444,38 @@ if (__DEV__) {
     console.log('===============================');
   });
 }
+```
+
+## Known Issues & Compatibility
+
+### Working with Other Error Handlers
+
+If you have other libraries that set error handlers (e.g., error monitoring SDKs), you may want to chain them together:
+
+```js
+import { setJSExceptionHandler, getJSExceptionHandler } from 'react-native-global-exception-handler';
+
+// Save the previous handler (might be from another library)
+const previousHandler = getJSExceptionHandler();
+
+setJSExceptionHandler((error, isFatal) => {
+  // Your custom handling
+  console.log('Custom handler:', error);
+  
+  // Call the previous handler if it exists
+  if (previousHandler) {
+    previousHandler(error, isFatal);
+  }
+}, true);
+```
+
+For native handlers, use the `callPreviouslyDefinedHandler` option:
+
+```js
+setNativeExceptionHandler((errorString) => {
+  // Your custom handling
+  console.log('Custom native handler:', errorString);
+}, {
+  callPreviouslyDefinedHandler: true  // Chain with previous handler
+});
 ```
