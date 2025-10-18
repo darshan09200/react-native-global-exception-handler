@@ -410,3 +410,11 @@ MIT
 ---
 
 Made with ❤️ for the React Native community
+
+## TODO
+
+- [ ] Add examples for old and new arch
+- [ ] Add examples for custom error screen
+- [ ] Update docs for old/new arch, custom error screen
+  - [ ] native handlers on android in debug mode might not work as expected
+- [ ] Possible add e2e tests
