@@ -88,7 +88,73 @@ const config: Config = {
     },
     footer: {
       style: 'dark',
-      copyright: `Copyright © ${new Date().getFullYear()} Darshan Jain, Built with Docusaurus.`,
+      links: [
+        {
+          title: 'Docs',
+          items: [
+            {
+              label: 'Getting started',
+              to: '/docs/intro',
+            },
+            {
+              label: 'Installation',
+              to: '/docs/installation',
+            },
+            {
+              label: 'API reference',
+              to: '/docs/api',
+            },
+          ],
+        },
+        {
+          title: 'Community',
+          items: [
+            {
+              label: 'GitHub',
+              href: 'https://github.com/darshan09200/react-native-global-exception-handler',
+            },
+            {
+              label: 'Issues',
+              href: 'https://github.com/darshan09200/react-native-global-exception-handler/issues',
+            },
+            {
+              label: 'Discussions',
+              href: 'https://github.com/darshan09200/react-native-global-exception-handler/discussions',
+            },
+            {
+              label: 'Stack Overflow',
+              href: 'https://stackoverflow.com/questions/tagged/global-exception-handler',
+            },
+          ],
+        },
+        {
+          title: 'Resources',
+          items: [
+            // {
+            //   label: 'Changelog',
+            //   to: '/changelog',
+            // },
+            {
+              label: 'Examples',
+              to: '/docs/examples',
+            },
+            {
+              label: 'Troubleshooting',
+              to: '/docs/troubleshooting',
+            },
+          ],
+        },
+      ],
+      // project logo centered by the theme (use full logo variants for light/dark)
+      logo: {
+        alt: 'Global Exception Handler',
+        src: 'img/logo-full-light.svg',
+        srcDark: 'img/logo-full-dark.svg',
+        href: '/',
+      },
+      // small badge-like HTML will still be rendered; keep it in metadata area via headTags or as a raw html link in the footer if desired
+      // keep copyright and make it specific to the project
+      copyright: `Copyright © ${new Date().getFullYear()} <a href="https://github.com/darshan09200" target="_blank" rel="noopener noreferrer">Darshan Jain</a>. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

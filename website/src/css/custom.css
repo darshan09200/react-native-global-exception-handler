@@ -168,3 +168,55 @@ main > section:nth-child(odd) {
 main > section:nth-child(even) {
   background: var(--ifm-background-color);
 }
+
+/* Theme-aware footer styles -------------------------------------------------*/
+:root {
+  /* sensible defaults for footer in light mode */
+  --site-footer-bg: #f8fafc; /* light gray */
+  --site-footer-text: #0f172a; /* slate-900 */
+  --site-footer-border: rgba(15, 23, 42, 0.06);
+  --site-footer-muted: rgba(15, 23, 42, 0.6);
+}
+
+[data-theme='dark'] {
+  --site-footer-bg: #0d1117; /* dark background matching page */
+  --site-footer-text: #e5e7eb; /* light text */
+  --site-footer-border: rgba(255, 255, 255, 0.04);
+  --site-footer-muted: rgba(229, 231, 235, 0.65);
+}
+
+/* Docusaurus footer wrapper */
+.footer {
+  background: var(--site-footer-bg) !important;
+  color: var(--site-footer-text) !important;
+  border-top: 1px solid var(--site-footer-border);
+}
+
+.footer a {
+  color: var(
+    --ifm-link-color
+  ) !important; /* use existing link color variable */
+}
+
+.footer .footer__title {
+  color: var(--site-footer-text) !important;
+}
+
+.footer .footer__item {
+  color: var(--site-footer-muted);
+}
+
+/* Center the logo HTML block we added in the footer and constrain size */
+.footer [role='presentation'] img,
+.footer img {
+  max-width: 360px;
+  height: auto;
+  display: block;
+  margin: 0.5rem auto 1.25rem auto;
+}
+
+/* Reduce visual weight of copyright text */
+.footer .footer__bottom {
+  /* Docusaurus v2 uses footer__bottom */
+  color: var(--site-footer-muted);
+}
