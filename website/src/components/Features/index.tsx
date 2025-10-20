@@ -190,7 +190,7 @@ export default function Features(): ReactNode {
         <div className={styles.featuresInner}>
           <div className={styles.featuresHeader}>
             <Heading as="h2" className={styles.featuresTitle}>
-              Why GlobalExceptionHandler?
+              Why Global Exception Handler?
             </Heading>
             <p className={styles.featuresIntro}>
               Catch crashes across JavaScript and native layers, customize
