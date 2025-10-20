@@ -38,7 +38,7 @@ export default function Hero() {
           </div>
           <pre
             className={styles.codeLines}
-          >{`import {\n  setJSExceptionHandler,\n  setNativeExceptionHandler,\n} from 'react-native-global-exception-handler';\n\nsetJSExceptionHandler((err, fatal) => {\n  // report + graceful UI\n}, true);\n\nsetNativeExceptionHandler(msg => {\n  // send to Crashlytics\n});`}</pre>
+          >{`import {\n  setJSExceptionHandler,\n  setNativeExceptionHandler,\n} from 'react-native-global-exception-handler';\n\nsetJSExceptionHandler((err, fatal) => {\n  // report + graceful UI\n}, true);\n\nsetNativeExceptionHandler(msg => {\n  // send to analytics\n});`}</pre>
         </div>
       </div>
     </section>

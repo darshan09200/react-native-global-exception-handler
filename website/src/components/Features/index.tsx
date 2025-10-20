@@ -2,7 +2,6 @@ import type { ReactNode } from 'react';
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
-import Link from '@docusaurus/Link';
 import styles from './styles.module.css';
 
 type RawFeature = {
@@ -276,23 +275,7 @@ export default function Features(): ReactNode {
               })}
             </div>
           </div>
-          <div className={styles.featuresFooter}>
-            <p className={styles.featuresFootnote}>
-              Want a quick demo first? Explore the{' '}
-              <Link
-                to="https://github.com/darshan09200/react-native-global-exception-handler/tree/main/example#readme"
-                className={styles.featuresDemoLink}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                example app README
-              </Link>{' '}
-              and use its simulation utilities to safely trigger crashes and
-              validate your integration.
-            </p>
-          </div>
         </div>
-        {/* Feature grid removed; merged into slides above */}
       </div>
     </section>
   );
