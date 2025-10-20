@@ -35,12 +35,6 @@ export default function Demo() {
         <div className={styles.ctaSection}>
           <Link
             className="button button--primary button--lg"
-            to="/docs/getting-started"
-          >
-            Get Started Now
-          </Link>
-          <Link
-            className="button button--secondary button--lg"
             to="docs/examples/basic-examples"
           >
             View Example Code

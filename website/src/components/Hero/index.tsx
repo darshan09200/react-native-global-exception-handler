@@ -20,20 +20,13 @@ export default function Hero() {
         <PackageNamePill />
         <div className={styles.ctaRow}>
           <Link
-            className="button button--secondary button--lg"
+            className="button button--primary button--lg"
             to="/docs/getting-started"
           >
             Get Started
           </Link>
-          <Link className="button button--primary button--lg" to="/docs/api">
+          <Link className="button button--secondary button--lg" to="/docs/api">
             API Reference
-          </Link>
-          <Link
-            className="button button--outline button--lg"
-            to="https://github.com/darshan09200/react-native-global-exception-handler"
-            target="_blank"
-          >
-            GitHub ★
           </Link>
         </div>
         <div className={styles.codeShell}>

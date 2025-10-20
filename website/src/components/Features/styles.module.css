@@ -12,7 +12,11 @@
 .featuresTitle {
   font-size: 2.2rem;
   margin: 0 0 1rem;
-  background: linear-gradient(135deg, var(--ifm-color-primary), #0fbfa2);
+  background: linear-gradient(
+    135deg,
+    var(--ifm-color-primary),
+    var(--ifm-color-primary-light)
+  );
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -38,7 +42,11 @@
 .featuresDemoLink {
   font-weight: 600;
   text-decoration: none;
-  background: linear-gradient(135deg, var(--ifm-color-primary), #0fbfa2);
+  background: linear-gradient(
+    135deg,
+    var(--ifm-color-primary),
+    var(--ifm-color-primary-light)
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -51,7 +59,11 @@
   bottom: -2px;
   height: 2px;
   width: 100%;
-  background: linear-gradient(135deg, var(--ifm-color-primary), #0fbfa2);
+  background: linear-gradient(
+    135deg,
+    var(--ifm-color-primary),
+    var(--ifm-color-primary-light)
+  );
   opacity: 0.55;
   transition: opacity 0.3s ease;
 }
@@ -107,12 +119,20 @@
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
 }
 .vertTabActive {
-  background: linear-gradient(135deg, var(--ifm-color-primary), #0fbfa2);
-  color: #fff;
+  background: linear-gradient(
+    135deg,
+    var(--ifm-color-primary),
+    var(--ifm-color-primary-light)
+  );
+  color: var(--ifm-button-color);
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.25);
 }
 .vertTabActive:hover {
-  background: linear-gradient(135deg, var(--ifm-color-primary), #13c7ab);
+  background: linear-gradient(
+    135deg,
+    var(--ifm-color-primary),
+    var(--ifm-color-primary-light)
+  );
 }
 .vertTabLabel {
   position: relative;
@@ -129,7 +149,7 @@
   background: linear-gradient(
     180deg,
     var(--ifm-color-primary) 0%,
-    #0fbfa2 100%
+    var(--ifm-color-primary-light) 100%
   );
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
 }
@@ -138,18 +158,28 @@
 }
 
 :root[data-theme='dark'] .vertTab {
-  background: #23272f;
+  background: var(--ifm-navbar-background-color);
   border-color: rgba(255, 255, 255, 0.08);
-  color: var(--ifm-color-emphasis-200);
 }
 :root[data-theme='dark'] .vertTab:hover {
-  background: #2b313b;
+  background: var(--ifm-navbar-background-color);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.55);
 }
-:root[data-theme='dark'] .vertTabActive {
-  background: linear-gradient(135deg, #1e9d83, #0f6d5c);
+:root[data-theme='dark'] .vertTabActive:hover {
+  background: linear-gradient(
+    135deg,
+    var(--ifm-color-primary-dark),
+    var(--ifm-color-primary-darker)
+  );
   box-shadow: 0 6px 26px rgba(0, 0, 0, 0.6);
-  color: #fff;
+}
+:root[data-theme='dark'] .vertTabActive {
+  background: linear-gradient(
+    135deg,
+    var(--ifm-color-primary-dark),
+    var(--ifm-color-primary-darker)
+  );
+  color: var(--ifm-button-color);
 }
 
 .contentPane {
@@ -167,7 +197,7 @@
   background: linear-gradient(
     155deg,
     var(--ifm-color-secondary-contrast-background, #f4f6f8),
-    #e9edf1 60%
+    var(--ifm-color-secondary-contrast-background, #f4f6f8) 60%
   );
   border-radius: 1.1rem;
   border: 1px solid rgba(0, 0, 0, 0.04);
@@ -191,12 +221,13 @@
   color: var(--ifm-color-emphasis-700);
 }
 :root[data-theme='dark'] .contentSlide {
-  background: linear-gradient(155deg, #1f2429, #242b31 55%);
+  background: linear-gradient(
+    155deg,
+    var(--ifm-background-color),
+    var(--ifm-navbar-background-color) 55%
+  );
   border-color: rgba(255, 255, 255, 0.07);
   box-shadow: 0 14px 46px rgba(0, 0, 0, 0.65);
-}
-:root[data-theme='dark'] .contentInner {
-  color: var(--ifm-color-emphasis-300);
 }
 
 /* Merged feature slide layout */
@@ -333,9 +364,6 @@
   background: var(--ifm-color-primary);
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
 }
-:root[data-theme='dark'] .slidePoints li {
-  color: var(--ifm-color-emphasis-300);
-}
 :root[data-theme='dark'] .slidePoints li::before {
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
 }
@@ -375,7 +403,7 @@
     background: linear-gradient(
       90deg,
       var(--ifm-color-primary) 0%,
-      #0fbfa2 100%
+      var(--ifm-color-primary-light) 100%
     );
   }
   .contentSlide,
@@ -402,7 +430,7 @@
 
 .badge {
   background: var(--ifm-color-primary);
-  color: #fff;
+  color: var(--ifm-button-color);
   padding: 0.5rem 0.95rem;
   font-size: 0.7rem;
   font-weight: 600;
@@ -420,7 +448,11 @@
     box-shadow 0.25s ease;
 }
 .badgeActive {
-  background: linear-gradient(135deg, var(--ifm-color-primary), #0fbfa2);
+  background: linear-gradient(
+    135deg,
+    var(--ifm-color-primary),
+    var(--ifm-color-primary-light)
+  );
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 }
 .badge::after {
@@ -451,7 +483,11 @@
 }
 
 :root[data-theme='dark'] .badge {
-  background: linear-gradient(135deg, #1e9d83, #0f6d5c);
+  background: linear-gradient(
+    135deg,
+    var(--ifm-color-primary-dark),
+    var(--ifm-color-primary-darker)
+  );
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
 }
 :root[data-theme='dark'] .badge:hover,
@@ -470,7 +506,7 @@
   border: 1px solid rgba(0, 0, 0, 0.06);
 }
 :root[data-theme='dark'] .carouselViewport {
-  background: #1f2429;
+  background: var(--ifm-navbar-background-color);
   border-color: rgba(255, 255, 255, 0.07);
   box-shadow: 0 12px 42px rgba(0, 0, 0, 0.55);
 }
