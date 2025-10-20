@@ -15,7 +15,8 @@
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx",
     "lib": [
-      "ESNext"
+      "ESNext",
+      "DOM"
     ],
     "module": "ESNext",
     "moduleResolution": "bundler",
@@ -33,7 +34,4 @@
     "target": "ESNext",
     "verbatimModuleSyntax": true
   },
-  "exclude": [
-    "website/"
-  ]
 }

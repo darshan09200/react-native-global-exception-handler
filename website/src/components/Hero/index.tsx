@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import Link from '@docusaurus/Link';
 import styles from './style.module.css';
 
