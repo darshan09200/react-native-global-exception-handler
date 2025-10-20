@@ -120,65 +120,6 @@
   opacity: 1;
   transform: translate(-50%, 0px);
 }
-.pkgName {
-  font-family: var(--ifm-font-family-monospace);
-  font-size: 0.75rem;
-  letter-spacing: 0.25px;
-  color: var(--ifm-font-color-base);
-  background: none;
-}
-.copyBtn {
-  background: linear-gradient(
-    135deg,
-    var(--ifm-color-primary-light) 60%,
-    var(--ifm-color-primary-dark) 100%
-  );
-  color: var(--ifm-button-color);
-  border: none;
-  font-size: 0.65rem;
-  font-weight: 600;
-  padding: 0.4rem 0.7rem;
-  border-radius: 6px;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-  transition:
-    background 0.25s ease,
-    transform 0.25s ease;
-}
-.copyBtn:hover,
-.copyBtn:focus-visible {
-  background: linear-gradient(
-    135deg,
-    var(--ifm-color-primary-darker) 60%,
-    var(--ifm-color-primary-light) 100%
-  );
-  transform: translateY(-2px);
-  outline: none;
-}
-.installHint {
-  position: absolute;
-  left: 50%;
-  top: 100%;
-  transform: translate(-50%, 6px);
-  background: var(--ifm-navbar-background-color);
-  color: var(--ifm-button-color);
-  padding: 0.35rem 0.6rem;
-  font-size: 0.6rem;
-  letter-spacing: 0.5px;
-  border-radius: 6px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease;
-  z-index: 2;
-}
-.pkgWrap:hover .installHint,
-.pkgWrap:focus-within .installHint {
-  opacity: 1;
-  transform: translate(-50%, 0px);
-}
 
 .ctaRow {
   display: flex;
@@ -308,11 +249,6 @@ html[data-theme='dark'] .heroRoot .ctaRow :global(.button.button--secondary) {
     rgba(255, 255, 255, 0)
   );
   pointer-events: none;
-}
-
-.codeLines {
-  white-space: pre;
-  overflow: hidden;
 }
 
 @media (max-width: 600px) {
