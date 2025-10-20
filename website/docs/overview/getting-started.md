@@ -1,7 +1,6 @@
 ---
 id: getting-started
 sidebar_position: 1
-slug: /getting-started
 title: Getting Started
 ---
 

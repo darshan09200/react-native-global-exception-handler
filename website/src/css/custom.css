@@ -92,6 +92,63 @@
   border-radius: 16px;
   box-shadow: 0 6px 20px rgba(2, 8, 23, 0.08);
 }
+
+/* Tweak cards used by generated-index and other lists to be theme-aware,
+   reduce excessive spacing and improve visual contrast in dark mode. */
+:root {
+  --site-card-bg: #ffffff;
+  --site-card-border: rgba(2, 8, 23, 0.06);
+  --site-card-padding: 1.5rem;
+}
+
+[data-theme='dark'] {
+  --site-card-bg: #111217; /* slightly lighter than page bg */
+  --site-card-border: rgba(255, 255, 255, 0.03);
+  --site-card-padding: 1.25rem;
+}
+
+.card {
+  background: var(--site-card-bg) !important;
+  border: 1px solid var(--site-card-border);
+  padding: var(--site-card-padding);
+  color: var(--ifm-font-color-base);
+  box-shadow: 0 8px 30px rgba(2, 8, 23, 0.06);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(2, 8, 23, 0.12);
+}
+
+.col--lg,
+.col--md,
+.col {
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+/* Titles inside generated-index cards: slightly larger, use brand color */
+.card .card__header h3 {
+  color: var(--ifm-color-primary) !important;
+  margin-bottom: 0.5rem;
+}
+
+/* Body text muted and well spaced */
+.card .card__content p,
+.card .card__content a {
+  color: var(--ifm-font-color-base);
+  opacity: 0.9;
+  margin: 0.25rem 0;
+}
+
+/* Ensure links inside cards use the defined link color and are readable in dark */
+.card a {
+  color: var(--ifm-link-color) !important;
+}
+
 .markdown a {
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;

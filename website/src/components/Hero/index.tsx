@@ -21,7 +21,7 @@ export default function Hero() {
         <div className={styles.ctaRow}>
           <Link
             className="button button--primary button--lg"
-            to="/docs/getting-started"
+            to="/docs/overview/getting-started"
           >
             Get Started
           </Link>

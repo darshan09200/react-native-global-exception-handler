@@ -2,6 +2,7 @@
 id: usage
 sidebar_position: 3
 title: Usage
+slug: /usage/usage
 ---
 
 ## Understanding Error Types
