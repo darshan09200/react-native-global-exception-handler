@@ -9,6 +9,7 @@ const config: Config = {
   tagline: 'Catch and report fatal/native errors in React Native',
   favicon: 'img/favicon.ico',
 
+  staticDirectories: ['static'],
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
     v4: true, // Improve compatibility with the upcoming Docusaurus v4

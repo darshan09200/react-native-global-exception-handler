@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import Layout from '@theme/Layout';
 import Features from '../components/Features';
 import Hero from '../components/Hero';
+import Demo from '../components/Demo';
 
 export default function Home(): ReactNode {
   return (
@@ -11,6 +12,7 @@ export default function Home(): ReactNode {
     >
       <Hero />
       <main>
+        <Demo />
         <Features />
       </main>
     </Layout>

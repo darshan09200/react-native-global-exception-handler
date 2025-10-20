@@ -1,11 +1,14 @@
 # react-native-global-exception-handler
 
-[![npm version](https://img.shields.io/npm/v/react-native-global-exception-handler.svg)](https://www.npmjs.com/package/react-native-global-exception-handler)
-[![npm downloads](https://img.shields.io/npm/dm/react-native-global-exception-handler.svg)](https://www.npmjs.com/package/react-native-global-exception-handler)
-[![License: MIT](https://img.shields.io/github/license/darshan09200/react-native-global-exception-handler?color=green)](./LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/darshan09200/react-native-global-exception-handler/pulls)
+[![npm version](https://img.shields.io/npm/v/react-native-global-exception-handler.svg?style=flat)](https://www.npmjs.com/package/react-native-global-exception-handler)
+[![npm downloads](https://img.shields.io/npm/dm/react-native-global-exception-handler.svg?style=flat)](https://www.npmjs.com/package/react-native-global-exception-handler)
+[![License: MIT](https://img.shields.io/github/license/darshan09200/react-native-global-exception-handler?color=green&style=flat)](./LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/darshan09200/react-native-global-exception-handler/pulls)
+[![Documentation](https://img.shields.io/badge/docs-online-blue.svg?style=flat)](https://darshan09200.github.io/react-native-global-exception-handler/)
 
 A modern React Native library for global error handling (JavaScript + native) with TurboModules support and cross-platform compatibility.
+
+> 🎬 **[See live demos](https://darshan09200.github.io/react-native-global-exception-handler/#demo)** of iOS and Android crash handling in action!
 
 ## Key Features
 
@@ -19,13 +22,23 @@ A modern React Native library for global error handling (JavaScript + native) wi
 
 ## Why
 
-Without a global handler, production native crashes often terminate silently and JS fatal errors close the app abruptly. This library lets you intercept them, show a fallback UI, and optionally report & recover.
+In React Native apps, uncaught exceptions behave differently based on the environment:
 
-## Demo
+- **In DEV mode**: You get a helpful Red Screen error showing the stack trace
+- **In production (bundled) mode**: The app simply **quits without any message** 😱
 
-| iOS (demo) | Android (demo) |
-| ---------- | -------------- |
-| ![iOS demo](./docs/assets/iOS_demo.png) | ![Android demo](./docs/assets/android_demo.png) |
+This creates a poor user experience where users don't know:
+
+- What went wrong
+- Whether they should restart the app
+- If their data was saved
+
+This library solves this by:
+
+1. **Catching unhandled exceptions** before the app crashes
+2. **Allowing you to show a graceful error message** to users
+3. **Enabling error reporting** to your development team
+4. **Providing restart capabilities** for recovery
 
 ## Installation
 
@@ -35,7 +48,16 @@ npm install react-native-global-exception-handler
 yarn add react-native-global-exception-handler
 ```
 
-> Requires React Native 0.68+ (TurboModules & auto-linking).
+> Requires React Native 0.68+ (TurboModules & auto-linking)
+
+### Architecture Support
+
+Works with both:
+
+- **Legacy Architecture** (Old Architecture)
+- **New Architecture** (TurboModules + Fabric)
+
+No additional configuration needed the correct bindings are auto-selected at build time.
 
 ## Quick Start
 
@@ -60,7 +82,7 @@ setJSExceptionHandler(
   (error, isFatal) => {
     // Your error handler
   },
-  true // Allow in dev mode (shows instead of RedBox)
+  true // allowedInDevMode: true = enable in dev (shows instead of RedBox)
 );
 ```
 
@@ -81,25 +103,27 @@ setNativeExceptionHandler(
     console.log('Native Exception:', errorString);
   },
   {
-    forceAppToQuit: true,              // Android: Force app to quit after error
-    callPreviouslyDefinedHandler: false // Call previous exception handler
+    forceAppToQuit: true,              // Android: Force app to quit after error (default: true)
+    callPreviouslyDefinedHandler: false // Call previous exception handler (default: false)
   }
 );
 ```
 
 ## Documentation
 
-Full docs live at: <https://darshan09200.github.io/react-native-global-exception-handler/>
+[**📚 View Full Documentation**](https://darshan09200.github.io/react-native-global-exception-handler/)
 
-- Getting Started
-- Installation
-- Usage
-- Native Crash Handling
-- API Reference
-- Testing & Simulation
-- Analytics Integration
-- Troubleshooting
-- Migration Guide
+### Quick Links
+
+- [Getting Started](https://darshan09200.github.io/react-native-global-exception-handler/docs/getting-started) - Installation and setup
+- [Usage Guide](https://darshan09200.github.io/react-native-global-exception-handler/docs/usage/usage) - JS exception handling
+- [Native Crash Handling](https://darshan09200.github.io/react-native-global-exception-handler/docs/usage/native-crash-handling) - Platform-specific native handlers
+- [API Reference](https://darshan09200.github.io/react-native-global-exception-handler/docs/api) - Complete API documentation
+- [Testing & Simulation](https://darshan09200.github.io/react-native-global-exception-handler/docs/advanced/testing) - simulateNativeCrash and testing
+- [Analytics Integration](https://darshan09200.github.io/react-native-global-exception-handler/docs/examples/analytics-integration) - Sentry, Crashlytics, custom services
+- [Customization](https://darshan09200.github.io/react-native-global-exception-handler/docs/advanced/customization) - Custom error screens
+- [Troubleshooting](https://darshan09200.github.io/react-native-global-exception-handler/docs/troubleshooting) - Common issues and solutions
+- [Migration Guide](https://darshan09200.github.io/react-native-global-exception-handler/docs/migration/migration) - From react-native-exception-handler
 
 ## Contributing
 
