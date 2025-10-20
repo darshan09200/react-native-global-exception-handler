@@ -57,7 +57,7 @@ Works with both:
 - **Legacy Architecture** (Old Architecture)
 - **New Architecture** (TurboModules + Fabric)
 
-No additional configuration needed the correct bindings are auto-selected at build time.
+No additional configuration needed; the correct bindings are auto-selected at build time.
 
 ## Quick Start
 
