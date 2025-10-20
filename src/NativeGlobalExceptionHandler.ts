@@ -13,6 +13,7 @@ export type ExceptionHandlerOptions = {
   /**
    * If true, the app will be forced to quit after the custom handler is called.
    *
+   * @default true
    * @platform Android
    */
   forceAppToQuit?: boolean;

@@ -1,0 +1,279 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  /* Brand */
+  --brand-blue: #2563eb; /* shield fill */
+  --brand-blue-600: #2563eb;
+  --brand-blue-500: #3b82f6; /* hover/active */
+  --brand-navy: #0a1f44; /* outline/deep accents */
+  --brand-cyan: #61dafb; /* react cyan */
+
+  /* Docusaurus / Infima primaries (buttons, active states) */
+  --ifm-color-primary: var(--brand-blue-600);
+  --ifm-color-primary-dark: #1e4fd6;
+  --ifm-color-primary-darker: #1a44bf;
+  --ifm-color-primary-light: #4f86ff;
+  --ifm-color-primary-lighter: #6fa0ff;
+
+  /* Status */
+  --ifm-color-success: #22c55e;
+  --ifm-color-info: #06b6d4;
+  --ifm-color-warning: #f59e0b;
+  --ifm-color-danger: #ef4444;
+
+  /* Text + surfaces */
+  --ifm-font-color-base: #0f172a; /* slate-900 */
+  --ifm-background-color: #ffffff;
+  /* navbar background: keep light/transparent in light mode, dark in dark mode */
+  --ifm-navbar-background-color: transparent; /* header stays visually light on white */
+  --ifm-navbar-link-hover-color: var(--brand-blue-500);
+  --ifm-link-color: var(--brand-blue-600);
+
+  /* Buttons */
+  --ifm-button-background-color: var(--brand-blue-600);
+  --ifm-button-border-color: var(--brand-blue-600);
+  --ifm-button-color: #fff;
+
+  /* Code blocks */
+  --docusaurus-highlighted-code-line-bg: rgba(37, 99, 235, 0.08);
+
+  --ifm-code-font-size: 95%;
+  /* Code shell backgrounds (used by component styles) */
+  /* Code shell backgrounds (light-mode friendly) */
+  --ifm-code-shell-bg: rgba(
+    15,
+    23,
+    42,
+    0.04
+  ); /* subtle light tint for code panels on white */
+  --ifm-code-shell-bg-dark: rgba(12, 20, 18, 0.55);
+  --ifm-code-shell-border-dark: rgba(255, 255, 255, 0.12);
+
+  --ifm-code-background: rgb(240, 240, 240);
+}
+
+/* For readability concerns, choose a brighter primary in dark mode */
+[data-theme='dark'] {
+  --ifm-background-color: #0b1020; /* near-black, not flat black */
+  --ifm-font-color-base: #e5e7eb; /* light slate */
+  --ifm-navbar-background-color: #0b1020;
+
+  --ifm-color-primary: #3b82f6; /* brighten in dark for contrast */
+  --ifm-color-primary-dark: #2f68d5;
+  --ifm-color-primary-darker: #2959ba;
+  --ifm-color-primary-light: #5b97ff;
+  --ifm-color-primary-lighter: #7babff;
+
+  --ifm-link-color: #60a5fa; /* readable blue on dark */
+  --ifm-navbar-link-hover-color: #93c5fd;
+
+  /* Code */
+  --docusaurus-highlighted-code-line-bg: rgba(96, 165, 250, 0.15);
+
+  --ifm-code-background: rgb(255, 255, 255, 0.1);
+}
+
+/* Hero gradient that matches the logo */
+.hero--primary {
+  background: linear-gradient(135deg, #22c1c3 0%, #2563eb 60%, #0a1f44 100%);
+  color: #fff;
+}
+[data-theme='dark'] .hero--primary {
+  background: linear-gradient(135deg, #0a1f44 0%, #2563eb 55%, #0b1020 100%);
+}
+
+/* Cards and callouts */
+.card {
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(2, 8, 23, 0.08);
+}
+
+/* Tweak cards used by generated-index and other lists to be theme-aware,
+   reduce excessive spacing and improve visual contrast in dark mode. */
+:root {
+  --site-card-bg: #ffffff;
+  --site-card-border: rgba(2, 8, 23, 0.06);
+  --site-card-padding: 1.5rem;
+}
+
+[data-theme='dark'] {
+  --site-card-bg: #111217; /* slightly lighter than page bg */
+  --site-card-border: rgba(255, 255, 255, 0.03);
+  --site-card-padding: 1.25rem;
+}
+
+.card {
+  background: var(--site-card-bg) !important;
+  border: 1px solid var(--site-card-border);
+  padding: var(--site-card-padding);
+  color: var(--ifm-font-color-base);
+  box-shadow: 0 8px 30px rgba(2, 8, 23, 0.06);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(2, 8, 23, 0.12);
+}
+
+.col--lg,
+.col--md,
+.col {
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+/* Titles inside generated-index cards: slightly larger, use brand color */
+.card .card__header h3 {
+  color: var(--ifm-color-primary) !important;
+  margin-bottom: 0.5rem;
+}
+
+/* Body text muted and well spaced */
+.card .card__content p,
+.card .card__content a {
+  color: var(--ifm-font-color-base);
+  opacity: 0.9;
+  margin: 0.25rem 0;
+}
+
+/* Ensure links inside cards use the defined link color and are readable in dark */
+.card a {
+  color: var(--ifm-link-color) !important;
+}
+
+.markdown a {
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+/* Optional: outline buttons that echo the shield */
+.button.button--primary {
+  background: linear-gradient(
+    135deg,
+    var(--ifm-color-primary-light) 0%,
+    var(--ifm-color-primary) 60%,
+    var(--ifm-color-primary-dark) 100%
+  );
+  border: none;
+  color: var(--ifm-button-color);
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.24);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+.button.button--primary:hover,
+.button.button--primary:focus-visible {
+  filter: brightness(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.3);
+}
+[data-theme='dark'] .button.button--primary {
+  box-shadow: 0 10px 24px rgba(6, 11, 30, 0.32);
+}
+
+.button.button--secondary {
+  color: var(--brand-blue-600);
+  border: 2px solid var(--brand-blue-600);
+  background: transparent;
+}
+[data-theme='dark'] .button.button--secondary {
+  color: #93c5fd;
+  border-color: #93c5fd;
+}
+
+.navbar {
+  background: linear-gradient(
+    110deg,
+    rgba(97, 218, 251, 0.15) 0%,
+    rgba(59, 130, 246, 0.12) 50%,
+    rgba(37, 99, 235, 0.18) 100%
+  );
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+}
+
+[data-theme='dark'] .navbar {
+  background: linear-gradient(
+    110deg,
+    rgba(10, 31, 68, 0.85) 0%,
+    rgba(37, 99, 235, 0.25) 50%,
+    rgba(11, 16, 32, 0.9) 100%
+  );
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(97, 218, 251, 0.12);
+}
+
+/* Section backgrounds for visual separation */
+main > section:nth-child(odd) {
+  background: #f8fafc; /* light gray for alternating sections */
+}
+
+[data-theme='dark'] main > section:nth-child(odd) {
+  background: #0d1117; /* slightly lighter than main background */
+}
+
+main > section:nth-child(even) {
+  background: var(--ifm-background-color);
+}
+
+/* Theme-aware footer styles -------------------------------------------------*/
+:root {
+  /* sensible defaults for footer in light mode */
+  --site-footer-bg: #f8fafc; /* light gray */
+  --site-footer-text: #0f172a; /* slate-900 */
+  --site-footer-border: rgba(15, 23, 42, 0.06);
+  --site-footer-muted: rgba(15, 23, 42, 0.6);
+}
+
+[data-theme='dark'] {
+  --site-footer-bg: #0d1117; /* dark background matching page */
+  --site-footer-text: #e5e7eb; /* light text */
+  --site-footer-border: rgba(255, 255, 255, 0.04);
+  --site-footer-muted: rgba(229, 231, 235, 0.65);
+}
+
+/* Docusaurus footer wrapper */
+.footer {
+  background: var(--site-footer-bg) !important;
+  color: var(--site-footer-text) !important;
+  border-top: 1px solid var(--site-footer-border);
+}
+
+.footer a {
+  color: var(
+    --ifm-link-color
+  ) !important; /* use existing link color variable */
+}
+
+.footer .footer__title {
+  color: var(--site-footer-text) !important;
+}
+
+.footer .footer__item {
+  color: var(--site-footer-muted);
+}
+
+/* Center the logo HTML block we added in the footer and constrain size */
+.footer [role='presentation'] img,
+.footer img {
+  max-width: 360px;
+  height: auto;
+  display: block;
+  margin: 0.5rem auto 1.25rem auto;
+}
+
+/* Reduce visual weight of copyright text */
+.footer .footer__bottom {
+  /* Docusaurus v2 uses footer__bottom */
+  color: var(--site-footer-muted);
+}
