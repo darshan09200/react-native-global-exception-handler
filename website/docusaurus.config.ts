@@ -94,11 +94,11 @@ const config: Config = {
           items: [
             {
               label: 'Getting started',
-              to: '/docs/intro',
+              to: '/docs/overview/getting-started',
             },
             {
               label: 'Installation',
-              to: '/docs/installation',
+              to: '/docs/overview/installation',
             },
             {
               label: 'API reference',
