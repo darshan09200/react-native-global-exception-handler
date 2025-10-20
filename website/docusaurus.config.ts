@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'react-native-global-exception-handler',
   tagline: 'Catch and report fatal/native errors in React Native',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon/favicon.ico',
 
   staticDirectories: ['static'],
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -96,8 +96,44 @@ const config: Config = {
     },
     metadata: [
       { name: 'algolia-site-verification', content: 'E6AE78369C7E69D4' },
+      { name: 'apple-mobile-web-app-capable', content: 'yes' },
     ],
   } satisfies Preset.ThemeConfig,
+
+  headTags: [
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'icon',
+        type: 'image/png',
+        href: 'img/favicon/icon-96x96.webp',
+        sizes: '96x96',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'icon',
+        type: 'image/svg+xml',
+        href: 'img/favicon/favicon.svg',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: 'img/favicon/apple-touch-icon.png',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'manifest',
+        href: 'img/favicon/site.webmanifest',
+      },
+    },
+  ],
 };
 
 export default config;
