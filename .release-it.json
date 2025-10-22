@@ -1,0 +1,66 @@
+{
+	"$schema": "https://unpkg.com/release-it@19/schema/release-it.json",
+	"github": {
+		"release": true,
+		"releaseName": "v${version}",
+		"draft": true
+	},
+	"git": {
+		"requireCleanWorkingDir": false,
+		"commit": true,
+		"commitMessage": "chore: release ${version}",
+		"push": false,
+		"tag": true,
+		"tagName": "v${version}",
+		"requireCommits": true,
+		"requireUpstream": false
+	},
+	"npm": {
+		"publish": true,
+		"skipChecks": true,
+		"publishArgs": [
+			"--access public",
+			"--provenance"
+		]
+	},
+	"plugins": {
+		"@release-it/conventional-changelog": {
+			"infile": "CHANGELOG.md",
+			"preset": {
+				"header": "# Changelog",
+				"name": "conventionalcommits",
+				"types": [
+					{
+						"type": "feat",
+						"section": "✨ Features"
+					},
+					{
+						"type": "fix",
+						"section": "🐛 Bug Fixes"
+					},
+					{
+						"type": "chore",
+						"section": "🧹 Chores"
+					},
+					{
+						"type": "docs",
+						"section": "📚 Documentation"
+					},
+					{
+						"type": "test",
+						"section": "🧪 Tests"
+					}
+				]
+			}
+		}
+	},
+	"hooks": {
+		"after:bump": [
+			"git checkout -b \"automation/CICD/release-v${version}\""
+		],
+		"after:release": [
+			"git push -u origin HEAD",
+			"gh pr create --base main --title \"CICD - Release v${version}\" --body \"${changelog}\""
+		]
+	}
+}

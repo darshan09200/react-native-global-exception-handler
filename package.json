@@ -43,7 +43,7 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli android/build android/app/build ios/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
-    "release": "release-it --only-version --git.requireCleanWorkingDir=false",
+    "release": "release-it",
     "prerelease": "yarn release --increment prerelease --preReleaseId=alpha",
     "codegen:generate:ios": "npx @react-native-community/cli codegen --platform ios --outputPath ios/ --source library",
     "codegen:generate:android": "npx @react-native-community/cli codegen --platform android --source library",
@@ -126,49 +126,6 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "release-it": {
-    "git": {
-      "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}"
-    },
-    "npm": {
-      "publish": true
-    },
-    "github": {
-      "release": true
-    },
-    "plugins": {
-      "@release-it/conventional-changelog": {
-        "infile": "CHANGELOG.md",
-        "preset": {
-          "header": "# Changelog",
-          "name": "conventionalcommits",
-          "types": [
-            {
-              "type": "feat",
-              "section": "✨ Features"
-            },
-            {
-              "type": "fix",
-              "section": "🐛 Bug Fixes"
-            },
-            {
-              "type": "chore",
-              "section": "🧹 Chores"
-            },
-            {
-              "type": "docs",
-              "section": "📚 Documentation"
-            },
-            {
-              "type": "test",
-              "section": "🧪 Tests"
-            }
-          ]
-        }
-      }
-    }
   },
   "prettier": {
     "quoteProps": "consistent",
