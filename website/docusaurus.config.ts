@@ -175,6 +175,18 @@ const config: Config = {
       { name: 'algolia-site-verification', content: 'E6AE78369C7E69D4' },
       { name: 'apple-mobile-web-app-capable', content: 'yes' },
     ],
+    algolia: {
+      // The application ID provided by Algolia
+      appId: '1ACEGH0KJV',
+
+      // Public API key: it is safe to commit it
+      apiKey: 'f859c121c39831937c2708e081e70e98',
+
+      indexName: 'rngeh-React Native Global Exception Handler Docs',
+
+      // Optional: see doc section below
+      contextualSearch: true,
+    },
   } satisfies Preset.ThemeConfig,
 
   headTags: [
