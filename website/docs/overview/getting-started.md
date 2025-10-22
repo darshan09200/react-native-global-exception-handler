@@ -30,12 +30,10 @@ This library solves this by:
 
 ## Installation
 
-```bash
-yarn add react-native-global-exception-handler
+```bash npm2yarn
+npm install react-native-global-exception-handler
 cd ios && pod install
 ```
-
-For other package managers (npm, pnpm) or detailed setup instructions, see the [Installation](./installation.md) page.
 
 ## Quick Setup
 

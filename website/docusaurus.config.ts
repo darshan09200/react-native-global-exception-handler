@@ -46,6 +46,9 @@ const config: Config = {
           editUrl:
             'https://github.com/darshan09200/react-native-global-exception-handler/tree/main/website/',
           routeBasePath: 'docs',
+          remarkPlugins: [
+            [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
+          ],
         },
         blog: false,
         theme: {
@@ -158,6 +161,15 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+      additionalLanguages: [
+        'bash',
+        'typescript',
+        'gradle',
+        'ruby',
+        'objectivec',
+        'xml-doc',
+        'kotlin',
+      ],
     },
     metadata: [
       { name: 'algolia-site-verification', content: 'E6AE78369C7E69D4' },

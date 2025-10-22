@@ -69,7 +69,7 @@ To test native exception handling:
 
 1. **Build a production/release bundle**:
 
-   ```bash
+   ```bash npm2yarn
    # iOS
    npx react-native run-ios --configuration Release
    

@@ -21,22 +21,8 @@ No additional steps are required to enable support; the correct native bindings 
 
 ## Install Package
 
-### Using npm
-
-```bash
+```bash npm2yarn
 npm install react-native-global-exception-handler
-```
-
-### Using yarn
-
-```bash
-yarn add react-native-global-exception-handler
-```
-
-### Using pnpm
-
-```bash
-pnpm add react-native-global-exception-handler
 ```
 
 ## iOS Setup

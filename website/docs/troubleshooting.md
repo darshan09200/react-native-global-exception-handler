@@ -78,13 +78,13 @@ TurboModuleRegistry.getEnforcing called for module 'GlobalExceptionHandler' but 
 1. Ensure you're using React Native 0.68 or higher
 2. Clear metro cache:
 
-   ```bash
+   ```bash npm2yarn
    npx react-native start --reset-cache
    ```
 
 3. Clean and rebuild:
 
-   ```bash
+   ```bash npm2yarn
    # iOS
    cd ios && rm -rf Pods && pod install && cd ..
    npx react-native run-ios
@@ -124,7 +124,7 @@ In debug mode, React Native's debug infrastructure may interfere with native exc
 
 Test native exception handling in release builds:
 
-```bash
+```bash npm2yarn
 npx react-native run-android --variant=release
 ```
 
@@ -363,13 +363,13 @@ This library requires React Native 0.68 or higher. If you're using an older vers
 
 1. Upgrade React Native:
 
-   ```bash
+   ```bash npm2yarn
    npx react-native upgrade
    ```
 
 2. Or use the original library for older versions:
 
-   ```bash
+   ```bash npm2yarn
    npm install react-native-exception-handler
    ```
 
