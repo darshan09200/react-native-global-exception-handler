@@ -202,6 +202,15 @@
   border-bottom: 1px solid rgba(37, 99, 235, 0.1);
 }
 
+.navbar-sidebar--show {
+  /* https://github.com/facebook/docusaurus/issues/6996#issuecomment-1312615163 */
+  backdrop-filter: none !important;
+}
+
+.navbar-sidebar {
+  background: var(--ifm-background-surface-color);
+}
+
 [data-theme='dark'] .navbar {
   background: linear-gradient(
     110deg,
