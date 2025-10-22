@@ -1,11 +1,14 @@
 import type { ReactNode } from 'react';
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
+import Carousel from '../Carousel';
+import type { Slide } from '../Carousel/types';
 
 type RawFeature = {
   title: string;
+  id: string;
   Svg: React.ComponentType<React.ComponentProps<'svg'>>;
   description: ReactNode;
 };
@@ -13,6 +16,7 @@ type RawFeature = {
 const rawFeatures: RawFeature[] = [
   {
     title: 'Modern Architecture',
+    id: 'modern-architecture',
     Svg: require('@site/static/img/undraw_react.svg').default,
     description: (
       <>
@@ -28,6 +32,7 @@ const rawFeatures: RawFeature[] = [
   },
   {
     title: 'Dual Exception Handling',
+    id: 'dual-exception-handling',
     Svg: require('@site/static/img/undraw_code-inspection.svg').default,
     description: (
       <>
@@ -43,6 +48,7 @@ const rawFeatures: RawFeature[] = [
   },
   {
     title: 'Highly Customizable',
+    id: 'highly-customizable',
     Svg: require('@site/static/img/undraw_switches.svg').default,
     description: (
       <>
@@ -58,6 +64,7 @@ const rawFeatures: RawFeature[] = [
   },
   {
     title: 'Testing & Development',
+    id: 'testing-development',
     Svg: require('@site/static/img/undraw_mobile-testing.svg').default,
     description: (
       <>
@@ -73,6 +80,7 @@ const rawFeatures: RawFeature[] = [
   },
   {
     title: 'Production Ready',
+    id: 'production-ready',
     Svg: require('@site/static/img/undraw_mobile-analytics.svg').default,
     description: (
       <>
@@ -88,6 +96,7 @@ const rawFeatures: RawFeature[] = [
   },
   {
     title: 'TypeScript Support',
+    id: 'typescript-support',
     Svg: require('@site/static/img/undraw_code-review.svg').default,
     description: (
       <>
@@ -103,179 +112,66 @@ const rawFeatures: RawFeature[] = [
   },
 ];
 
-export default function Features(): ReactNode {
-  const slides = rawFeatures.map((f, i) => ({
-    label: f.title,
-    id: `feat-${i}`,
+const slides: Slide[] = rawFeatures.map(
+  ({ id, title, Svg, description }, index) => ({
+    id,
+    title,
+    tab: (onClick, selected) => (
+      <button
+        key={id}
+        role="tab"
+        id={id}
+        aria-selected={selected}
+        aria-controls={`${id}-panel`}
+        tabIndex={selected ? 0 : -1}
+        className={clsx(styles.vertTab, selected && styles.vertTabActive)}
+        onClick={onClick}
+        type="button"
+      >
+        <span className={styles.vertTabLabel}>{title}</span>
+      </button>
+    ),
     content: (
-      <div className={styles.slideBody}>
-        <div className={styles.slideIconWrap}>
-          <f.Svg className={styles.slideSvg} role="img" />
-        </div>
-        <div className={styles.slideText}>
-          <Heading as="h3" className={styles.slideTitle}>
-            {f.title}
-          </Heading>
-          <p className={styles.slideDescription}>{f.description}</p>
+      <div
+        key={`feat-panel-${index}`}
+        role="tabpanel"
+        id={`feat-${index}-panel`}
+        aria-labelledby={`feat-${index}`}
+        className={clsx(styles.contentSlide)}
+      >
+        <div className={styles.contentInner}>
+          <div className={styles.slideBodyRight}>
+            <div className={styles.slideText}>
+              <Heading as="h3" className={styles.slideTitle}>
+                {title}
+              </Heading>
+              <p className={styles.slideDescription}>{description}</p>
+            </div>
+            <div className={clsx(styles.slideIconWrap)}>
+              <Svg className={styles.slideSvg} role="img" />
+            </div>
+          </div>
         </div>
       </div>
     ),
-  }));
+  })
+);
 
-  const [active, setActive] = useState(0);
-  const [prev, setPrev] = useState(0);
-  const tablistRef = useRef<HTMLDivElement | null>(null);
-
-  const onSelect = useCallback(
-    (idx: number) => {
-      setPrev(active);
-      setActive(idx);
-    },
-    [active]
-  );
-
-  const onKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      const count = slides.length;
-      let next = active;
-      switch (e.key) {
-        case 'ArrowRight':
-          next = (active + 1) % count;
-          break;
-        case 'ArrowLeft':
-          next = (active - 1 + count) % count;
-          break;
-        case 'Home':
-          next = 0;
-          break;
-        case 'End':
-          next = count - 1;
-          break;
-        default:
-          return;
-      }
-      e.preventDefault();
-      setActive(next);
-      const buttons =
-        tablistRef.current?.querySelectorAll('button[role="tab"]');
-      if (buttons && buttons[next]) {
-        (buttons[next] as HTMLButtonElement).focus();
-      }
-    },
-    [active, slides.length]
-  );
-
-  // Ensure focus style only visible when keyboard navigation occurs
-  useEffect(() => {
-    const handler = () => {
-      document.documentElement.classList.remove('using-keyboard');
-    };
-    const keyHandler = (e: KeyboardEvent) => {
-      if (e.key === 'Tab') {
-        document.documentElement.classList.add('using-keyboard');
-      }
-    };
-    window.addEventListener('mousedown', handler);
-    window.addEventListener('keydown', keyHandler);
-    return () => {
-      window.removeEventListener('mousedown', handler);
-      window.removeEventListener('keydown', keyHandler);
-    };
-  }, []);
-
+export default function Features(): ReactNode {
   return (
     <section className={styles.features}>
-      <div className="container">
-        <div className={styles.featuresInner}>
-          <div className={styles.featuresHeader}>
-            <Heading as="h2" className={styles.featuresTitle}>
-              Why Global Exception Handler?
-            </Heading>
-            <p className={styles.featuresIntro}>
-              Catch crashes across JavaScript and native layers, customize
-              recovery UI, and ship more resilient apps. Explore the core
-              advantages below.
-            </p>
-          </div>
-          <div className={styles.splitLayout}>
-            <div
-              className={styles.verticalTabs}
-              role="tablist"
-              aria-label="Feature highlights"
-              aria-orientation="vertical"
-              ref={tablistRef}
-              onKeyDown={onKeyDown}
-            >
-              {slides.map((s, idx) => (
-                <button
-                  key={s.id}
-                  role="tab"
-                  id={s.id}
-                  aria-selected={active === idx}
-                  aria-controls={`${s.id}-panel`}
-                  tabIndex={active === idx ? 0 : -1}
-                  className={clsx(
-                    styles.vertTab,
-                    active === idx && styles.vertTabActive
-                  )}
-                  onClick={() => onSelect(idx)}
-                  type="button"
-                >
-                  <span className={styles.vertTabLabel}>{s.label}</span>
-                </button>
-              ))}
-            </div>
-            <div className={styles.contentPane} aria-live="polite">
-              {rawFeatures.map((f, idx) => {
-                const direction =
-                  active > prev
-                    ? 'forward'
-                    : active < prev
-                      ? 'backward'
-                      : 'static';
-                const SvgComp = f.Svg;
-                const isActive = active === idx;
-                return (
-                  <div
-                    key={`feat-panel-${idx}`}
-                    role="tabpanel"
-                    id={`feat-${idx}-panel`}
-                    aria-labelledby={`feat-${idx}`}
-                    className={clsx(
-                      styles.contentSlide,
-                      isActive && styles.contentSlideActive,
-                      direction === 'forward' && styles.slideForward,
-                      direction === 'backward' && styles.slideBackward
-                    )}
-                    hidden={!isActive}
-                    data-direction={direction}
-                  >
-                    <div className={styles.contentInner}>
-                      <div className={styles.slideBodyRight}>
-                        <div className={styles.slideText}>
-                          <Heading as="h3" className={styles.slideTitle}>
-                            {f.title}
-                          </Heading>
-                          <p className={styles.slideDescription}>
-                            {f.description}
-                          </p>
-                        </div>
-                        <div
-                          className={clsx(
-                            styles.slideIconWrap,
-                            isActive && styles.slideIconActive
-                          )}
-                        >
-                          <SvgComp className={styles.slideSvg} role="img" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+      <div className={styles.featuresInner}>
+        <div className={styles.featuresHeader}>
+          <Heading as="h2" className={styles.featuresTitle}>
+            Why Global Exception Handler?
+          </Heading>
+          <p className={styles.featuresIntro}>
+            Catch crashes across JavaScript and native layers, customize
+            recovery UI, and ship more resilient apps. Explore the core
+            advantages below.
+          </p>
         </div>
+        <Carousel slides={slides} />
       </div>
     </section>
   );

@@ -1,5 +1,6 @@
 .features {
   padding: 2rem;
+  overflow: hidden;
 }
 .featuresInner {
   max-width: 1050px;
@@ -138,24 +139,6 @@
   position: relative;
   z-index: 1;
 }
-.vertTabActive::before {
-  content: '';
-  position: absolute;
-  left: -10px;
-  top: 0;
-  bottom: 0;
-  width: 6px;
-  border-radius: 4px;
-  background: linear-gradient(
-    180deg,
-    var(--ifm-color-primary) 0%,
-    var(--ifm-color-primary-light) 100%
-  );
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
-}
-:root[data-theme='dark'] .vertTabActive::before {
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
-}
 
 :root[data-theme='dark'] .vertTab {
   background: var(--ifm-navbar-background-color);
@@ -188,11 +171,6 @@
   min-width: 0;
 }
 .contentSlide {
-  opacity: 0;
-  transform: translateX(20px);
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
   padding: 1.85rem 2.1rem;
   background: linear-gradient(
     155deg,
@@ -201,18 +179,8 @@
   );
   border-radius: 1.1rem;
   border: 1px solid rgba(0, 0, 0, 0.04);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
-  transition:
-    opacity 0.4s ease,
-    transform 0.4s ease;
   display: flex;
   align-items: flex-start;
-}
-.contentSlideActive {
-  opacity: 1;
-  transform: translateX(0);
-  pointer-events: auto;
-  position: relative;
 }
 .contentInner {
   flex-grow: 1;
@@ -239,7 +207,7 @@
 .slideBodyRight {
   display: flex;
   gap: 3rem;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 }
 .slideIconWrap {
@@ -311,7 +279,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 600px) {
   .slideBodyRight {
     flex-direction: column-reverse;
     gap: 1.75rem;
