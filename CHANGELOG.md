@@ -1,5 +1,35 @@
 # Changelog
 
+## [1.0.0-alpha.5](https://github.com/darshan09200/react-native-global-exception-handler/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2025-10-22)
+
+### 🧹 Chores
+
+* add GitHub Actions workflow for deploying to GitHub Pages ([a36e3a8](https://github.com/darshan09200/react-native-global-exception-handler/commit/a36e3a8b080e0c2be1f24defc758038215ac49fe))
+* add prerelease script ([f7a82c1](https://github.com/darshan09200/react-native-global-exception-handler/commit/f7a82c1dc5db6f956e4779061c6ffe238b6c19ea))
+* update deployment trigger paths for GitHub Pages ([de7881c](https://github.com/darshan09200/react-native-global-exception-handler/commit/de7881ca66244a1ecfd02efd208b7cd784b2effb))
+* update social card image reference ([215a4e5](https://github.com/darshan09200/react-native-global-exception-handler/commit/215a4e5432b79348462dbf7d893545570b27e7a6))
+* update TypeScript configuration and component imports ([cb4964b](https://github.com/darshan09200/react-native-global-exception-handler/commit/cb4964b0fb98052bca553c7b72fbfffebb760815))
+
+### 📚 Documentation
+
+* add Algolia configuration for search functionality ([e34cfef](https://github.com/darshan09200/react-native-global-exception-handler/commit/e34cfefb72b97bbfe71234c6e2fab0777c498e49))
+* add detailed documentation website ([f4118cc](https://github.com/darshan09200/react-native-global-exception-handler/commit/f4118cceb22e6dde08a02ef328a094265fab082b))
+* add favicon images and web manifest for improved site branding ([8488794](https://github.com/darshan09200/react-native-global-exception-handler/commit/8488794b8efc779b345b132f621b0d590d3a4e83))
+* add large footer to website ([f31da2e](https://github.com/darshan09200/react-native-global-exception-handler/commit/f31da2eb383fe38995662746b9adf684547797f0))
+* correct punctuation in README.md ([50c3833](https://github.com/darshan09200/react-native-global-exception-handler/commit/50c3833fc2d0ce51acbebb50985f5718a8f876a2))
+* corrected footer links ([ad0f666](https://github.com/darshan09200/react-native-global-exception-handler/commit/ad0f66695e62fba3b627793642f5776e2487373f))
+* enhance runnable commands display ([3e23dab](https://github.com/darshan09200/react-native-global-exception-handler/commit/3e23dab8ad8f513e8543eeaac3753085993cd54a))
+* fix issue with sidebar not showing on mobile ([6cc8ace](https://github.com/darshan09200/react-native-global-exception-handler/commit/6cc8acea266bd39903aff12d663c327c35203c35))
+* fix typo in Features component title ([b2c8927](https://github.com/darshan09200/react-native-global-exception-handler/commit/b2c89270393d55677bd7b441f9b39cabb98b996a))
+* move demo section for Android and iOS to website ([28fb77d](https://github.com/darshan09200/react-native-global-exception-handler/commit/28fb77d7c46ce5a5d57d891462b63c6f278acbbd))
+* remove duplicated styles from Hero component ([d78f5fb](https://github.com/darshan09200/react-native-global-exception-handler/commit/d78f5fba30994701bae19dea4d2872fd1df512ec))
+* replace custom carousel with `embla-carousel` ([4999602](https://github.com/darshan09200/react-native-global-exception-handler/commit/499960234fcf8e937d9ecbb027c288e4587fdfcb))
+* setup initial template for website ([a98b29a](https://github.com/darshan09200/react-native-global-exception-handler/commit/a98b29a5067d0ad795c12611fd0bb0c4745a0436))
+* update documentation to be more advanced with examples ([6d9cc80](https://github.com/darshan09200/react-native-global-exception-handler/commit/6d9cc80c54b7d79bdfd78cb0be10681b6fc135a4))
+* update documentation to generate index pages ([af9186a](https://github.com/darshan09200/react-native-global-exception-handler/commit/af9186a194f793b871d5dc7dfd1dd31a6498d0bf))
+* update example code in Hero component ([d440f04](https://github.com/darshan09200/react-native-global-exception-handler/commit/d440f04d1a4e3d1d4a0ac0e457731a5e95418a5c))
+* update package.json description and keywords ([6ec8514](https://github.com/darshan09200/react-native-global-exception-handler/commit/6ec85147e1427ee85e6fd2375c38f824669e5b83))
+
 ## [1.0.0-alpha.4](https://github.com/darshan09200/react-native-global-exception-handler/compare/v1.0.0-alpha.2...v1.0.0-alpha.4) (2025-10-16)
 
 ### ✨ Features
