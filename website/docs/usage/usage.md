@@ -128,4 +128,4 @@ const currentHandler = getJSExceptionHandler();
 
 ## Migration Guide
 
-If you're upgrading from the original `react-native-exception-handler`, see the dedicated [Migration Guide](../migration/migration.md) for differences, legacy API notes, and step-by-step update instructions.
+If you're upgrading from the original `react-native-exception-handler`, see the dedicated [Migration Guide](../migration/migrating-from-react-native-exception-handler.md) for differences, legacy API notes, and step-by-step update instructions.

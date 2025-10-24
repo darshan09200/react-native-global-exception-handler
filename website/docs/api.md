@@ -68,7 +68,7 @@ setNativeExceptionHandler(
 );
 ```
 
-> Migrating from the old positional signature? See the [Migration Guide](./migration/migration.md) for step-by-step update instructions.
+> Migrating from the old positional signature? See the [Migration Guide](./migration/migrating-from-react-native-exception-handler.md) for step-by-step update instructions.
 
 ### `setHandlerForNativeException(callback, callPreviouslyDefinedHandler)` ⚠️ Deprecated
 
