@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0-alpha.12](https://github.com/darshan09200/react-native-global-exception-handler/compare/v1.0.0-alpha.5...v1.0.0-alpha.12) (2025-10-24)
+
+### 🧹 Chores
+
+* add release workflow ([9ca2729](https://github.com/darshan09200/react-native-global-exception-handler/commit/9ca2729f0840401b552c00f010b313b9db5ea800))
+* add release-it configuration ([c744d27](https://github.com/darshan09200/react-native-global-exception-handler/commit/c744d270d40982600f728ea76943413bac59eff4))
+
 ## [1.0.0-alpha.5](https://github.com/darshan09200/react-native-global-exception-handler/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2025-10-22)
 
 ### 🧹 Chores
