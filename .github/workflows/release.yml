@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: "Release type"
+        required: true
+        type: choice
+        default: "alpha-release"
+        options:
+          - alpha-release
+          - stable-release
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write # For git operations
+      id-token: write # < REQUIRED FOR OIDC
+      pull-requests: write # For creating release PRs
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref }}
+
+      - name: Setup
+        uses: ./.github/actions/setup
+
+      - name: Alpha release
+        if: ${{ inputs.release_type == 'alpha-release' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn prerelease --ci -VV
+
+      - name: Release
+        if: ${{ inputs.release_type == 'stable-release' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn release --ci -VV
