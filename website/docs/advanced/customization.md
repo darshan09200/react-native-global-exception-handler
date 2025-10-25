@@ -2,6 +2,13 @@
 id: customization
 sidebar_position: 10
 title: Customization
+description: How to customize native error screens and behavior on iOS and Android, including custom activities, handlers, and best practices.
+keywords:
+    - customization
+    - native
+    - error screen
+    - android
+    - ios
 ---
 
 Learn how to customize the native error screens and behavior on both iOS and Android platforms.

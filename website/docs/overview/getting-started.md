@@ -2,6 +2,13 @@
 id: getting-started
 sidebar_position: 1
 title: Getting Started
+description: Quickstart guide to install and set up react-native-global-exception-handler to capture JS and native crashes in your React Native app.
+keywords:
+  - getting started
+  - quick start
+  - setup
+  - react-native
+  - installation
 ---
 
 Welcome to `react-native-global-exception-handler`.

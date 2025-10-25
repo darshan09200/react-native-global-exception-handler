@@ -54,6 +54,9 @@ const config: Config = {
         theme: {
           customCss: './src/css/custom.css',
         },
+        sitemap: {
+          lastmod: 'datetime',
+        },
       } satisfies Preset.Options,
     ],
   ],
@@ -174,6 +177,10 @@ const config: Config = {
     metadata: [
       { name: 'algolia-site-verification', content: 'E6AE78369C7E69D4' },
       { name: 'apple-mobile-web-app-capable', content: 'yes' },
+      {
+        name: 'google-site-verification',
+        content: 'n8vt4Pho9XWHBst2qj5PAhwpwdLp9f6fZDEKhwJIoZ0',
+      },
     ],
     algolia: {
       // The application ID provided by Algolia

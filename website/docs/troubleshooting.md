@@ -2,6 +2,14 @@
 id: troubleshooting
 sidebar_position: 12
 title: Troubleshooting
+description: Common installation, runtime, and testing issues with solutions and commands for iOS and Android when using react-native-global-exception-handler.
+keywords:
+  - troubleshooting
+  - errors
+  - debugging
+  - installation
+  - android
+  - ios
 ---
 
 Common issues and solutions when working with `react-native-global-exception-handler`.

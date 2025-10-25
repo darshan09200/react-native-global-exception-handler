@@ -2,6 +2,13 @@
 id: analytics-integration
 sidebar_position: 3
 title: Analytics Integration 
+description: Examples for integrating react-native-global-exception-handler with Sentry, Crashlytics, and custom analytics for reporting JS and native crashes.
+keywords:
+  - analytics
+  - sentry
+  - crashlytics
+  - monitoring
+  - integration
 ---
 
 Quick reference snippets for wiring `react-native-global-exception-handler` into popular monitoring services. (Assumes the service SDKs are already installed & initialized.)

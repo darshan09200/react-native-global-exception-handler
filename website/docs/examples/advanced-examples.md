@@ -2,6 +2,14 @@
 id: advanced-examples
 sidebar_position: 2
 title: Advanced Examples
+description: Advanced usage patterns - app restart after crash, chaining existing handlers, recovery strategies, and native customization tips.
+keywords:
+  - advanced
+  - examples
+  - restart
+  - chaining
+  - recovery
+  - customization
 ---
 
 ## Restarting the App After an Error

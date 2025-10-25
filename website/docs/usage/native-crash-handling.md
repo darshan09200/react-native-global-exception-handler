@@ -2,6 +2,13 @@
 id: native-crash-handling
 sidebar_position: 4
 title: Native Crash Handling
+description: Platform-specific guide to native crash handling on iOS and Android, including options, limitations, and examples.
+keywords:
+  - native
+  - crash
+  - handling
+  - ios
+  - android
 ---
 
 The library provides native exception handling for iOS and Android to catch crashes that occur in native code.

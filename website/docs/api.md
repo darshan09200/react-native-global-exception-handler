@@ -2,6 +2,14 @@
 id: api
 sidebar_position: 5
 title: API Reference
+description: Full API reference for react-native-global-exception-handler, including JavaScript and native handler functions, types, and examples.
+keywords:
+  - api
+  - reference
+  - javascript
+  - native
+  - exception
+  - handlers
 ---
 
 ## JavaScript Exception Handlers

@@ -2,6 +2,14 @@
 id: basic-examples
 title: Basic examples
 sidebar_position: 1
+description: Basic code examples showing how to set up JavaScript and native exception handlers, simulate crashes, and display error dialogs.
+keywords:
+  - examples
+  - basic
+  - usage
+  - crash
+  - simulate
+  - js
 ---
 
 

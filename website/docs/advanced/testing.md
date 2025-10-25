@@ -2,6 +2,13 @@
 id: testing
 sidebar_position: 13
 title: Testing
+description: Testing guide for safely simulating JavaScript and native crashes, best practices, and verifying analytics integrations in QA/dev.
+keywords:
+  - testing
+  - simulate
+  - crash
+  - qa
+  - dev
 ---
 
 Learn how to safely test your error handling setup and simulate crashes in development.

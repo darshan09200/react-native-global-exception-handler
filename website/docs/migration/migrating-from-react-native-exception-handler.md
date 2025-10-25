@@ -1,6 +1,12 @@
 ---
 id: migration
 title: Migrating from react-native-exception-handler
+description: Guide to migrate from the original react-native-exception-handler to react-native-global-exception-handler, covering API changes and migration steps.
+keywords:
+  - migration
+  - upgrade
+  - react-native-exception-handler
+  - breaking changes
 ---
 
 This guide helps you migrate from the original `react-native-exception-handler` package to `react-native-global-exception-handler`.

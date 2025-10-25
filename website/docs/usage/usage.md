@@ -3,6 +3,13 @@ id: usage
 sidebar_position: 3
 title: Usage
 slug: /usage/usage
+description: Detailed usage guide explaining JavaScript vs native exceptions and how to configure handlers and options for both platforms.
+keywords:
+  - usage
+  - javascript
+  - native
+  - exception
+  - handling
 ---
 
 ## Understanding Error Types

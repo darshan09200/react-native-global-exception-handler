@@ -2,6 +2,14 @@
 id: installation
 sidebar_position: 2
 title: Installation
+description: Installation and platform-specific setup instructions for react-native-global-exception-handler (iOS, Android, and TypeScript guidance).
+keywords:
+  - installation
+  - setup
+  - ios
+  - android
+  - pods
+  - gradle
 ---
 
 ## Peer Dependencies
