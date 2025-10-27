@@ -229,6 +229,15 @@ const config: Config = {
         href: 'img/favicon/site.webmanifest',
       },
     },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'sitemap',
+        type: 'application/xml',
+        title: 'Sitemap',
+        href: '/sitemap.xml',
+      },
+    },
   ],
 };
 
