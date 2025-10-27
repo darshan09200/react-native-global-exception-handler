@@ -23,7 +23,7 @@ export const Thumb: React.FC<PropType> = (props) => {
       <button
         onClick={onClick}
         type="button"
-        className={styles['embla__thumbs__slide__number']}
+        className={styles.embla__thumbs__slide__number}
       >
         {index + 1}
       </button>
