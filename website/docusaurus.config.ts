@@ -15,11 +15,11 @@ const config: Config = {
     v4: true, // Improve compatibility with the upcoming Docusaurus v4
   },
 
-  // Production URL of your site (GitHub Pages)
-  url: 'https://darshan09200.github.io',
+  // Production URL of your site
+  url: 'https://geh.darshan09200.dev',
   // For GitHub pages deployment, you often set the baseUrl to your project name.
   // If you serve from a custom domain, keep it as '/'
-  baseUrl: '/react-native-global-exception-handler/',
+  baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.

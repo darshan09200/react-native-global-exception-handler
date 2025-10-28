@@ -4,11 +4,11 @@
 [![npm downloads](https://img.shields.io/npm/dm/react-native-global-exception-handler.svg?style=flat)](https://www.npmjs.com/package/react-native-global-exception-handler)
 [![License: MIT](https://img.shields.io/github/license/darshan09200/react-native-global-exception-handler?color=green&style=flat)](./LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/darshan09200/react-native-global-exception-handler/pulls)
-[![Documentation](https://img.shields.io/badge/docs-online-blue.svg?style=flat)](https://darshan09200.github.io/react-native-global-exception-handler/)
+[![Documentation](https://img.shields.io/badge/docs-online-blue.svg?style=flat)](https://geh.darshan09200.dev/)
 
 A modern React Native library for global error handling (JavaScript + native) with TurboModules support and cross-platform compatibility.
 
-> 🎬 **[See live demos](https://darshan09200.github.io/react-native-global-exception-handler/#demo)** of iOS and Android crash handling in action!
+> 🎬 **[See live demos](https://geh.darshan09200.dev/#demo)** of iOS and Android crash handling in action!
 
 ## Key Features
 
@@ -42,19 +42,19 @@ This library solves this by:
 
 ## Documentation
 
-[**📚 View Full Documentation**](https://darshan09200.github.io/react-native-global-exception-handler/)
+[**📚 View Full Documentation**](https://geh.darshan09200.dev/)
 
 ### Quick Links
 
-- [Getting Started](https://darshan09200.github.io/react-native-global-exception-handler/docs/getting-started) - Installation and setup
-- [Usage Guide](https://darshan09200.github.io/react-native-global-exception-handler/docs/usage/usage) - JS exception handling
-- [Native Crash Handling](https://darshan09200.github.io/react-native-global-exception-handler/docs/usage/native-crash-handling) - Platform-specific native handlers
-- [API Reference](https://darshan09200.github.io/react-native-global-exception-handler/docs/api) - Complete API documentation
-- [Testing & Simulation](https://darshan09200.github.io/react-native-global-exception-handler/docs/advanced/testing) - simulateNativeCrash and testing
-- [Analytics Integration](https://darshan09200.github.io/react-native-global-exception-handler/docs/examples/analytics-integration) - Sentry, Crashlytics, custom services
-- [Customization](https://darshan09200.github.io/react-native-global-exception-handler/docs/advanced/customization) - Custom error screens
-- [Troubleshooting](https://darshan09200.github.io/react-native-global-exception-handler/docs/troubleshooting) - Common issues and solutions
-- [Migration Guide](https://darshan09200.github.io/react-native-global-exception-handler/docs/migration/migration) - From react-native-exception-handler
+- [Getting Started](https://geh.darshan09200.dev/docs/getting-started) - Installation and setup
+- [Usage Guide](https://geh.darshan09200.dev/docs/usage/usage) - JS exception handling
+- [Native Crash Handling](https://geh.darshan09200.dev/docs/usage/native-crash-handling) - Platform-specific native handlers
+- [API Reference](https://geh.darshan09200.dev/docs/api) - Complete API documentation
+- [Testing & Simulation](https://geh.darshan09200.dev/docs/advanced/testing) - simulateNativeCrash and testing
+- [Analytics Integration](https://geh.darshan09200.dev/docs/examples/analytics-integration) - Sentry, Crashlytics, custom services
+- [Customization](https://geh.darshan09200.dev/docs/advanced/customization) - Custom error screens
+- [Troubleshooting](https://geh.darshan09200.dev/docs/troubleshooting) - Common issues and solutions
+- [Migration Guide](https://geh.darshan09200.dev/docs/migration/migration) - From react-native-exception-handler
 
 ## Installation
 

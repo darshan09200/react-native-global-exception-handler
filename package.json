@@ -77,7 +77,7 @@
   "bugs": {
     "url": "https://github.com/darshan09200/react-native-global-exception-handler/issues"
   },
-  "homepage": "https://darshan09200.github.io/react-native-global-exception-handler/",
+  "homepage": "https://geh.darshan09200.dev/",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
