@@ -54,7 +54,7 @@ This library solves this by:
 - [Analytics Integration](https://geh.darshan09200.dev/docs/examples/analytics-integration) - Sentry, Crashlytics, custom services
 - [Customization](https://geh.darshan09200.dev/docs/advanced/customization) - Custom error screens
 - [Troubleshooting](https://geh.darshan09200.dev/docs/troubleshooting) - Common issues and solutions
-- [Migration Guide](https://geh.darshan09200.dev/docs/migration/migration) - From react-native-exception-handler
+- [Migration Guide](https://geh.darshan09200.dev/docs/migration/migrating-from-react-native-exception-handler) - From react-native-exception-handler
 
 ## Installation
 
