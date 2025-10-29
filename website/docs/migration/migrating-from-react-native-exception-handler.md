@@ -64,9 +64,9 @@ setNativeExceptionHandler((errorString) => {
 
 1. Update dependency:
 
-```bash
-yarn remove react-native-exception-handler
-yarn add react-native-global-exception-handler
+```bash npm2yarn
+npm uninstall react-native-exception-handler
+npm install react-native-global-exception-handler
 cd ios && pod install
 ```
 
