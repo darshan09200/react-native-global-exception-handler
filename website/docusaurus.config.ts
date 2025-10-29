@@ -181,6 +181,11 @@ const config: Config = {
         name: 'google-site-verification',
         content: 'n8vt4Pho9XWHBst2qj5PAhwpwdLp9f6fZDEKhwJIoZ0',
       },
+      // Open Graph Meta Tags
+      { property: 'og:type', content: 'website' },
+      // Twitter Meta Tags
+      { property: 'twitter:domain', content: 'geh.darshan09200.dev' },
+      { property: 'twitter:url', content: 'https://geh.darshan09200.dev/' },
     ],
     algolia: {
       // The application ID provided by Algolia
