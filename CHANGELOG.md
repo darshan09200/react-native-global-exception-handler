@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.0.2](https://github.com/darshan09200/react-native-global-exception-handler/compare/v1.0.1...v1.0.2) (2026-01-02)
+
+### 🐛 Bug Fixes
+
+* add hasConstants parameter to ReactModuleInfo for RN 0.75 ([#4](https://github.com/darshan09200/react-native-global-exception-handler/issues/4)) ([e27fa5d](https://github.com/darshan09200/react-native-global-exception-handler/commit/e27fa5dd1682996361aa16bc6ad3b82196571583))
+* allow pod install by loosening CrashType union in codegen ([af6ddb9](https://github.com/darshan09200/react-native-global-exception-handler/commit/af6ddb9697ba69c82009dfe5da19ea460f8fa67f))
+
+### 🧹 Chores
+
+* update GitHub Actions workflows to support new OIDC npm flow ([445d6c0](https://github.com/darshan09200/react-native-global-exception-handler/commit/445d6c0c7d5520b051f7a4fd41cbf55c9953202c))
+
+### 📚 Documentation
+
+* add Open Graph and Twitter meta tags for improved SEO ([e532ef4](https://github.com/darshan09200/react-native-global-exception-handler/commit/e532ef4c595c78987a380d50bc7e60ced972433e))
+* add sitemap link to configuration ([5a73c57](https://github.com/darshan09200/react-native-global-exception-handler/commit/5a73c5708744a904951076cd392504b7ecba942b))
+* update documentation links and site configuration ([5c822a2](https://github.com/darshan09200/react-native-global-exception-handler/commit/5c822a2e6f14cfb7476740dc6afbfedbbcccb08d))
+* update migration guide link ([319fe41](https://github.com/darshan09200/react-native-global-exception-handler/commit/319fe4126a769ccd73d35e0956a5eda164da9388))
+* update migration instructions for installation to be dynamic ([2b0ad5e](https://github.com/darshan09200/react-native-global-exception-handler/commit/2b0ad5ec258b941822df92dd07b3c43d729d2903))
+
 ## [1.0.1](https://github.com/darshan09200/react-native-global-exception-handler/compare/v1.0.0-alpha.12...v1.0.1) (2025-10-27)🎉
 
 ### ✨ Features
