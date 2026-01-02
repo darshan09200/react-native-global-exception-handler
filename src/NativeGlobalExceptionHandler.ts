@@ -19,25 +19,13 @@ export type ExceptionHandlerOptions = {
   forceAppToQuit?: boolean;
 };
 
-export type CrashType =
-  | 'nsexception'
-  | 'array_bounds'
-  | 'invalid_argument'
-  | 'memory_access'
-  | 'abort'
-  | 'stack_overflow'
-  | 'internal_inconsistency'
-  | 'malloc_error'
-  | 'sigill'
-  | 'sigbus';
-
 export interface Spec extends TurboModule {
   setHandlerForNativeException(
     options: ExceptionHandlerOptions,
     callback: ExceptionHandlerCallback
   ): void;
 
-  simulateNativeCrash(crashType: CrashType): void;
+  simulateNativeCrash(crashType: string): void;
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('GlobalExceptionHandler');

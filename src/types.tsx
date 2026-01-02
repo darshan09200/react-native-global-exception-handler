@@ -1,8 +1,5 @@
-import { type CrashType as NativeCrashType } from './NativeGlobalExceptionHandler';
-
 export type { ExceptionHandlerOptions } from './NativeGlobalExceptionHandler';
 
-export type CrashType = (typeof CrashType)[NativeCrashType];
 export const CrashType = {
   nsexception: 'nsexception' as const,
   array_bounds: 'array_bounds' as const,
@@ -15,6 +12,8 @@ export const CrashType = {
   sigill: 'sigill' as const,
   sigbus: 'sigbus' as const,
 };
+
+export type CrashType = keyof typeof CrashType;
 
 export interface ErrorUtilsType {
   setGlobalHandler: (handler: JSExceptionHandler) => void;
