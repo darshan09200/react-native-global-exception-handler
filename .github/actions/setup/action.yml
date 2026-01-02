@@ -11,6 +11,12 @@ runs:
         registry-url: https://registry.npmjs.org
         always-auth: true
 
+    - name: Update npm
+      # OIDC requires npm v11.5.1 or later
+      # Node.js v22 comes with v10.9, so we need to update it:
+      run: npm install -g npm@latest
+      shell: bash
+
     - name: Git user config
       run: |
         git config user.name "github-actions[bot]"

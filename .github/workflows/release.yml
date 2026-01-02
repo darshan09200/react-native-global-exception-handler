@@ -33,22 +33,16 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Setup
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         uses: ./.github/actions/setup
 
       - name: Alpha release
         if: ${{ inputs.release_type == 'alpha-release' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: yarn prerelease --ci -VV
 
       - name: Release
         if: ${{ inputs.release_type == 'stable-release' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: yarn release --ci -VV
