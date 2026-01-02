@@ -24,6 +24,7 @@ class GlobalExceptionHandlerPackage : BaseReactPackage() {
 				GlobalExceptionHandlerModule.NAME,
 				canOverrideExistingModule = false,  // canOverrideExistingModule
 				needsEagerInit = false,  // needsEagerInit
+				hasConstants = false,  // hasConstants
 				isCxxModule = false,  // isCxxModule
 				isTurboModule = isTurboModule,
 			)
