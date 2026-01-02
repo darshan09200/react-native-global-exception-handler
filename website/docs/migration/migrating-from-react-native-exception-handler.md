@@ -123,9 +123,9 @@ Rare cases (navigation libraries or experimental recovery). Default `true` is sa
 ## Cross-References
 
 - [Usage Guide](../usage/usage.md)
-- [API Reference](../api)
-- [Native Crash Handling](../usage/native-crash-handling)
-- [Troubleshooting](../troubleshooting)
+- [API Reference](../api.md)
+- [Native Crash Handling](../usage/native-crash-handling.md)
+- [Troubleshooting](../troubleshooting.md)
 
 ## Credits
 

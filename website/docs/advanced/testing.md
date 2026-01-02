@@ -30,7 +30,7 @@ throw new Error('Test JS Error');
 
 ## Simulating Native Crashes
 
-Use the built-in [`simulateNativeCrash`](../api#simulatenativecrashcrashtype) function to trigger native crashes for testing. **Warning:** This will crash your app.
+Use the built-in [`simulateNativeCrash`](../api.md#simulatenativecrashcrashtype) function to trigger native crashes for testing. **Warning:** This will crash your app.
 
 ```js
 import { simulateNativeCrash, CrashType } from 'react-native-global-exception-handler';
@@ -43,7 +43,7 @@ simulateNativeCrash(CrashType.array_bounds);
 simulateNativeCrash(CrashType.memory_access);
 ```
 
-**Available Crash Types:** See the full list in the [CrashType section of the API Reference](../api#crashtype).
+**Available Crash Types:** See the full list in the [CrashType section of the API Reference](../api.md#crashtype).
 
 ## Platform Support
 
@@ -130,4 +130,4 @@ AsyncStorage.getItem('lastNativeCrash').then(data => {
 
 ## Troubleshooting
 
-See [Troubleshooting](../troubleshooting)
+See [Troubleshooting](../troubleshooting.md)
