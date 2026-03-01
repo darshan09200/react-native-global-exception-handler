@@ -64,6 +64,18 @@ const config: Config = {
     ],
   ],
 
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          { to: '/', from: '/search/' },
+          { to: '/docs/usage/basic-usage/', from: '/docs/usage/usage/' },
+        ],
+      },
+    ],
+  ],
+
   themeConfig: {
     image: 'img/social-card.jpg',
     colorMode: {
