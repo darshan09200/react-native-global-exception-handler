@@ -31,11 +31,6 @@ export default function LayoutWrapper(props: Props): ReactNode {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     'url': siteUrl,
-    'potentialAction': {
-      '@type': 'SearchAction',
-      'target': `${siteUrl}/search?q={search_term_string}`,
-      'query-input': 'required name=search_term_string',
-    },
   };
 
   const software = {
@@ -51,7 +46,7 @@ export default function LayoutWrapper(props: Props): ReactNode {
     'operatingSystem': 'iOS, Android',
     'applicationCategory': 'DeveloperLibrary',
     'softwareVersion': version,
-    'installUrl': `${siteUrl}docs/overview/installation`,
+    'installUrl': `${siteUrl}docs/overview/installation/`,
     // More complete offers object to satisfy structured-data checks
     'offers': {
       '@type': 'Offer',

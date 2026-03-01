@@ -21,11 +21,11 @@ export default function Hero() {
         <div className={styles.ctaRow}>
           <Link
             className="button button--primary button--lg"
-            to="/docs/overview/getting-started"
+            to="/docs/overview/getting-started/"
           >
             Get Started
           </Link>
-          <Link className="button button--secondary button--lg" to="/docs/api">
+          <Link className="button button--secondary button--lg" to="/docs/api/">
             API Reference
           </Link>
         </div>

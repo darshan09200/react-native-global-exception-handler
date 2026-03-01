@@ -16,7 +16,7 @@ const sidebars: SidebarsConfig = {
         type: 'generated-index',
         title: 'Usage',
         description:
-          'How to install, configure and use the global exception handler in your app.',
+          'How to configure and use the global exception handler in your app.',
         slug: '/usage',
         keywords: ['usage', 'install', 'configuration'],
         image: '/img/logo-full-light.svg',
@@ -43,7 +43,7 @@ const sidebars: SidebarsConfig = {
         type: 'generated-index',
         title: 'Examples',
         description:
-          'Example projects and code snippets showing typical usage patterns.',
+          'Example projects and snippets showing typical usage patterns.',
         slug: '/examples',
         keywords: ['examples', 'snippets', 'samples'],
         image: '/img/logo-full-light.svg',
@@ -57,7 +57,7 @@ const sidebars: SidebarsConfig = {
         type: 'generated-index',
         title: 'Migration',
         description:
-          'Notes and instructions for upgrading between major versions.',
+          'Instructions for upgrading from older libraries/versions.',
         slug: '/migration',
         keywords: ['migration', 'upgrade', 'breaking-changes'],
         image: '/img/logo-full-light.svg',

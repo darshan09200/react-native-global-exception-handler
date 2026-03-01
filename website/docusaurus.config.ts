@@ -58,6 +58,7 @@ const config: Config = {
         },
         sitemap: {
           lastmod: 'datetime',
+          ignorePatterns: ['/search', '/search/**'],
         },
       } satisfies Preset.Options,
     ],
@@ -82,7 +83,7 @@ const config: Config = {
           position: 'left',
         },
         {
-          to: '/docs/api',
+          to: '/docs/api/',
           label: 'API',
           position: 'left',
         },
@@ -101,15 +102,15 @@ const config: Config = {
           items: [
             {
               label: 'Getting started',
-              to: '/docs/overview/getting-started',
+              to: '/docs/overview/getting-started/',
             },
             {
               label: 'Installation',
-              to: '/docs/overview/installation',
+              to: '/docs/overview/installation/',
             },
             {
               label: 'API reference',
-              to: '/docs/api',
+              to: '/docs/api/',
             },
           ],
         },
@@ -143,11 +144,11 @@ const config: Config = {
             // },
             {
               label: 'Examples',
-              to: '/docs/examples',
+              to: '/docs/examples/',
             },
             {
               label: 'Troubleshooting',
-              to: '/docs/troubleshooting',
+              to: '/docs/troubleshooting/',
             },
           ],
         },
@@ -200,6 +201,7 @@ const config: Config = {
 
       // Optional: see doc section below
       contextualSearch: true,
+      searchPagePath: false,
     },
   } satisfies Preset.ThemeConfig,
 

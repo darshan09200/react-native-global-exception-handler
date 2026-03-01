@@ -1,8 +1,7 @@
 ---
-id: usage
+id: basic-usage
 sidebar_position: 3
-title: Usage
-slug: /usage/usage
+title: Basic Usage
 description: Detailed usage guide explaining JavaScript vs native exceptions and how to configure handlers and options for both platforms.
 keywords:
   - usage

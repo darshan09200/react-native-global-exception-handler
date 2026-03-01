@@ -75,4 +75,4 @@ setNativeExceptionHandler((errorString) => {
 - **Testing Tools**: Simulate crashes for testing with `simulateNativeCrash`
 - **TypeScript Support**: Fully typed APIs
 
-See the [Installation](./installation.md) and [Usage](../usage/usage.md) pages for more detail.
+See the [Installation](./installation.md) and [Usage](../usage/basic-usage.md) pages for more detail.

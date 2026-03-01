@@ -122,7 +122,7 @@ Rare cases (navigation libraries or experimental recovery). Default `true` is sa
 
 ## Cross-References
 
-- [Usage Guide](../usage/usage.md)
+- [Usage Guide](../usage/basic-usage.md)
 - [API Reference](../api.md)
 - [Native Crash Handling](../usage/native-crash-handling.md)
 - [Troubleshooting](../troubleshooting.md)
