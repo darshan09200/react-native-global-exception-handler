@@ -16,9 +16,9 @@ export default function Hero() {
           <span className={styles.packageName}>
             react-native-global-exception-handler
           </span>{' '}
-          helps React Native teams capture uncaught JavaScript exceptions,
-          handle native crashes, trigger fallback flows, and forward reports to
-          Sentry, Crashlytics, or custom backends.
+          gives React Native teams one place to catch uncaught JavaScript
+          exceptions, handle native crashes, trigger fallback flows, and send
+          reports to Sentry, Crashlytics, or custom backends.
         </p>
         <PackageNamePill />
         <div className={styles.ctaRow}>

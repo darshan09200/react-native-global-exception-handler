@@ -12,8 +12,8 @@ export default function Demo() {
           Watch React Native crash handling in action
         </Heading>
         <p className={styles.demoSubheading}>
-          See how the library reports native failures, shows fallback UI, and
-          helps teams validate production crash flows on both iOS and Android.
+          See the library log native failures, show fallback UI, and prove out
+          production crash flows on both iOS and Android.
         </p>
 
         <div className={styles.demoGrid}>
@@ -27,7 +27,7 @@ export default function Demo() {
             platform="Android"
             videoSrc="/video/android_demo.mp4"
             posterSrc="/img/android-demo-poster.png"
-            description="Android can show crash details, log the failure, and support restart-oriented recovery flows when your app needs them."
+            description="Android can log the failure, show crash details, and support restart-oriented recovery flows when your app needs them."
           />
         </div>
 
@@ -37,7 +37,7 @@ export default function Demo() {
             className="button button--primary button--lg"
             to="/docs/examples/basic-examples/"
           >
-            View Example Code
+            See Example Code
           </Link>
           <Link
             className="button button--secondary button--lg margin-left--sm"

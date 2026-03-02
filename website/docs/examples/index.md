@@ -12,9 +12,9 @@ keywords:
   - simulate native crash react native
 ---
 
-These examples are the fastest way to copy a working setup into your app. Use them when you want implementation patterns for JavaScript error handling, native crash reporting, analytics integrations, or controlled crash simulation.
+These examples are the fastest way to go from “I get the API” to “this works in my app.” Use them when you want copyable patterns for JavaScript handling, native crash reporting, analytics integrations, or controlled crash simulation.
 
-## Example pages
+## Pick an example
 
 - [Basic Examples](./basic-examples.md)
 - [React Native Sentry Integration](./react-native-sentry-integration.md)
@@ -22,6 +22,6 @@ These examples are the fastest way to copy a working setup into your app. Use th
 - [Simulate Native Crash in React Native](./simulate-native-crash-in-react-native.md)
 - [Advanced Examples](./advanced-examples.md)
 
-## Recommended order
+## Good starting order
 
-Start with [Basic Examples](./basic-examples.md), then move to the monitoring or testing guide that matches your rollout. If you are comparing packages before implementation, read the [migration comparison guide](../migration/react-native-exception-handler-vs-react-native-global-exception-handler.md).
+Start with [Basic Examples](./basic-examples.md), then move to the monitoring or testing guide that matches your rollout. If you are still deciding between packages, read the [migration comparison guide](../migration/react-native-exception-handler-vs-react-native-global-exception-handler.md) first.

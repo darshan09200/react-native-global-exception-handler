@@ -13,7 +13,7 @@ keywords:
   - javascript exception handler
 ---
 
-Use this section when you need to configure `react-native-global-exception-handler` in a real React Native app. These guides explain the difference between JavaScript and native crashes, show the recommended handler setup, and document the platform limits that matter in release builds.
+This is where the library starts feeling real. The usage guides show how to wire JavaScript and native handlers, where the two crash paths differ, and which platform limits matter before you ship a release build.
 
 ## Start here
 
@@ -27,6 +27,6 @@ Use this section when you need to configure `react-native-global-exception-handl
 3. Review [Native Crash Handling](./native-crash-handling.md) before shipping release builds.
 4. Use the [API Reference](../api.md) for signatures, types, and defaults.
 
-## Need more than the basics?
+## Ready for more?
 
-If you need testing, custom crash screens, or analytics integrations, continue into the [Advanced](../advanced/) and [Examples](../examples/) sections.
+If you want crash simulation, custom native screens, or reporting integrations, jump next to [Advanced](../advanced/) or [Examples](../examples/).

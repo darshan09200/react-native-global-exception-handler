@@ -12,14 +12,14 @@ keywords:
   - native crash customization
 ---
 
-The advanced section covers the parts of crash handling that usually come after basic setup: custom native error screens, release validation, and provider-specific behavior that needs more than a copy-paste snippet.
+The advanced guides cover the part where crash handling stops being a quick setup and starts becoming product behavior. This is where you shape native error screens, test release-only flows, and fit the library into existing reporting or recovery logic.
 
 ## Best entry points
 
 - [Customization](./customization.md): customize native crash screens and handler behavior.
 - [Testing](./testing.md): safely simulate crashes and verify monitoring in QA.
 
-## When to read these guides
+## Come here when
 
 - You need more than the default fallback behavior.
 - You are integrating with an existing native recovery flow.

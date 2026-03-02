@@ -12,9 +12,9 @@ keywords:
   - react-native-global-exception-handler comparison
 ---
 
-This section is for teams replacing older crash-handling packages or validating whether `react-native-global-exception-handler` is the right alternative. The guides focus on migration steps, API differences, and decision points that matter when moving an existing app.
+This section is for teams moving off older crash-handling packages or deciding whether the switch is worth it. The guides focus on the practical questions: what changes in the API, what stays familiar, and what you need to retest before the migration is done.
 
-## Read these first
+## Start with these
 
 - [Migrating from react-native-exception-handler](./migrating-from-react-native-exception-handler.md)
 - [react-native-exception-handler vs react-native-global-exception-handler](./react-native-exception-handler-vs-react-native-global-exception-handler.md)
