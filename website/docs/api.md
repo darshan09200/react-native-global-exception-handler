@@ -2,108 +2,138 @@
 id: api
 sidebar_position: 5
 title: API Reference
-description: Full API reference for react-native-global-exception-handler, including JavaScript and native handler functions, types, and examples.
+description: API reference for react-native-global-exception-handler. Review JavaScript and native handler signatures, default option values, and crash simulation utilities for React Native.
 keywords:
-  - api
-  - reference
-  - javascript
-  - native
-  - exception
-  - handlers
+  - react-native-global-exception-handler api
+  - react native exception handler api
+  - react native native exception handler options
+  - simulate native crash api
 ---
 
-## JavaScript Exception Handlers
+The API reference is the place to confirm exact signatures, default values, and behavior details without reading the setup guides again. It is most useful once you already know the flow you want and need to check which function to call, how the options behave, or how crash simulation fits into testing. Keep this page nearby when you are wiring handlers or reviewing an existing implementation.
+
+## JavaScript exception handlers
 
 ### `setJSExceptionHandler(customHandler, allowedInDevMode)`
 
-Sets a global handler for JavaScript exceptions.
+Registers the global JavaScript exception handler.
 
-**Parameters:**
+Use this when you want to intercept uncaught JavaScript exceptions before the app exits or before you hand the error off to another reporting tool.
 
-- `customHandler`: [`JSExceptionHandler`](#jsexceptionhandler) - Function called when a JS exception occurs
-- `allowedInDevMode: boolean` - If `true`, handler works in development mode (default: `false`)
+**Parameters**
 
-**Example:**
+- `customHandler`: [`JSExceptionHandler`](#jsexceptionhandler)
+- `allowedInDevMode`: `boolean` and defaults to `false`
 
 ```ts
 import { setJSExceptionHandler } from 'react-native-global-exception-handler';
 
 setJSExceptionHandler((error, isFatal) => {
   console.log('JS Exception:', error, isFatal);
-  // Send to error reporting service
-}, true); // Enable in dev mode
+}, true);
 ```
+
+Common use cases:
+
+- log the error to your backend
+- show a crash dialog for fatal JavaScript exceptions
+- chain another SDK handler after your own logic runs
 
 ### `getJSExceptionHandler()`
 
-Returns the currently set global JavaScript exception handler.
+Returns the currently registered JavaScript exception handler.
+
+This is mainly useful when you need to preserve an existing handler and chain your own logic before or after it runs.
 
 **Returns:** [`JSExceptionHandler`](#jsexceptionhandler)
 
-## Native Exception Handlers
+Example:
+
+```ts
+import {
+  getJSExceptionHandler,
+  setJSExceptionHandler,
+} from 'react-native-global-exception-handler';
+
+const previousHandler = getJSExceptionHandler();
+
+setJSExceptionHandler((error, isFatal) => {
+  console.log('My handler', error.message);
+  if (previousHandler) {
+    previousHandler(error, isFatal);
+  }
+}, true);
+```
+
+## Native exception handlers
 
 ### `setNativeExceptionHandler(customErrorHandler, options)`
 
-Sets a handler for native exceptions with platform-specific options.
+Registers the native exception handler.
 
-**Parameters:**
+This callback is for native crash messages, not for rendering normal React UI. Keep the work minimal and prefer logging or forwarding to a monitoring provider.
 
-- `customErrorHandler`: [`NativeExceptionHandler`](#nativeexceptionhandler) - Function called when a native exception occurs
-- `options`: [`ExceptionHandlerOptions`](#exceptionhandleroptions) (optional) - Platform-specific configuration. If omitted, defaults are used (see [`ExceptionHandlerOptions`](#exceptionhandleroptions)).
+**Parameters**
 
-**Example (New API):**
+- `customErrorHandler`: [`NativeExceptionHandler`](#nativeexceptionhandler)
+- `options`: [`ExceptionHandlerOptions`](#exceptionhandleroptions)
 
 ```ts
 import { setNativeExceptionHandler } from 'react-native-global-exception-handler';
 
 setNativeExceptionHandler((errorString) => {
   console.log('Native error:', errorString);
-  // Send to error reporting service
 }, {
   forceAppToQuit: true,
-  callPreviouslyDefinedHandler: false
+  callPreviouslyDefinedHandler: false,
 });
 ```
 
-**Legacy API (Deprecated):**
+Common use cases:
+
+- forward the crash string to Sentry or Crashlytics
+- preserve an earlier native handler with `callPreviouslyDefinedHandler`
+- allow a tested Android recovery flow with `forceAppToQuit: false`
+
+### Deprecated positional signature
 
 ```ts
-// Old signature still works but is deprecated
 setNativeExceptionHandler(
   handler,
-  forceApplicationToQuit,  // boolean
-  executeDefaultHandler    // boolean
+  forceApplicationToQuit,
+  executeDefaultHandler
 );
 ```
 
-> Migrating from the old positional signature? See the [Migration Guide](./migration/migrating-from-react-native-exception-handler.md) for step-by-step update instructions.
+If you are upgrading older code, use [Migrate from react-native-exception-handler](./migration/migrating-from-react-native-exception-handler.md).
 
-### `setHandlerForNativeException(callback, callPreviouslyDefinedHandler)` ⚠️ Deprecated
+### `setHandlerForNativeException(callback, callPreviouslyDefinedHandler)`
 
-**Deprecated:** Use `setNativeExceptionHandler` instead.
+Deprecated. Prefer `setNativeExceptionHandler`.
 
-## Testing & Utilities
+This older API exists for backward compatibility with older usage patterns.
+
+## Testing utilities
 
 ### `simulateNativeCrash(crashType)`
 
-Simulates a native crash for testing purposes. **Use with caution** - will crash your app!
+Simulates a native crash for testing.
 
-**Parameters:**
-
-- `crashType`: [`CrashType`](#crashtype) - Type of crash to simulate (default: `'nsexception'`)
-
-**Available Crash Types:** See [`CrashType`](#crashtype)
-
-**Example:**
+This is intended for QA and release validation. Do not expose it to users in production code paths.
 
 ```ts
-import { simulateNativeCrash, CrashType } from 'react-native-global-exception-handler';
+import { CrashType, simulateNativeCrash } from 'react-native-global-exception-handler';
 
-// Simulate crash
 simulateNativeCrash(CrashType.nsexception);
-
-// Avoid calling in production builds
 ```
+
+Another example:
+
+```ts
+simulateNativeCrash(CrashType.array_bounds);
+```
+
+For a practical workflow, read [Simulate Native Crash in React Native](./examples/simulate-native-crash-in-react-native.md).
 
 ## Types
 
@@ -119,20 +149,29 @@ type JSExceptionHandler = (error: Error, isFatal: boolean) => void;
 type NativeExceptionHandler = (errorMessage: string) => void;
 ```
 
+`errorMessage` is the crash string passed from the native layer. Treat it as a logging/reporting payload, not as a signal that the app is still in a healthy UI state.
+
 ### `ExceptionHandlerOptions`
 
-The `options` object allows you to control native crash handling behavior:
+```ts
+interface ExceptionHandlerOptions {
+  callPreviouslyDefinedHandler?: boolean;
+  forceAppToQuit?: boolean;
+}
+```
 
-- `forceAppToQuit` (`boolean`, Android only, default: `true`):
-  - If `true` (default), the app will be force-closed after your handler runs. Useful for ensuring a clean state after a fatal native crash.
-  - If `false`, the app will attempt to continue running after the handler.
-- `callPreviouslyDefinedHandler` (`boolean`, iOS & Android, default: `false`):
-  - If `true`, any previously registered native exception handler will be called after your handler.
-  - If `false` (default), only your handler is called.
+`forceAppToQuit`:
 
-**Default values:**
+- Android-focused option
+- defaults to `true`
 
-If you omit the `options` parameter, the defaults are:
+`callPreviouslyDefinedHandler`:
+
+- available on iOS and Android
+- defaults to `false`
+- use it when another SDK or native layer already installed a handler you still want to run
+
+Defaults:
 
 ```ts
 {
@@ -141,10 +180,25 @@ If you omit the `options` parameter, the defaults are:
 }
 ```
 
+Typical object forms:
+
 ```ts
-interface ExceptionHandlerOptions {
-  callPreviouslyDefinedHandler?: boolean;
-  forceAppToQuit?: boolean;
+// Safer default
+{
+  forceAppToQuit: true,
+  callPreviouslyDefinedHandler: false,
+}
+
+// Preserve an earlier native handler
+{
+  forceAppToQuit: true,
+  callPreviouslyDefinedHandler: true,
+}
+
+// Advanced Android-only recovery attempt
+{
+  forceAppToQuit: false,
+  callPreviouslyDefinedHandler: true,
 }
 ```
 
@@ -164,3 +218,10 @@ enum CrashType {
   sigbus = 'sigbus',
 }
 ```
+
+## Related guides
+
+- [Getting Started](./overview/getting-started.md)
+- [Basic Usage](./usage/basic-usage.md)
+- [Native Crash Handling](./usage/native-crash-handling.md)
+- [Troubleshooting](./troubleshooting.md)

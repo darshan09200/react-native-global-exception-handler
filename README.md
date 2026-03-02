@@ -6,39 +6,39 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/darshan09200/react-native-global-exception-handler/pulls)
 [![Documentation](https://img.shields.io/badge/docs-online-blue.svg?style=flat)](https://geh.darshan09200.dev/)
 
-A modern React Native library for global error handling (JavaScript + native) with TurboModules support and cross-platform compatibility.
+A modern React Native library for JavaScript and native exception handling, graceful fallback flows, and crash-reporting integrations.
 
 > 🎬 **[See live demos](https://geh.darshan09200.dev/#demo)** of iOS and Android crash handling in action!
 
 ## Key Features
 
-- 🔥 **Modern Architecture**: Built with TurboModules for React Native 0.68+
-- 📱 **Cross-Platform**: Full iOS and Android support
-- 🎯 **Dual Exception Handling**: Catches both JS and native exceptions
-- 🔧 **Highly Customizable**: Configurable options for different platforms
-- 🚀 **Crash Simulation**: Built-in crash testing for development
-- 🎨 **Custom Error UI**: Platform-specific error screens with restart functionality
-- ⚡ **TypeScript Support**: Full TypeScript definitions included
+- 🔥 **Modern Architecture Support**: Works with both legacy and new architecture React Native projects
+- 🎯 **Dual Exception Handling**: Capture uncaught JavaScript exceptions and native crashes in one place
+- 🔗 **Chained Native Handlers**: Preserve existing crash flows when another SDK already owns the handler
+- 🚀 **Crash Simulation**: Use `simulateNativeCrash` to validate release-mode behavior safely
+- 📡 **Reporting Integrations**: Forward events to Sentry, Crashlytics, or your own backend
+- ⚡ **TypeScript Support**: Full type definitions for handlers and options
 
 ## Why
 
-In React Native apps, uncaught exceptions behave differently based on the environment:
+In React Native apps, uncaught failures behave differently depending on the environment:
 
-- **In DEV mode**: You get a helpful Red Screen error showing the stack trace
-- **In production (bundled) mode**: The app simply **quits without any message** 😱
+- **In DEV mode**: you usually get a helpful Red Screen with a stack trace
+- **In production (bundled) mode**: the app can quit or crash with far less context
 
-This creates a poor user experience where users don't know:
+That makes it harder to answer basic questions:
 
-- What went wrong
-- Whether they should restart the app
-- If their data was saved
+- What failed?
+- Was it a JavaScript exception or a native crash?
+- Should the app show fallback UI, restart, or just log the failure?
+- Did the crash report actually reach Sentry, Crashlytics, or your own backend?
 
-This library solves this by:
+This package helps by giving you one place to:
 
-1. **Catching unhandled exceptions** before the app crashes
-2. **Allowing you to show a graceful error message** to users
-3. **Enabling error reporting** to your development team
-4. **Providing restart capabilities** for recovery
+1. Register JavaScript and native exception handlers
+2. Wire crash reporting to Sentry, Crashlytics, or your own backend
+3. Define fallback or restart behavior where the platform allows it
+4. Validate native crash behavior before you ship
 
 ## Documentation
 
@@ -46,15 +46,21 @@ This library solves this by:
 
 ### Quick Links
 
-- [Getting Started](https://geh.darshan09200.dev/docs/getting-started) - Installation and setup
-- [Usage Guide](https://geh.darshan09200.dev/docs/usage/usage) - JS exception handling
-- [Native Crash Handling](https://geh.darshan09200.dev/docs/usage/native-crash-handling) - Platform-specific native handlers
-- [API Reference](https://geh.darshan09200.dev/docs/api) - Complete API documentation
-- [Testing & Simulation](https://geh.darshan09200.dev/docs/advanced/testing) - simulateNativeCrash and testing
-- [Analytics Integration](https://geh.darshan09200.dev/docs/examples/analytics-integration) - Sentry, Crashlytics, custom services
-- [Customization](https://geh.darshan09200.dev/docs/advanced/customization) - Custom error screens
-- [Troubleshooting](https://geh.darshan09200.dev/docs/troubleshooting) - Common issues and solutions
-- [Migration Guide](https://geh.darshan09200.dev/docs/migration/migrating-from-react-native-exception-handler) - From react-native-exception-handler
+- [Getting Started](https://geh.darshan09200.dev/docs/overview/getting-started/) - First install and handler setup
+- [Installation](https://geh.darshan09200.dev/docs/overview/installation/) - iOS, Android, and linking checks
+- [Basic Usage](https://geh.darshan09200.dev/docs/usage/basic-usage/) - Register JavaScript and native handlers
+- [Native Crash Handling](https://geh.darshan09200.dev/docs/usage/native-crash-handling/) - Platform limits and release testing
+- [API Reference](https://geh.darshan09200.dev/docs/api/) - Public API and option behavior
+- [Testing & Simulation](https://geh.darshan09200.dev/docs/advanced/testing/) - `simulateNativeCrash` and validation
+- [Sentry Integration](https://geh.darshan09200.dev/docs/examples/react-native-sentry-integration/) - Forward reports to Sentry
+- [Crashlytics Integration](https://geh.darshan09200.dev/docs/examples/react-native-crashlytics-integration/) - Forward reports to Crashlytics
+- [Troubleshooting](https://geh.darshan09200.dev/docs/troubleshooting/) - Common setup and release issues
+- [Migration Guide](https://geh.darshan09200.dev/docs/migration/migrating-from-react-native-exception-handler/) - Move from `react-native-exception-handler`
+
+### For AI agents and code assistants
+
+- [Machine-readable guide](https://geh.darshan09200.dev/llms.txt) - canonical `llms.txt` entrypoint
+- [AI Agents docs page](https://geh.darshan09200.dev/docs/ai-agents/) - task map, caveats, and API-at-a-glance notes
 
 ## Installation
 
@@ -68,38 +74,29 @@ yarn add react-native-global-exception-handler
 
 ### Architecture Support
 
-Works with both:
+Designed to work with both:
 
-- **Legacy Architecture** (Old Architecture)
+- **Legacy Architecture**
 - **New Architecture** (TurboModules + Fabric)
 
-No additional configuration needed; the correct bindings are auto-selected at build time.
+No extra setup is usually required beyond installing the package, running pods on iOS, and rebuilding the app.
 
 ## Quick Start
 
-### JS Exception Handling
+### JavaScript Exception Handling
 
 ```js
 import { setJSExceptionHandler } from 'react-native-global-exception-handler';
 
-// Basic setup
 setJSExceptionHandler((error, isFatal) => {
   console.log('JS Exception:', error);
-  
+
   if (isFatal) {
-    // Handle fatal errors - maybe show restart dialog
+    // Show fallback UI or send a fatal report
   } else {
-    // Handle non-fatal errors - maybe just log them
+    // Log and continue
   }
 });
-
-// Advanced setup with dev mode control
-setJSExceptionHandler(
-  (error, isFatal) => {
-    // Your error handler
-  },
-  true // allowedInDevMode: true = enable in dev (shows instead of RedBox)
-);
 ```
 
 ### Native Exception Handling
@@ -107,23 +104,16 @@ setJSExceptionHandler(
 ```js
 import { setNativeExceptionHandler } from 'react-native-global-exception-handler';
 
-// Basic setup with default options
 setNativeExceptionHandler((errorString) => {
   console.log('Native Exception:', errorString);
   // Send to crash reporting service
+}, {
+  forceAppToQuit: true,
+  callPreviouslyDefinedHandler: false,
 });
-
-// Advanced setup with platform-specific options
-setNativeExceptionHandler(
-  (errorString) => {
-    console.log('Native Exception:', errorString);
-  },
-  {
-    forceAppToQuit: true,              // Android: Force app to quit after error (default: true)
-    callPreviouslyDefinedHandler: false // Call previous exception handler (default: false)
-  }
-);
 ```
+
+For more complete examples, see [Basic Usage](https://geh.darshan09200.dev/docs/usage/basic-usage/), [Native Crash Handling](https://geh.darshan09200.dev/docs/usage/native-crash-handling/), and the [API Reference](https://geh.darshan09200.dev/docs/api/).
 
 ## Contributing
 

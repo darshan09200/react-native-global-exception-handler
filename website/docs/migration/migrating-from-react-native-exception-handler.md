@@ -1,68 +1,51 @@
 ---
 id: migrating-from-react-native-exception-handler
-title: Migrating from react-native-exception-handler
-description: Guide to migrate from the original react-native-exception-handler to react-native-global-exception-handler, covering API changes and migration steps.
+title: Migrate from react-native-exception-handler
+sidebar_label: Migration Guide
+seo_title: Migration from react-native-exception-handler | react-native-global-exception-handler
+description: Upgrade from react-native-exception-handler to react-native-global-exception-handler. Update imports, native handler options, and release-build testing without changing your core JS error flow.
 keywords:
-  - migration
-  - upgrade
-  - react-native-exception-handler
-  - breaking changes
+  - migrate from react-native-exception-handler
+  - react-native-exception-handler alternative
+  - react-native-global-exception-handler migration
+  - react native crash handler migration
 ---
 
-This guide helps you migrate from the original `react-native-exception-handler` package to `react-native-global-exception-handler`.
+If your app already uses `react-native-exception-handler`, this guide walks through the switch to `react-native-global-exception-handler` with minimal churn. The main changes are the package import, the native handler options shape, and the release-build checks around JavaScript and native crash flows. In most apps, the migration is small, but it is still worth verifying both debug and release behavior before shipping.
 
-## Overview
+## Why move to react-native-global-exception-handler
 
-The newer library preserves the core concepts (global JS & native exception handling) while improving clarity, adding TypeScript types, and modernizing the native API.
+- clearer native handler configuration through an options object
+- first-class TypeScript support
+- built-in `simulateNativeCrash` utility for QA and release verification
+- updated docs for iOS, Android, and new architecture projects
 
-## What Was Ported
+If you want a high-level package comparison first, read [react-native-exception-handler vs react-native-global-exception-handler](./react-native-exception-handler-vs-react-native-global-exception-handler.md).
 
-The following concepts and behaviors remain the same, so existing mental models still apply:
+## What stays the same
 
-- Global JavaScript exception handling via a single setup call (`setJSExceptionHandler`).
-- Native exception interception concept (ability to run a handler just before process termination).
-- Basic restart pattern for Android after fatal errors (using a restart utility or relaunch intent).
-- Ability (conceptually) to chain/execute previously defined handlers.
-- Force-quit semantics on Android after a native crash to ensure clean state.
-- Distinction between JS exceptions and native exceptions, including limitations of UI interaction after native crashes.
+- You still register a global JavaScript exception handler.
+- You still register a native exception handler for crash reporting.
+- Existing ideas like restart flows, chaining previous handlers, and analytics forwarding still apply.
 
-## What's New
+## Main API difference
 
-Enhancements and features introduced in `react-native-global-exception-handler`:
-
-- Options object for native handler: `setNativeExceptionHandler(handler, { forceAppToQuit, callPreviouslyDefinedHandler })` replacing positional params.
-- Full TypeScript surface: `ExceptionHandlerOptions`, handler function types, `CrashType` enum.
-- Built-in native crash simulation via `simulateNativeCrash(crashType)` for QA/testing.
-
-## Legacy Native API (Still Supported)
-
-If you previously used the positional signature, it still works but is deprecated:
+The largest migration change is the native handler signature.
 
 ```ts
-// Deprecated positional form
-setNativeExceptionHandler(
-  (errorString) => { console.log(errorString); },
-  /* forceAppToQuit */ true,
-  /* callPreviouslyDefinedHandler */ false
-);
+// Older style
+setNativeExceptionHandler(handler, true, false);
 
-// Recommended object form
-setNativeExceptionHandler((errorString) => {
-  console.log(errorString);
-}, { forceAppToQuit: true, callPreviouslyDefinedHandler: false });
+// Recommended current style
+setNativeExceptionHandler(handler, {
+  forceAppToQuit: true,
+  callPreviouslyDefinedHandler: false,
+});
 ```
 
-## Why Migrate?
+## Migration steps
 
-- Explicit defaults (`forceAppToQuit: true`, `callPreviouslyDefinedHandler: false`)
-- Improved readability and future-proof extensibility via options object
-- Full TypeScript support for safer integration
-- Clear platform behavior (dev vs production; iOS vs Android constraints)
-- API reference with all exported functions
-
-## Migration Steps
-
-1. Update dependency:
+### 1. Replace the dependency
 
 ```bash npm2yarn
 npm uninstall react-native-exception-handler
@@ -70,79 +53,73 @@ npm install react-native-global-exception-handler
 cd ios && pod install
 ```
 
-1. Update imports:
+### 2. Update imports
 
 ```ts
 // Before
 import { setJSExceptionHandler } from 'react-native-exception-handler';
+
 // After
 import { setJSExceptionHandler } from 'react-native-global-exception-handler';
 ```
 
-1. Update native handler usage (if using legacy positional form):
+### 3. Move native handler booleans into the options object
 
 ```ts
 // Before
 setNativeExceptionHandler(handler, true, false);
+
 // After
-setNativeExceptionHandler(handler, { forceAppToQuit: true, callPreviouslyDefinedHandler: false });
+setNativeExceptionHandler(handler, {
+  forceAppToQuit: true,
+  callPreviouslyDefinedHandler: false,
+});
 ```
 
-1. Replace `executeDefaultHandler` naming with `callPreviouslyDefinedHandler`.
-1. Add iOS crash flow if handling native exceptions: ensure you call `releaseExceptionHold()` in custom native popup logic.
-1. Optional: Use `getJSExceptionHandler()` to chain existing handlers when integrating analytics SDKs.
+If your old setup depended on chaining another native handler, keep that behavior explicitly:
+
+```ts
+setNativeExceptionHandler(handler, {
+  forceAppToQuit: true,
+  callPreviouslyDefinedHandler: true,
+});
+```
+
+### 4. Re-test release behavior
+
+After the code change, validate:
+
+1. JavaScript exception handling
+2. native crash handling in release builds
+3. analytics forwarding to Sentry or Crashlytics
+4. any custom restart or recovery flow
+
+Use [Simulate Native Crash in React Native](../examples/simulate-native-crash-in-react-native.md) for the native-crash part of that test.
 
 ## FAQ
 
-### Do I need to change my existing JS exception handler?
+### Do I need to rewrite my JavaScript exception handler?
 
-No. The signature is identical. Only the preferred naming (`allowedInDevMode`) is documented consistently.
+No. The core JS handler pattern stays the same.
 
-### Is the old native positional API removed?
+### Is the old positional native API removed?
 
-No, it's still supported for backward compatibility, but new code should use the options object.
+No. It is still supported for backward compatibility, but new code should use the object form.
 
-### How do I chain other SDK handlers?
+### What if I already chain another handler?
 
-Use:
-
-```ts
-const prev = getJSExceptionHandler();
-setJSExceptionHandler((e, fatal) => {
-  // custom logic
-  if (prev) prev(e, fatal);
-}, true);
-```
-
-For native handlers: `{ callPreviouslyDefinedHandler: true }`.
-
-### When should I set `forceAppToQuit: false`?
-
-Rare cases (navigation libraries or experimental recovery). Default `true` is safer.
-
-## Cross-References
-
-- [Usage Guide](../usage/usage.md)
-- [API Reference](../api.md)
-- [Native Crash Handling](../usage/native-crash-handling.md)
-- [Troubleshooting](../troubleshooting.md)
+Use `callPreviouslyDefinedHandler: true` and review the full signature in the [API Reference](../api.md).
 
 ## Credits
 
-This library builds upon the excellent work done in the original project:
+This library builds on the ideas popularized by the original project:
 
 - Original repository: [react-native-exception-handler](https://github.com/a7ul/react-native-exception-handler)
-- Maintained and evolved by its original authors and broader community of contributors.
+- Maintained and evolved by its original authors and wider community of contributors
 
-Their collective contributions informed many design decisions here (global handler patterns, restart flows, native popup customization concepts). If you find value in this library, consider visiting the original repository and showing support.
+The migration path exists because that earlier work made the JS/global-handler model familiar to many React Native teams.
 
-## Next Steps
+## Next actions
 
-After migration, test:
-
-1. JS handler triggers in dev (if enabled) and production.
-2. Native handler triggers only in production.
-3. Crash reporting integration still works (e.g., Sentry/Crashlytics).
-4. Optional chaining logic preserves previous handlers.
-
-If all pass, migration is complete.
+- [Install the package](../overview/installation.md)
+- [Read Basic Usage](../usage/basic-usage.md)

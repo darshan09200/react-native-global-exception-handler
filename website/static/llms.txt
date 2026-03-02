@@ -1,0 +1,93 @@
+# react-native-global-exception-handler
+
+Summary
+A React Native library for JavaScript and native exception handling, graceful fallback flows, and crash-reporting integrations. It is designed for apps that need one place to register handlers, validate release-mode crash behavior, and forward failures to Sentry, Crashlytics, or a custom backend.
+
+Use this package for
+- Install JavaScript and native exception handlers in one package
+- Show fallback UI or recovery flows for fatal JavaScript errors
+- Log or report native crash payloads to Sentry, Crashlytics, or a custom backend
+- Preserve an existing native handler with callPreviouslyDefinedHandler
+- Validate release-mode crash behavior with simulateNativeCrash
+- Migrate from react-native-exception-handler without changing the core JS flow
+
+Do not assume
+- It does not make native crash handling equivalent to JavaScript exception handling
+- It does not guarantee restart-oriented recovery on iOS after a fatal native crash
+- It does not remove the need to run CocoaPods and rebuild native apps after installation
+- It does not make debug-mode crash behavior a reliable substitute for release-mode validation
+
+Read first
+- Getting Started: https://geh.darshan09200.dev/docs/overview/getting-started/ (Use this first if you are adding the package to an app for the first time.)
+- Installation: https://geh.darshan09200.dev/docs/overview/installation/ (Confirms iOS pods, Android autolinking, and native module registration.)
+- Basic Usage: https://geh.darshan09200.dev/docs/usage/basic-usage/ (Shows the minimum JavaScript and native handler setup most apps need.)
+- Native Crash Handling: https://geh.darshan09200.dev/docs/usage/native-crash-handling/ (Explains iOS and Android platform limits before release testing.)
+- API Reference: https://geh.darshan09200.dev/docs/api/ (Covers signatures, defaults, and option behavior.)
+- Troubleshooting: https://geh.darshan09200.dev/docs/troubleshooting/ (Use when pods, native linking, or crash capture do not behave as expected.)
+
+Task map
+- Install the package: https://geh.darshan09200.dev/docs/overview/installation/
+- Register the first handlers: https://geh.darshan09200.dev/docs/overview/getting-started/, https://geh.darshan09200.dev/docs/usage/basic-usage/
+- Understand native crash limitations: https://geh.darshan09200.dev/docs/usage/native-crash-handling/
+- Integrate with Sentry: https://geh.darshan09200.dev/docs/examples/react-native-sentry-integration/
+- Integrate with Crashlytics: https://geh.darshan09200.dev/docs/examples/react-native-crashlytics-integration/
+- Simulate a crash: https://geh.darshan09200.dev/docs/examples/simulate-native-crash-in-react-native/
+- Troubleshoot module not registered or pod/build issues: https://geh.darshan09200.dev/docs/troubleshooting/, https://geh.darshan09200.dev/docs/overview/installation/
+- Migrate from react-native-exception-handler: https://geh.darshan09200.dev/docs/migration/migrating-from-react-native-exception-handler/, https://geh.darshan09200.dev/docs/migration/react-native-exception-handler-vs-react-native-global-exception-handler/
+- Check function signatures and option defaults: https://geh.darshan09200.dev/docs/api/
+
+Public API
+- setJSExceptionHandler(customHandler, allowedInDevMode): Registers the global JavaScript exception handler.
+  - Use for uncaught JavaScript exceptions before the app exits.
+  - allowedInDevMode lets you opt into handler behavior during development.
+- getJSExceptionHandler(): Returns the currently registered JavaScript exception handler.
+  - Useful when you need to preserve or chain an existing JS handler.
+- setNativeExceptionHandler(customErrorHandler, options): Registers the native exception handler.
+  - Prefer the options-object signature over the older positional form.
+  - Keep native crash work minimal and validate behavior in release builds.
+- getNativeExceptionHandler(): Returns the currently registered native exception handler.
+  - Use when you need to preserve or inspect an existing native handler.
+- simulateNativeCrash(crashType): Simulates a native crash for QA and release validation.
+  - Do not expose this through end-user flows.
+  - Use a controlled test environment when validating destructive crash types.
+
+Core options
+- forceAppToQuit (default: true)
+  - Primarily an Android-focused option.
+  - Use with care if you are attempting advanced recovery flows.
+- callPreviouslyDefinedHandler (default: false)
+  - Use when another SDK or native layer already installed a handler.
+  - Relevant for Sentry, Crashlytics, or custom native crash pipelines.
+
+Platform notes
+- JavaScript exceptions and native crashes are not interchangeable.
+- Release builds are the only reliable way to validate native crash behavior.
+- iOS
+  - Native crash recovery is more limited on iOS.
+  - Do not assume a normal React Native UI flow is still safe after a fatal native crash.
+- Android
+  - Android offers more flexibility for restart-oriented recovery flows.
+  - forceAppToQuit changes how advanced Android recovery attempts behave.
+
+Testing and release validation
+- Use simulateNativeCrash for release validation, not as a production feature.
+- Test JavaScript handling and native crash handling separately.
+- Verify provider integrations end-to-end in the same environment you plan to ship.
+- If native results differ from expectations, compare debug and release behavior before changing handler logic.
+
+Migration
+- Migration Guide: https://geh.darshan09200.dev/docs/migration/migrating-from-react-native-exception-handler/
+- Package Comparison: https://geh.darshan09200.dev/docs/migration/react-native-exception-handler-vs-react-native-global-exception-handler/
+
+Examples
+- Sentry Integration: https://geh.darshan09200.dev/docs/examples/react-native-sentry-integration/
+- Crashlytics Integration: https://geh.darshan09200.dev/docs/examples/react-native-crashlytics-integration/
+- Simulate Native Crash: https://geh.darshan09200.dev/docs/examples/simulate-native-crash-in-react-native/
+
+Canonical links
+- Docs: https://geh.darshan09200.dev/
+- AI agents guide: https://geh.darshan09200.dev/docs/ai-agents/
+- GitHub: https://github.com/darshan09200/react-native-global-exception-handler
+- npm: https://www.npmjs.com/package/react-native-global-exception-handler
+- Issues: https://github.com/darshan09200/react-native-global-exception-handler/issues
+- Discussions: https://github.com/darshan09200/react-native-global-exception-handler/discussions

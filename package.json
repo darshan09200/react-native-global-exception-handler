@@ -1,7 +1,7 @@
 {
   "name": "react-native-global-exception-handler",
   "version": "1.0.2",
-  "description": "A modern, cross-platform React Native library to capture uncaught JS & native exceptions, show custom error UIs, and optionally restart the app. Supports TurboModules, Fabric, and both new/old architectures.",
+  "description": "A modern React Native library for JavaScript and native exception handling, graceful fallback flows, and crash-reporting integrations.",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
   "types": "./lib/typescript/module/src/index.d.ts",
@@ -52,21 +52,21 @@
   },
   "keywords": [
     "react-native",
-    "ios",
-    "android",
     "exception-handler",
-    "error-handling",
+    "react-native-crash-handler",
     "crash-reporting",
     "global-error-handler",
-    "error-boundary",
+    "javascript-exception-handler",
+    "native-exception-handler",
+    "native-crash-handling",
+    "error-handling",
     "turbomodules",
     "fabric",
     "typescript",
     "native-modules",
-    "mobile",
-    "library",
     "uncaught-exception",
-    "restart-app"
+    "crashlytics",
+    "sentry"
   ],
   "repository": {
     "type": "git",

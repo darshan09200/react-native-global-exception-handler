@@ -2,488 +2,227 @@
 id: troubleshooting
 sidebar_position: 12
 title: Troubleshooting
-description: Common installation, runtime, and testing issues with solutions and commands for iOS and Android when using react-native-global-exception-handler.
+description: Troubleshoot react-native-global-exception-handler in React Native. Fix module registration errors, pod install failures, debug-vs-release confusion, and native crashes not being captured.
 keywords:
-  - troubleshooting
-  - errors
-  - debugging
-  - installation
-  - android
-  - ios
+  - react native exception handler not working
+  - react-native-global-exception-handler troubleshooting
+  - turbomodule not found globalexceptionhandler
+  - pod install global exception handler
 ---
 
-Common issues and solutions when working with `react-native-global-exception-handler`.
+When the module is not registered, pods fail, or native crashes are not being captured, start here. This page focuses on the checks that usually explain those problems, especially the difference between debug behavior and release behavior in React Native. It should help you narrow the issue before you open a bug report or start changing working code.
 
-## Installation Issues
+## Before you open an issue
 
-### iOS Pod Installation Fails
+- confirm the React Native version
+- note the iOS and Android versions you tested
+- state whether the problem happens in debug, release, or both
+- include exact reproduction steps
+- include logs, stack traces, or build errors
 
-**Error:**
+## Debug vs Release
 
-```
+JavaScript handlers can be tested in development if you enable them. Native crash behavior is a release-mode concern first, because debug tooling can intercept or change the failure path.
+
+## Common issues
+
+- module not registered or `TurboModuleRegistry.getEnforcing` errors
+- `pod install` or native build failures
+- JavaScript crashes captured but native crashes not captured
+- native handler works in debug assumptions but fails in release validation
+- another SDK handler no longer runs after registration
+
+## Installation issues
+
+### CocoaPods could not find the pod
+
+```text
 [!] CocoaPods could not find compatible versions for pod "GlobalExceptionHandler"
 ```
 
-**Solution:**
+Try:
 
-1. Update CocoaPods:
-
-   ```bash
-   sudo gem install cocoapods
-   ```
-
-2. Clean and reinstall:
-
-   ```bash
-   cd ios
-   rm -rf Pods Podfile.lock
-   pod deintegrate
-   pod install
-   cd ..
-   ```
-
-### Android Build Fails
-
-**Error:**
-
+```bash
+sudo gem install cocoapods
+cd ios
+rm -rf Pods Podfile.lock
+pod deintegrate
+pod install
+cd ..
 ```
+
+Then revisit [Installation](./overview/installation.md).
+
+### Android build dependency failure
+
+```text
 Could not determine the dependencies of task ':app:compileDebugJavaWithJavac'
 ```
 
-**Solution:**
+Check your Kotlin version in `android/build.gradle`, then clean:
 
-1. Ensure your `android/build.gradle` has correct Kotlin version:
-
-   ```gradle
-   buildscript {
-       ext {
-           kotlinVersion = "1.8.0"
-       }
-   }
-   ```
-
-2. Clean gradle cache:
-
-   ```bash
-   cd android
-   ./gradlew clean
-   ./gradlew cleanBuildCache
-   cd ..
-   ```
-
-### TurboModule Not Found
-
-> Only for React Native New architecture
-
-**Error:**
-
+```gradle
+buildscript {
+    ext {
+        kotlinVersion = "1.8.0"
+    }
+}
 ```
+
+```bash
+cd android
+./gradlew clean
+./gradlew cleanBuildCache
+cd ..
+```
+
+### TurboModule is not registered
+
+```text
 TurboModuleRegistry.getEnforcing called for module 'GlobalExceptionHandler' but it is not registered
 ```
 
-**Solution:**
+This usually points to a cache or build mismatch in a new architecture project.
 
-1. Ensure you're using React Native 0.68 or higher
-2. Clear metro cache:
-
-   ```bash npm2yarn
-   npx react-native start --reset-cache
-   ```
-
-3. Clean and rebuild:
-
-   ```bash npm2yarn
-   # iOS
-   cd ios && rm -rf Pods && pod install && cd ..
-   npx react-native run-ios
-   
-   # Android
-   cd android && ./gradlew clean && cd ..
-   npx react-native run-android
-   ```
-
-## Runtime Issues
-
-### Handler Not Called in Development
-
-**Issue:** Exception handler doesn't trigger in development mode.
-
-**Solution:**
-
-For JavaScript exceptions, enable dev mode:
-
-```js
-setJSExceptionHandler((error, isFatal) => {
-  // Your handler
-}, true); // ← Set to true to enable in dev mode
+```bash npm2yarn
+npx react-native start --reset-cache
 ```
 
-**Note:** Android native handlers may not work as expected in debug mode due to the way debug builds handle uncaught exceptions.
+Then rebuild the native app from scratch:
 
-### Native Handler Not Working on Android (Debug)
+```bash npm2yarn
+# iOS
+cd ios && rm -rf Pods && pod install && cd ..
+npx react-native run-ios
 
-**Issue:** Native exception handler doesn't trigger in Android debug builds.
+# Android
+cd android && ./gradlew clean && cd ..
+npx react-native run-android
+```
 
-**Explanation:**
+If your project uses TurboModules, the cache reset and clean rebuild steps above are the first things to retry.
 
-In debug mode, React Native's debug infrastructure may interfere with native exception handling. This is expected behavior.
+## Runtime issues
 
-**Solution:**
+### JavaScript handler does not run in development
 
-Test native exception handling in release builds:
+Pass `true` as the second argument:
+
+```ts
+setJSExceptionHandler((error, isFatal) => {
+  console.log(error, isFatal);
+}, true);
+```
+
+### Native handler seems broken in debug mode
+
+Debug builds can interfere with native crash handling. Validate native crash behavior in release builds instead.
 
 ```bash npm2yarn
 npx react-native run-android --variant=release
 ```
 
-### App Doesn't Restart After Crash
+If you test only in debug mode, you can get false negatives for native crash handling.
 
-**Issue:** App shows error but doesn't provide restart functionality.
+### App does not restart after a crash
 
-**Solution:**
+Android restart-oriented flows usually need `forceAppToQuit: true` for predictable cleanup:
 
-For Android, ensure `forceAppToQuit` is configured:
-
-```js
+```ts
 setNativeExceptionHandler((errorString) => {
-  // Handle error
+  console.log(errorString);
 }, {
-  forceAppToQuit: true  // Required for proper cleanup
+  forceAppToQuit: true,
 });
 ```
 
-For iOS, you must use a custom error screen as iOS doesn't allow programmatic restart.
+On iOS, programmatic restart is not a supported recovery strategy.
 
-### When to Use `forceAppToQuit: false`
+### Another SDK handler stopped running
 
-**Issue:** Using navigation libraries like react-native-navigation (Wix), and the app quits unexpectedly on errors.
+If an analytics SDK or native library already set a native exception handler, enable chaining:
 
-**Why:** Some navigation libraries recreate the application stack after errors. If `forceAppToQuit` is `true`, the app will quit before the navigation library can handle the error properly.
-
-**Solution:**
-
-Set `forceAppToQuit: false` to allow the navigation library to handle the error:
-
-```js
+```ts
 setNativeExceptionHandler((errorString) => {
-  // Log error for debugging
-  console.log('Native error:', errorString);
-  // Send to analytics
-  reportToAnalytics(errorString);
+  console.log(errorString);
 }, {
-  forceAppToQuit: false,  // Let the navigation library handle recovery
-  callPreviouslyDefinedHandler: true  // Chain with navigation's handler
+  forceAppToQuit: true,
+  callPreviouslyDefinedHandler: true,
 });
 ```
 
-**Use cases for `forceAppToQuit: false`:**
+If the older handler still does not run, verify which library initializes last.
 
-- Using react-native-navigation (Wix) or similar navigation libraries
-- You have custom recovery logic in native code
-- You want to allow the app to attempt recovery instead of forcing quit
+### When should `forceAppToQuit` be false?
 
-**Note:** In most cases, `forceAppToQuit: true` (default) is recommended for clean crash handling.
+Only in advanced cases, such as:
 
-### Errors Not Reaching Analytics Service
+- custom native recovery logic
+- navigation-driven recovery flows
+- carefully tested Android-specific restart patterns
 
-**Issue:** Errors are captured but not sent to your analytics service.
+See [Native Crash Handling](./usage/native-crash-handling.md) before changing the default.
 
-**Solution:**
+## Testing issues
 
-1. Check network connectivity in error handler
-2. Queue errors locally for retry:
+### `simulateNativeCrash` does nothing
 
-   ```js
-   import AsyncStorage from '@react-native-async-storage/async-storage';
-   
-   const queueError = async (error) => {
-     const queue = await AsyncStorage.getItem('error_queue');
-     const errors = queue ? JSON.parse(queue) : [];
-     errors.push(error);
-     await AsyncStorage.setItem('error_queue', JSON.stringify(errors));
-   };
-   
-   setJSExceptionHandler((error, isFatal) => {
-     queueError({ error, isFatal });
-   }, true);
-   ```
+Check these first:
 
-## Testing Issues
+1. You are on iOS or Android, not web.
+2. You are using a supported crash type.
+3. You are testing in an environment where native crashes can actually execute.
 
-### `simulateNativeCrash` Doesn't Work
+Use [Simulate Native Crash in React Native](./examples/simulate-native-crash-in-react-native.md) for the full validation flow.
 
-**Issue:** Calling `simulateNativeCrash` has no effect.
+Two common mistakes:
 
-**Solution:**
+- calling it only in debug mode and expecting release behavior
+- using a crash type that does not make sense for the current platform or test path
 
-1. Ensure you're running on a real device or simulator (not web)
-2. Check platform:
+### Test crash code leaked into production
 
-   ```js
-   import { Platform } from 'react-native';
-   
-   if (Platform.OS === 'ios' || Platform.OS === 'android') {
-     simulateNativeCrash('nsexception');
-   } else {
-     console.log('Not supported on this platform');
-   }
-   ```
+Guard crash triggers with `__DEV__`:
 
-3. Verify the crash type is valid for your platform
-
-### Test Crashes Affect Production
-
-**Issue:** Accidentally left crash simulation code in production build.
-
-**Solution:**
-
-Use `__DEV__` flag to prevent test code in production:
-
-```js
-import { simulateNativeCrash } from 'react-native-global-exception-handler';
+```ts
+import { CrashType, simulateNativeCrash } from 'react-native-global-exception-handler';
 
 if (__DEV__) {
-  // Only available in dev builds
-  global.simulateCrash = () => {
-    simulateNativeCrash('nsexception');
+  global.triggerNativeCrash = () => {
+    simulateNativeCrash(CrashType.nsexception);
   };
 }
 ```
 
-## Performance Issues
+## Analytics issues
 
-### App Sluggish After Setting Handler
+### Errors are not reaching Sentry or Crashlytics
 
-**Issue:** App performance degrades after setting exception handlers.
+- verify the monitoring SDK is initialized first
+- keep the exception handler lightweight
+- validate both JavaScript and native paths separately
 
-**Solution:**
+Minimal verification example:
 
-Keep handlers lightweight:
-
-```js
-// ❌ Bad - Heavy synchronous operation
+```ts
 setJSExceptionHandler((error, isFatal) => {
-  // Expensive operation
-  const largeData = processHugeDataset();
-  sendToServer(largeData);
+  console.log('JS handler fired', error.message, isFatal);
 }, true);
-
-// ✅ Good - Async operation
-setJSExceptionHandler((error, isFatal) => {
-  // Queue for later processing
-  setTimeout(() => {
-    sendToServer(error);
-  }, 0);
-}, true);
-```
-
-### Memory Leaks from Error Handlers
-
-**Issue:** Memory usage increases over time.
-
-**Solution:**
-
-Avoid storing references in closures:
-
-```js
-// ❌ Bad - Closure captures large data
-let largeData = /* ... */;
-setJSExceptionHandler((error, isFatal) => {
-  console.log(largeData); // Keeps largeData in memory
-}, true);
-
-// ✅ Good - No closure captures
-setJSExceptionHandler((error, isFatal) => {
-  // Get fresh data when needed
-  const data = getCurrentData();
-  console.log(data);
-}, true);
-```
-
-## Type Issues (TypeScript)
-
-### Type Errors with Handler Functions
-
-**Error:**
-
-```typescript
-Type '(error: Error, isFatal: boolean) => void' is not assignable to type 'JSExceptionHandler'
-```
-
-**Solution:**
-
-Import types from the library:
-
-```typescript
-import { 
-  setJSExceptionHandler, 
-  type JSExceptionHandler 
-} from 'react-native-global-exception-handler';
-
-const handler: JSExceptionHandler = (error, isFatal) => {
-  console.log(error);
-};
-
-setJSExceptionHandler(handler, true);
-```
-
-### Options Type Not Recognized
-
-**Error:**
-
-```typescript
-Property 'forceAppToQuit' does not exist on type '{}'
-```
-
-**Solution:**
-
-Import `ExceptionHandlerOptions` type:
-
-```typescript
-import { 
-  setNativeExceptionHandler,
-  type ExceptionHandlerOptions 
-} from 'react-native-global-exception-handler';
-
-const options: ExceptionHandlerOptions = {
-  forceAppToQuit: true,
-  callPreviouslyDefinedHandler: false
-};
 
 setNativeExceptionHandler((errorString) => {
-  console.log(errorString);
-}, options);
-```
-
-## Compatibility Issues
-
-### React Native Version Mismatch
-
-**Error:**
-
-```
-The package react-native-global-exception-handler requires React Native 0.68+
-```
-
-**Solution:**
-
-This library requires React Native 0.68 or higher. If you're using an older version:
-
-1. Upgrade React Native:
-
-   ```bash npm2yarn
-   npx react-native upgrade
-   ```
-
-2. Or use the original library for older versions:
-
-   ```bash npm2yarn
-   npm install react-native-exception-handler
-   ```
-
-### Hermes Not Enabled
-
-**Issue:** Some features don't work without Hermes engine.
-
-**Solution:**
-
-Enable Hermes in your app:
-
-**iOS** (`ios/Podfile`):
-
-```ruby
-use_react_native!(
-  :path => config[:reactNativePath],
-  :hermes_enabled => true
-)
-```
-
-**Android** (`android/app/build.gradle`):
-
-```gradle
-project.ext.react = [
-    enableHermes: true
-]
-```
-
-## Getting More Help
-
-If you're still experiencing issues:
-
-1. **Check existing issues**: [GitHub Issues](https://github.com/darshan09200/react-native-global-exception-handler/issues)
-2. **Create a new issue**: Include:
-   - React Native version
-   - Platform (iOS/Android)
-   - Error message
-   - Minimal reproduction code
-3. **Enable verbose logging**:
-
-   ```js
-   setJSExceptionHandler((error, isFatal) => {
-     console.log('Error details:', {
-       name: error.name,
-       message: error.message,
-       stack: error.stack,
-       isFatal
-     });
-   }, true);
-   ```
-
-## Debug Mode
-
-Enable detailed logging for troubleshooting:
-
-```js
-// Add to your index.js
-if (__DEV__) {
-  console.log('Global Exception Handler - Debug Mode');
-  
-  setJSExceptionHandler((error, isFatal) => {
-    console.log('=== JS Exception Caught ===');
-    console.log('Fatal:', isFatal);
-    console.log('Error:', error);
-    console.log('Stack:', error.stack);
-    console.log('==========================');
-  }, true);
-  
-  setNativeExceptionHandler((errorString) => {
-    console.log('=== Native Exception Caught ===');
-    console.log('Error:', errorString);
-    console.log('===============================');
-  });
-}
-```
-
-## Known Issues & Compatibility
-
-### Working with Other Error Handlers
-
-If you have other libraries that set error handlers (e.g., error monitoring SDKs), you may want to chain them together:
-
-```js
-import { setJSExceptionHandler, getJSExceptionHandler } from 'react-native-global-exception-handler';
-
-// Save the previous handler (might be from another library)
-const previousHandler = getJSExceptionHandler();
-
-setJSExceptionHandler((error, isFatal) => {
-  // Your custom handling
-  console.log('Custom handler:', error);
-  
-  // Call the previous handler if it exists
-  if (previousHandler) {
-    previousHandler(error, isFatal);
-  }
-}, true);
-```
-
-For native handlers, use the `callPreviouslyDefinedHandler` option:
-
-```js
-setNativeExceptionHandler((errorString) => {
-  // Your custom handling
-  console.log('Custom native handler:', errorString);
+  console.log('Native handler fired', errorString);
 }, {
-  callPreviouslyDefinedHandler: true  // Chain with previous handler
+  forceAppToQuit: true,
 });
 ```
+
+If the console logs never appear in the expected environment, fix that first before debugging the monitoring provider.
+
+Use the provider guides:
+
+- [React Native Sentry Integration](./examples/react-native-sentry-integration.md)
+- [React Native Crashlytics Integration](./examples/react-native-crashlytics-integration.md)
+
+## Next actions
+
+- [Read the API Reference](./api.md)

@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'react-native-global-exception-handler',
-  tagline: 'Catch and report fatal/native errors in React Native',
+  tagline: 'React Native exception handling for JavaScript and native crashes',
   favicon: 'img/favicon/favicon.ico',
 
   trailingSlash: true,
@@ -58,8 +58,21 @@ const config: Config = {
         },
         sitemap: {
           lastmod: 'datetime',
+          ignorePatterns: ['/search', '/search/**'],
         },
       } satisfies Preset.Options,
+    ],
+  ],
+
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          { to: '/', from: '/search/' },
+          { to: '/docs/usage/basic-usage/', from: '/docs/usage/usage/' },
+        ],
+      },
     ],
   ],
 
@@ -82,7 +95,7 @@ const config: Config = {
           position: 'left',
         },
         {
-          to: '/docs/api',
+          to: '/docs/api/',
           label: 'API',
           position: 'left',
         },
@@ -101,21 +114,25 @@ const config: Config = {
           items: [
             {
               label: 'Getting started',
-              to: '/docs/overview/getting-started',
+              to: '/docs/overview/getting-started/',
             },
             {
               label: 'Installation',
-              to: '/docs/overview/installation',
+              to: '/docs/overview/installation/',
             },
             {
               label: 'API reference',
-              to: '/docs/api',
+              to: '/docs/api/',
             },
           ],
         },
         {
           title: 'Community',
           items: [
+            {
+              label: 'npm package',
+              href: 'https://www.npmjs.com/package/react-native-global-exception-handler',
+            },
             {
               label: 'GitHub',
               href: 'https://github.com/darshan09200/react-native-global-exception-handler',
@@ -143,11 +160,11 @@ const config: Config = {
             // },
             {
               label: 'Examples',
-              to: '/docs/examples',
+              to: '/docs/examples/',
             },
             {
               label: 'Troubleshooting',
-              to: '/docs/troubleshooting',
+              to: '/docs/troubleshooting/',
             },
           ],
         },
@@ -200,6 +217,7 @@ const config: Config = {
 
       // Optional: see doc section below
       contextualSearch: true,
+      searchPagePath: false,
     },
   } satisfies Preset.ThemeConfig,
 

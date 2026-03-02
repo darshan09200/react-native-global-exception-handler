@@ -2,38 +2,40 @@
 id: installation
 sidebar_position: 2
 title: Installation
-description: Installation and platform-specific setup instructions for react-native-global-exception-handler (iOS, Android, and TypeScript guidance).
+sidebar_label: Installation
+seo_title: Install for React Native | react-native-global-exception-handler
+description: Install react-native-global-exception-handler in React Native. Follow the iOS CocoaPods step, confirm Android native module linking, and check Troubleshooting if the module is not registered.
 keywords:
-  - installation
-  - setup
-  - ios
-  - android
-  - pods
-  - gradle
+  - install react-native-global-exception-handler
+  - react native crash handler installation
+  - ios pod install react native exception handler
+  - android exception handler setup
 ---
 
-## Peer Dependencies
+Installation is the place to confirm that the package is present and the native module is actually available to the app. Work through this page if you need the iOS pod step, Android autolinking expectations, or the basic checks that catch an incomplete native setup early. Once this is done, you can move on to handler registration with confidence that the library is wired correctly.
 
-Ensure you have a recent version of React Native (0.68+) and TypeScript if using types.
+## Requirements
 
-## Architecture Support
+- React Native 0.68 or later
+- iOS or Android target app
+- TypeScript only if you want typed handlers and option objects
 
-This library supports both the legacy (Old Architecture) and the New Architecture (TurboModules + Fabric) of React Native:
+## Architecture support
 
-- Works with projects that have **not** enabled the New Architecture (uses the JS runtime and auto-linked native module as usual).
-- Fully compatible with the **New Architecture**: the native module is implemented as a TurboModule, and exception handling works across both architectures without extra configuration.
+The package is designed to work with both React Native architecture modes:
 
-No additional steps are required to enable support; the correct native bindings are auto-selected at build time.
+- legacy architecture projects
+- new architecture projects using TurboModules and Fabric
 
-> If you later migrate your app to the New Architecture, you do **not** need to change your exception handler setup—your existing usage continues to work.
+You do not need a separate install path for the new architecture in most setups. If you run into TurboModule registration issues after install, use the [Troubleshooting](../troubleshooting.md) steps to clear caches and rebuild the native app.
 
-## Install Package
+## Install the package
 
 ```bash npm2yarn
 npm install react-native-global-exception-handler
 ```
 
-## iOS Setup
+## iOS setup
 
 Run CocoaPods after installation:
 
@@ -41,21 +43,41 @@ Run CocoaPods after installation:
 cd ios && pod install
 ```
 
-No additional manual iOS integration is required.
+No additional manual iOS integration is required for the standard setup.
 
-## Android Setup
+## Android setup
 
-The library uses a native module. Gradle should auto-link automatically when you run the app. No manual steps required.
+The Android native module auto-links in supported React Native versions. In most projects there are no extra manual Gradle steps beyond rebuilding the app.
 
-## TypeScript
+If your app uses the new architecture and the native module is not registered, the usual fix is to clear Metro and native build caches, then rebuild from scratch. Those commands are listed in [Troubleshooting](../troubleshooting.md).
 
-Types are bundled. Import directly:
+## TypeScript support
+
+Types are bundled with the package:
 
 ```ts
-import type { 
+import type {
+  CrashType,
   ExceptionHandlerOptions,
   JSExceptionHandler,
   NativeExceptionHandler,
-  CrashType
 } from 'react-native-global-exception-handler';
 ```
+
+## After installation
+
+Once the package is installed:
+
+1. Follow [Getting Started](./getting-started.md) to register the handlers.
+2. Review [Basic Usage](../usage/basic-usage.md) for entry-point setup.
+3. Read [Native Crash Handling](../usage/native-crash-handling.md) before testing release behavior.
+4. Use [Troubleshooting](../troubleshooting.md) if pods, builds, or module registration fail.
+
+## Need provider-specific examples?
+
+- [React Native Sentry Integration](../examples/react-native-sentry-integration.md)
+- [React Native Crashlytics Integration](../examples/react-native-crashlytics-integration.md)
+
+## Next actions
+
+- [Continue to Basic Usage](../usage/basic-usage.md)

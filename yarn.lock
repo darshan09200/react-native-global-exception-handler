@@ -2788,6 +2788,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@docusaurus/plugin-client-redirects@npm:3.9.2":
+  version: 3.9.2
+  resolution: "@docusaurus/plugin-client-redirects@npm:3.9.2"
+  dependencies:
+    "@docusaurus/core": 3.9.2
+    "@docusaurus/logger": 3.9.2
+    "@docusaurus/utils": 3.9.2
+    "@docusaurus/utils-common": 3.9.2
+    "@docusaurus/utils-validation": 3.9.2
+    eta: ^2.2.0
+    fs-extra: ^11.1.1
+    lodash: ^4.17.21
+    tslib: ^2.6.0
+  peerDependencies:
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
+  checksum: b8f8d00af5bf6dd50d8e16d2c65364376045575d46248773c38e377ff38c3104cac7a4db1fdf8e47c7de86a11a2e4b1142b99df4615ebefa6fa0183188260ef0
+  languageName: node
+  linkType: hard
+
 "@docusaurus/plugin-content-blog@npm:3.9.2":
   version: 3.9.2
   resolution: "@docusaurus/plugin-content-blog@npm:3.9.2"
@@ -20356,6 +20376,7 @@ __metadata:
   dependencies:
     "@docusaurus/core": 3.9.2
     "@docusaurus/module-type-aliases": 3.9.2
+    "@docusaurus/plugin-client-redirects": 3.9.2
     "@docusaurus/preset-classic": 3.9.2
     "@docusaurus/remark-plugin-npm2yarn": ^3.9.2
     "@docusaurus/tsconfig": 3.9.2

@@ -20,12 +20,13 @@ const rawFeatures: RawFeature[] = [
     Svg: require('@site/static/img/undraw_react.svg').default,
     description: (
       <>
-        Built with <strong>TurboModules</strong> for React Native 0.68+. Modern
-        link to native functionality with minimal bridge overhead.
+        Built with <strong>TurboModules</strong> support for React Native 0.68+
+        so teams can add crash handling without giving up compatibility with
+        legacy or new architecture apps.
         <ul className={styles.slidePoints}>
-          <li>Zero-config install for supported RN versions</li>
-          <li>Lean native surface → faster startup</li>
-          <li>Future‑proof architecture alignment</li>
+          <li>Works with old and new architecture projects</li>
+          <li>Fast install path for supported React Native versions</li>
+          <li>Solid fit for long-lived apps</li>
         </ul>
       </>
     ),
@@ -36,12 +37,12 @@ const rawFeatures: RawFeature[] = [
     Svg: require('@site/static/img/undraw_code-inspection.svg').default,
     description: (
       <>
-        Catches both <strong>JavaScript and native</strong> exceptions with one
-        unified API surface.
+        Catch <strong>JavaScript and native</strong> exceptions through one API
+        surface so your team can stop piecing together separate crash flows.
         <ul className={styles.slidePoints}>
-          <li>Single place to register handlers</li>
+          <li>One place to register handlers</li>
           <li>Consistent reporting payloads</li>
-          <li>Graceful fallback UI trigger</li>
+          <li>Graceful fallback and restart workflows</li>
         </ul>
       </>
     ),
@@ -52,8 +53,9 @@ const rawFeatures: RawFeature[] = [
     Svg: require('@site/static/img/undraw_switches.svg').default,
     description: (
       <>
-        Configurable options with <strong>custom error UI</strong>, restart
-        behavior, and pluggable reporters.
+        Shape the crash experience with <strong>custom error UI</strong>,
+        restart behavior, and pluggable reporters instead of accepting the
+        default app quit.
         <ul className={styles.slidePoints}>
           <li>Override default handler logic</li>
           <li>Inject user-friendly recovery screens</li>
@@ -68,8 +70,9 @@ const rawFeatures: RawFeature[] = [
     Svg: require('@site/static/img/undraw_mobile-testing.svg').default,
     description: (
       <>
-        Built-in <strong>crash simulation</strong> utilities to validate your
-        fallback UX before shipping.
+        Built-in <strong>crash simulation</strong> utilities let you test
+        fallback UX, release behavior, and crash reporting before users ever hit
+        a fatal path.
         <ul className={styles.slidePoints}>
           <li>Trigger JS exceptions on demand</li>
           <li>Simulate native crashes safely</li>
@@ -84,12 +87,12 @@ const rawFeatures: RawFeature[] = [
     Svg: require('@site/static/img/undraw_mobile-analytics.svg').default,
     description: (
       <>
-        Integrate with <strong>Crashlytics, Sentry</strong>, or any analytics
-        service using flexible hooks.
+        Plug into <strong>Crashlytics, Sentry</strong>, or your own analytics
+        pipeline without rewriting the rest of your monitoring stack.
         <ul className={styles.slidePoints}>
           <li>Attach custom metadata/context</li>
           <li>Rate-limit noisy error bursts</li>
-          <li>Works offline with queued dispatch</li>
+          <li>Bridge docs with real monitoring workflows</li>
         </ul>
       </>
     ),
@@ -100,8 +103,8 @@ const rawFeatures: RawFeature[] = [
     Svg: require('@site/static/img/undraw_code-review.svg').default,
     description: (
       <>
-        Full <strong>TypeScript</strong> definitions for safer integrations and
-        better editor guidance.
+        Full <strong>TypeScript</strong> definitions make integrations safer and
+        editor feedback sharper when you wire crash handling into a real app.
         <ul className={styles.slidePoints}>
           <li>Strict handler signatures</li>
           <li>Typed config options</li>
@@ -163,12 +166,12 @@ export default function Features(): ReactNode {
       <div className={styles.featuresInner}>
         <div className={styles.featuresHeader}>
           <Heading as="h2" className={styles.featuresTitle}>
-            Why Global Exception Handler?
+            Why teams install this React Native crash handler
           </Heading>
           <p className={styles.featuresIntro}>
-            Catch crashes across JavaScript and native layers, customize
-            recovery UI, and ship more resilient apps. Explore the core
-            advantages below.
+            Catch the failures that matter, give users a better fallback path,
+            and connect your monitoring stack without inventing a crash pipeline
+            from scratch.
           </p>
         </div>
         <Carousel slides={slides} />

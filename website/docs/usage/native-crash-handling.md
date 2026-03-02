@@ -2,106 +2,108 @@
 id: native-crash-handling
 sidebar_position: 4
 title: Native Crash Handling
-description: Platform-specific guide to native crash handling on iOS and Android, including options, limitations, and examples.
+sidebar_label: Native Crashes
+description: Handle native crashes in React Native with react-native-global-exception-handler. Learn Android and iOS limits, `callPreviouslyDefinedHandler`, and why native crash behavior should be tested in release mode.
 keywords:
-  - native
-  - crash
-  - handling
-  - ios
-  - android
+  - react native native crash handling
+  - react native native exception handler
+  - ios native crash handling react native
 ---
 
-The library provides native exception handling for iOS and Android to catch crashes that occur in native code.
+Native crash handling is the part of the library where platform limits matter most. This page is for cases where JavaScript handling is already clear, but you still need to understand Android versus iOS behavior, when to chain an existing native handler, and why release builds are the only meaningful test environment. The goal is to set realistic expectations before you rely on a native crash flow in production.
 
-## How It Works
-
-The library uses platform-specific native exception handlers:
-
-- **iOS**: Installs an NSException handler and signal handlers
-- **Android**: Installs an UncaughtExceptionHandler
-
-When a native crash occurs, your handler function is called with the error message before the app terminates (or continues based on your options).
-
-## Basic Usage
+## Basic native crash setup
 
 ```ts
 import { setNativeExceptionHandler } from 'react-native-global-exception-handler';
 
 setNativeExceptionHandler((errorString) => {
-  // errorString contains the native error message/stack
   console.log('Native crash:', errorString);
-  
-  // Send to error monitoring
-  reportToSentry(errorString);
-});
-```
-
-## Platform-Specific Options
-
-### Android Options
-
-```ts
-setNativeExceptionHandler((errorString) => {
-  // Handle error
+  // forward to your monitoring service
 }, {
-  forceAppToQuit: true,  // Force app to terminate after handler runs
-  callPreviouslyDefinedHandler: false  // Call previous handler
+  forceAppToQuit: true,
+  callPreviouslyDefinedHandler: false,
 });
 ```
 
-- `forceAppToQuit`: If `true` (default), forces the app to quit after your handler runs (Android only)
-- `callPreviouslyDefinedHandler`: If `true`, calls any previously defined native handler (default: `false`)
+## How the native handler works
 
-### iOS Options
+- iOS installs native exception and signal handlers.
+- Android installs an `UncaughtExceptionHandler`.
+- Your callback runs very late in the failure path, so it must stay lightweight.
+- `callPreviouslyDefinedHandler` lets you chain another native exception handler after your own callback has run.
+
+## Android behavior
+
+Android is the more flexible platform for native crash recovery:
+
+- you can log crash information
+- you can decide whether to force the app to quit
+- some restart or relaunch flows are possible depending on your app design
 
 ```ts
 setNativeExceptionHandler((errorString) => {
-  // Handle error
+  console.log(errorString);
 }, {
-  callPreviouslyDefinedHandler: false  // Chain with previous handler
+  forceAppToQuit: true,
+  callPreviouslyDefinedHandler: false,
 });
 ```
 
-- `callPreviouslyDefinedHandler`: If `true`, calls any previously defined native exception handler (default: `false`)
+### Android options
 
-## Platform Limitations
+- `forceAppToQuit: true` is the safer default for a clean post-crash state
+- `forceAppToQuit: false` can make sense for advanced recovery flows or navigation-driven restart strategies
+- `callPreviouslyDefinedHandler: true` is useful if another SDK or native layer already registered its own handler and you want to preserve that behavior
 
-### iOS Limitations
+## iOS behavior
 
-iOS has stricter limitations when handling native crashes:
+iOS is stricter after a native crash:
 
-- **Cannot Restart Programmatically**: Unlike Android, iOS doesn't allow programmatic app restarts
-- **UI State is Unstable**: The app is in an unstable state after a crash. UI may not render properly
-- **Event Handlers Don't Work**: Click handlers and other event listeners won't fire in the error screen
-- **Must Call `releaseExceptionHold()`**: You MUST call this to allow the app to crash gracefully. Without it, the app will hang indefinitely
+- interactive UI is not reliable
+- programmatic restart is not supported
+- the app is already in an unstable state
+- touch handlers and button callbacks may stop working
+- not every low-level signal crash can be recovered or even reported cleanly
 
-**iOS Example:**
+That means your iOS handler should focus on lightweight logging or native crash-screen strategies that respect the platform constraints.
 
-```ts
-import { setNativeExceptionHandler } from 'react-native-global-exception-handler';
-
-setNativeExceptionHandler((errorString) => {
-  // Log the error
-  console.log('iOS Native Crash:', errorString);
-  
-  // Report to analytics
-});
-```
+If you use a custom native popup flow on iOS, make sure the app is allowed to continue its crash path after you finish the minimal logging or display work. Holding the exception indefinitely can leave the app hung instead of terminated cleanly.
 
 :::warning
-On iOS, **DO NOT** attempt to show interactive UI (buttons, touchable elements) in your error handler. The app is in an unstable state and touch events will not work.
+Do not rely on interactive React Native UI after a fatal native iOS crash. Touch handlers and normal app flow are not dependable in that state.
 :::
 
-### Android Capabilities
+## Release-build testing matters
 
-Android is more flexible with native crash handling:
+Native crash handling needs release-build verification because debug infrastructure can change the behavior you see in development.
 
-- Can restart the app programmatically
-- UI can be displayed (though still unstable)
-- Can force app to quit or continue running
+Recommended validation flow:
 
-### General Limitations
+1. Complete [Installation](../overview/installation.md)
+2. Register handlers from [Basic Usage](./basic-usage.md)
+3. Use [Simulate Native Crash in React Native](../examples/simulate-native-crash-in-react-native.md)
+4. Confirm your reporting provider receives the payload
 
-- Not all crashes can be intercepted (e.g., some signal-based crashes)
-- Handler runs synchronously before crash, so keep it lightweight
-- Network calls may not complete before app terminates
+## Integrations
+
+Need reporting examples?
+
+- [React Native Sentry Integration](../examples/react-native-sentry-integration.md)
+- [React Native Crashlytics Integration](../examples/react-native-crashlytics-integration.md)
+
+## Minimal chained-handler example
+
+```ts
+setNativeExceptionHandler((errorString) => {
+  console.log('Native error:', errorString);
+}, {
+  forceAppToQuit: true,
+  callPreviouslyDefinedHandler: true,
+});
+```
+
+## Next actions
+
+- [Read Troubleshooting](../troubleshooting.md)
+- [See the full API Reference](../api.md)
