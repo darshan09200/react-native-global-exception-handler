@@ -6,27 +6,33 @@ export default function Hero() {
   return (
     <section className={styles.heroRoot}>
       <div className={styles.heroInner}>
+        <p className={styles.eyebrow}>react-native-global-exception-handler</p>
         <h1 className={styles.headline}>
-          Catch <span className="accent">native & JS</span> crashes
+          Handle <span className="accent">JS and native crashes</span>
           <br />
-          Show a <span className="accent">graceful fallback</span>
-          <br />
-          Ship <span className="accent">resilient apps</span>
+          in <span className="accent">React Native</span>
         </h1>
         <p className={styles.subhead}>
-          Global exception handling for React Native 0.68+: TurboModules, native
-          crash interception, simulation, and TypeScript‑first APIs.
+          <span className={styles.packageName}>
+            react-native-global-exception-handler
+          </span>{' '}
+          helps React Native teams capture uncaught JavaScript exceptions,
+          handle native crashes, trigger fallback flows, and forward reports to
+          Sentry, Crashlytics, or custom backends.
         </p>
         <PackageNamePill />
         <div className={styles.ctaRow}>
           <Link
             className="button button--primary button--lg"
-            to="/docs/overview/getting-started/"
+            to="/docs/overview/installation/"
           >
-            Get Started
+            Install the Package
           </Link>
-          <Link className="button button--secondary button--lg" to="/docs/api/">
-            API Reference
+          <Link
+            className="button button--secondary button--lg"
+            href="https://github.com/darshan09200/react-native-global-exception-handler"
+          >
+            View on GitHub
           </Link>
         </div>
         <div className={styles.codeShell}>
@@ -47,7 +53,7 @@ export default function Hero() {
 
 function PackageNamePill() {
   const pkg = 'react-native-global-exception-handler';
-  const installCmd = `yarn add ${pkg}`;
+  const installCmd = `npm install ${pkg}`;
   const [copied, setCopied] = useState(false);
   const onCopy = useCallback(() => {
     navigator.clipboard.writeText(installCmd).then(() => {

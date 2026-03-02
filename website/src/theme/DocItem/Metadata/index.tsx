@@ -13,8 +13,16 @@ const safe = <T,>(v: T | undefined) =>
   v === undefined || v === null ? undefined : v;
 
 export default function MetadataWrapper(props: Props) {
-  const { metadata } = useDoc();
+  const { metadata, frontMatter } =
+    useDoc() as typeof useDoc extends () => infer T
+      ? T & {
+          frontMatter?: {
+            seo_title?: string;
+          };
+        }
+      : never;
   const { siteConfig } = useDocusaurusContext();
+  const seoTitle = frontMatter?.seo_title ?? titleWithSuffix(metadata.title);
   const { title, description, permalink } = metadata;
 
   const webPage = {
@@ -57,6 +65,16 @@ export default function MetadataWrapper(props: Props) {
     <>
       <OriginalMetadata {...props} />
       <Head>
+        <title>{seoTitle}</title>
+        {description ? (
+          <>
+            <meta name="description" content={description} />
+            <meta property="og:title" content={seoTitle} />
+            <meta property="og:description" content={description} />
+          </>
+        ) : (
+          <meta property="og:title" content={seoTitle} />
+        )}
         {/* Emit WebPage JSON-LD */}
         <script type="application/ld+json">{JSON.stringify(webPage)}</script>
         {/* Emit FAQ JSON-LD for troubleshooting page (if applicable) */}
@@ -66,4 +84,8 @@ export default function MetadataWrapper(props: Props) {
       </Head>
     </>
   );
+}
+
+function titleWithSuffix(title: string) {
+  return `${title} | react-native-global-exception-handler`;
 }

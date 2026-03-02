@@ -20,11 +20,24 @@
   text-align: center;
 }
 
+.eyebrow {
+  display: inline-block;
+  margin: 0 0 0.85rem;
+  padding: 0.34rem 0.78rem;
+  border-radius: 999px;
+  background: rgba(23, 37, 84, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.96);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
 .headline {
   font-size: clamp(2.2rem, 5vw, 3.25rem);
   font-weight: 700;
   line-height: 1.05;
-  margin: 0 0 1.75rem;
+  margin: 0 0 1.25rem;
   letter-spacing: -0.5px;
 }
 
@@ -43,9 +56,22 @@
 .subhead {
   font-size: 1.15rem;
   max-width: 760px;
-  margin: 0 auto 2.25rem;
+  margin: 0 auto 2rem;
   line-height: 1.5;
   font-weight: 400;
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.packageName {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.94em;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.98);
+  background: rgba(15, 23, 42, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 0.45rem;
+  padding: 0.08rem 0.38rem;
+  white-space: nowrap;
 }
 /* Package name pill */
 .pkgWrap {

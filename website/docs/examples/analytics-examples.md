@@ -1,8 +1,9 @@
 ---
 id: analytics-integration
 sidebar_position: 3
-title: Analytics Integration 
-description: Examples for integrating react-native-global-exception-handler with Sentry, Crashlytics, and custom analytics for reporting JS and native crashes.
+title: Analytics Integration Patterns
+sidebar_label: Analytics
+description: Overview of analytics and monitoring patterns for react-native-global-exception-handler, with links to dedicated Sentry and Crashlytics integration guides.
 keywords:
   - analytics
   - sentry
@@ -11,66 +12,45 @@ keywords:
   - integration
 ---
 
-Quick reference snippets for wiring `react-native-global-exception-handler` into popular monitoring services. (Assumes the service SDKs are already installed & initialized.)
+This page is the analytics overview for `react-native-global-exception-handler`. It keeps the shared patterns and one custom example here, while the dedicated Sentry and Crashlytics pages keep the provider-specific setup.
 
-## Sentry
+## Choose the reporting path you need
 
-```js
-import * as Sentry from '@sentry/react-native';
-import { 
-  setJSExceptionHandler, 
-  setNativeExceptionHandler 
+- [React Native Sentry Integration](./react-native-sentry-integration.md): dedicated setup for forwarding JavaScript exceptions and native crash messages into Sentry.
+- [React Native Crashlytics Integration](./react-native-crashlytics-integration.md): Firebase Crashlytics-specific setup for production monitoring.
+- Custom analytics: use your own API or event pipeline if you do not want a third-party crash platform.
+
+## Shared integration pattern
+
+No matter which provider you choose, the architecture is usually the same:
+
+1. Initialize the analytics SDK first.
+2. Register `setJSExceptionHandler` for JavaScript errors.
+3. Register `setNativeExceptionHandler` for native crash messages.
+4. Keep the native handler lightweight.
+5. Verify the behavior in a release build.
+
+## Lightweight shared example
+
+```ts
+import {
+  setJSExceptionHandler,
+  setNativeExceptionHandler,
 } from 'react-native-global-exception-handler';
 
-// JavaScript exceptions
 setJSExceptionHandler((error, isFatal) => {
-  Sentry.captureException(error, {
-    level: isFatal ? 'fatal' : 'error',
-    tags: {
-      error_type: 'javascript',
-      is_fatal: isFatal
-    }
-  });
+  console.log('report JS error', error.message, isFatal);
 }, true);
 
-// Native exceptions
 setNativeExceptionHandler((errorString) => {
-  Sentry.captureMessage(errorString, {
-    level: 'fatal',
-    tags: {
-      error_type: 'native'
-    }
-  });
+  console.log('report native error', errorString);
+}, {
+  forceAppToQuit: true,
+  callPreviouslyDefinedHandler: false,
 });
 ```
 
-## Crashlytics
-
-```js
-import crashlytics from '@react-native-firebase/crashlytics';
-import { 
-  setJSExceptionHandler, 
-  setNativeExceptionHandler 
-} from 'react-native-global-exception-handler';
-
-// JavaScript exceptions
-setJSExceptionHandler((error, isFatal) => {
-  crashlytics().recordError(error);
-  
-  if (isFatal) {
-    crashlytics().log('Fatal JS error occurred');
-    crashlytics().setAttribute('error_type', 'fatal_js');
-  }
-}, true);
-
-// Native exceptions
-setNativeExceptionHandler((errorString) => {
-  crashlytics().log(errorString);
-  crashlytics().setAttribute('error_type', 'native');
-});
-```
-
-## Custom Analytics
+## Custom analytics example
 
 ```ts
 import { Alert, BackHandler } from 'react-native';
@@ -109,3 +89,32 @@ setNativeExceptionHandler((errorString) => {
   forceAppToQuit: true
 });
 ```
+
+## Queue before sending
+
+If you do not trust the network path during a fatal error, queue data first and upload it later:
+
+```ts
+const queueError = async (payload: unknown) => {
+  // persist locally, then upload next launch
+  console.log('queued', payload);
+};
+
+setJSExceptionHandler((error, isFatal) => {
+  queueError({
+    layer: 'javascript',
+    isFatal,
+    message: error.message,
+  });
+}, true);
+```
+
+## Release validation
+
+After wiring a provider, use [Simulate Native Crash in React Native](./simulate-native-crash-in-react-native.md) and the [Testing](../advanced/testing.md) guide to confirm that the monitoring pipeline captures both JavaScript and native failures.
+
+## Next steps
+
+- [React Native Sentry Integration](./react-native-sentry-integration.md)
+- [React Native Crashlytics Integration](./react-native-crashlytics-integration.md)
+- [Troubleshooting](../troubleshooting.md)

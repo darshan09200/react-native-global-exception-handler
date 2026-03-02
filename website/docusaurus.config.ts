@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'react-native-global-exception-handler',
-  tagline: 'Catch and report fatal/native errors in React Native',
+  tagline: 'React Native exception handling for JavaScript and native crashes',
   favicon: 'img/favicon/favicon.ico',
 
   trailingSlash: true,
@@ -129,6 +129,10 @@ const config: Config = {
         {
           title: 'Community',
           items: [
+            {
+              label: 'npm package',
+              href: 'https://www.npmjs.com/package/react-native-global-exception-handler',
+            },
             {
               label: 'GitHub',
               href: 'https://github.com/darshan09200/react-native-global-exception-handler',

@@ -2,136 +2,109 @@
 id: basic-usage
 sidebar_position: 3
 title: Basic Usage
-description: Detailed usage guide explaining JavaScript vs native exceptions and how to configure handlers and options for both platforms.
+sidebar_label: Basic Usage
+description: Basic usage for react-native-global-exception-handler in React Native. Register JavaScript and native handlers, understand `forceAppToQuit` and `callPreviouslyDefinedHandler`, and move to release testing.
 keywords:
-  - usage
-  - javascript
-  - native
-  - exception
-  - handling
+  - react native global error handler example
+  - react native exception handler usage
+  - react native javascript crash handling
 ---
 
-## Understanding Error Types
+Basic usage covers the smallest setup that is still useful in a real app. Read this after installation if you want to register JavaScript and native handlers, understand the main native options, and get to a clean baseline before adding provider-specific integrations. It is also the quickest way to see what should be validated in release mode.
 
-Before diving into usage, it's important to understand the two types of errors in a React Native app:
+## Understand the two crash layers
 
-### JavaScript Exceptions
+### JavaScript exceptions
 
-- Errors produced by your JavaScript/React code
-- Can show UI dialogs, alerts, and perform async operations
-- Can capture and handle gracefully before app crashes
-- Examples: undefined variables, network errors, logic errors
+JavaScript exceptions come from your React or React Native code. These failures are usually easier to report and can still trigger controlled UI or logging flows before the app exits.
 
-### Native Exceptions
+Common examples:
 
-- Errors produced by native modules (iOS/Android)
-- **Cannot** show JS alerts or update UI via JS code
-- Must use native UI for error screens
-- **Much more critical** - leave app in unstable state
-- Examples: null pointer exceptions, memory access violations
+- undefined values
+- logic bugs
+- failed assumptions in app code
 
-> **Important**: Native exceptions are handled via native code. You cannot show React components or JS alerts when a native crash occurs. The handler runs just before the app terminates.
+### Native exceptions
 
-## JavaScript Exception Handling
+Native exceptions come from iOS or Android runtime code and are more restrictive.
 
-Set up a global handler for JavaScript exceptions in your app's entry point (`index.js` or `App.tsx`):
+Common examples:
+
+- null pointer failures
+- memory access violations
+- platform-specific native crashes
+
+> Native crash behavior is platform-dependent. Read [Native Crash Handling](./native-crash-handling.md) before building custom UI or restart flows around it.
+
+## Register the JavaScript exception handler
 
 ```ts
 import { setJSExceptionHandler } from 'react-native-global-exception-handler';
 
 setJSExceptionHandler((error, isFatal) => {
-  // Send to error monitoring service (e.g., Sentry, Bugsnag)
   console.log('JS Exception:', error.message, 'Fatal:', isFatal);
-  
-  if (isFatal) {
-    // Show crash screen or force restart
-  }
-}, true); // true = enable in dev mode
+  // send to your reporting service
+}, true);
 ```
 
-**Parameters:**
+### Parameters
 
-- First parameter: Handler function receiving `(error: Error, isFatal: boolean)`
-- Second parameter: `allowedInDevMode` - Set to `true` to enable in development (default: `false`)
+- `customHandler`: receives `(error: Error, isFatal: boolean)`
+- `allowedInDevMode`: set to `true` if you want the handler to run in development too
 
-## Native Exception Handling
-
-Handle native crashes on iOS and Android:
+## Register the native exception handler
 
 ```ts
 import { setNativeExceptionHandler } from 'react-native-global-exception-handler';
 
 setNativeExceptionHandler((errorString) => {
-  // errorString contains the native error message
   console.log('Native Exception:', errorString);
-  
-  // Send to error monitoring
+  // send to Sentry, Crashlytics, or your backend
 }, {
-  forceAppToQuit: true,  // Android: Force app to quit after handling
-  callPreviouslyDefinedHandler: false  // Call previous handler (iOS/Android)
+  forceAppToQuit: true,
+  callPreviouslyDefinedHandler: false,
 });
 ```
 
-**Options:**
+### Options
 
-- `forceAppToQuit` (Android only): Force app to quit after handler runs
-- `callPreviouslyDefinedHandler`: Chain with previous native exception handler
+- `forceAppToQuit`: Android-only behavior for terminating the app after the handler runs
+- `callPreviouslyDefinedHandler`: chains the earlier native exception handler if needed
 
-> Note: The native exception handler only activates in production (bundled) builds. In development you'll still see the Red Screen.
-
-## Complete Setup Example
-
-In your `index.js`:
+## Complete setup example
 
 ```ts
-import { 
-  setJSExceptionHandler, 
-  setNativeExceptionHandler 
+import {
+  setJSExceptionHandler,
+  setNativeExceptionHandler,
 } from 'react-native-global-exception-handler';
 
-// JavaScript exception handler
 setJSExceptionHandler((error, isFatal) => {
-  // Send to monitoring service
   console.log('JS Error:', error, isFatal);
 }, true);
 
-// Native exception handler
 setNativeExceptionHandler((errorString) => {
-  // Send to monitoring service
   console.log('Native Error:', errorString);
 }, {
   forceAppToQuit: true,
-  callPreviouslyDefinedHandler: false
+  callPreviouslyDefinedHandler: false,
 });
-
 ```
 
-## Development vs Production
+## Development vs production
 
-By default, JS exception handler only works in production builds. Enable in development:
+- JavaScript handling can run in development if you pass `true`.
+- Native crash handling should be validated in release builds because debug tooling can interfere with the behavior.
 
-```ts
-// Only in production (default)
-setJSExceptionHandler(handler);
+Use [Troubleshooting](../troubleshooting.md) if the callbacks do not behave the way you expect.
 
-// Also in development
-setJSExceptionHandler(handler, true);
+## Where to go next
 
-// Or check manually
-const isDev = __DEV__;
-setJSExceptionHandler(handler, !isDev); // Only in production
-```
+- [Native Crash Handling](./native-crash-handling.md) for platform limits and recovery expectations
+- [React Native Sentry Integration](../examples/react-native-sentry-integration.md) for Sentry reporting
+- [React Native Crashlytics Integration](../examples/react-native-crashlytics-integration.md) for Firebase
+- [Migrating from react-native-exception-handler](../migration/migrating-from-react-native-exception-handler.md) if you are upgrading from the older package
 
-## Getting the Current Handler
+## Next actions
 
-Retrieve the currently set JavaScript exception handler:
-
-```ts
-import { getJSExceptionHandler } from 'react-native-global-exception-handler';
-
-const currentHandler = getJSExceptionHandler();
-```
-
-## Migration Guide
-
-If you're upgrading from the original `react-native-exception-handler`, see the dedicated [Migration Guide](../migration/migrating-from-react-native-exception-handler.md) for differences, legacy API notes, and step-by-step update instructions.
+- [Read the API Reference](../api.md)

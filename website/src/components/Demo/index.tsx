@@ -9,11 +9,11 @@ export default function Demo() {
     <section className={styles.demoSection} id="demo">
       <div className="container">
         <Heading as="h2" className={styles.demoHeading}>
-          See It In Action
+          Watch React Native crash handling in action
         </Heading>
         <p className={styles.demoSubheading}>
-          Watch how the library handles crashes gracefully on both iOS and
-          Android
+          See how the library reports native failures, shows fallback UI, and
+          helps teams validate production crash flows on both iOS and Android.
         </p>
 
         <div className={styles.demoGrid}>
@@ -21,13 +21,13 @@ export default function Demo() {
             platform="iOS"
             videoSrc="/video/iOS_demo.mp4"
             posterSrc="/img/ios-demo-poster.png"
-            description="Test native crash handling with built-in simulation tools for comprehensive error testing"
+            description="Test native crash handling with built-in simulation tools and validate what iOS can safely do after a fatal exception."
           />
           <VideoDemo
             platform="Android"
             videoSrc="/video/android_demo.mp4"
             posterSrc="/img/android-demo-poster.png"
-            description="Default error screen displays crash details with options to relaunch the app or quit gracefully"
+            description="Android can show crash details, log the failure, and support restart-oriented recovery flows when your app needs them."
           />
         </div>
 
@@ -35,9 +35,15 @@ export default function Demo() {
         <div className={styles.ctaSection}>
           <Link
             className="button button--primary button--lg"
-            to="docs/examples/basic-examples"
+            to="/docs/examples/basic-examples/"
           >
             View Example Code
+          </Link>
+          <Link
+            className="button button--secondary button--lg margin-left--sm"
+            to="/docs/examples/simulate-native-crash-in-react-native/"
+          >
+            Simulate a Crash
           </Link>
         </div>
       </div>
