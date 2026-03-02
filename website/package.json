@@ -4,12 +4,14 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "start": "docusaurus start",
-    "build": "docusaurus build",
+    "llms:generate": "node ./scripts/generate-llms.mjs",
+    "agent:check": "node ./scripts/check-agent-docs.mjs",
+    "start": "yarn llms:generate && docusaurus start",
+    "build": "yarn llms:generate && docusaurus build",
     "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus deploy",
+    "deploy": "yarn llms:generate && docusaurus deploy",
     "clear": "docusaurus clear",
-    "serve": "docusaurus serve",
+    "serve": "yarn llms:generate && docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc"

@@ -1,0 +1,144 @@
+---
+id: ai-agents
+sidebar_position: 3
+title: AI Agents
+sidebar_label: AI Agents
+description: Guidance for AI agents and code assistants using react-native-global-exception-handler, including task routing, API-at-a-glance notes, and release-mode caveats.
+keywords:
+  - ai agents react native library docs
+  - llms.txt react native package
+  - code assistant react native exception handler
+---
+
+import Link from '@docusaurus/Link';
+import guide from '@site/src/data/agentGuide.json';
+
+This page mirrors the canonical machine-readable guide at <a href="/llms.txt">`/llms.txt`</a>. Use it when you want the same guidance in a format that is easier to review in the docs site.
+
+## What this package does
+
+{guide.summary}
+
+## Read these first
+
+<ul>
+  {guide.readFirst.map((item) => (
+    <li key={item.path}>
+      <Link to={`/docs${item.path}`}>{item.title}</Link>: {item.why}
+    </li>
+  ))}
+</ul>
+
+## Typical tasks
+
+<ul>
+  {guide.taskMap.map((item) => (
+    <li key={item.task}>
+      <strong>{item.task}</strong>:{' '}
+      {item.docs.map((docPath, index) => (
+        <span key={`${item.task}-${docPath}`}>
+          {index > 0 ? ', ' : ''}
+          <Link to={`/docs${docPath}`}>
+            {guide.readFirst.find((entry) => entry.path === docPath)?.title ??
+              guide.migrationLinks.find((entry) => entry.path === docPath)
+                ?.title ??
+              guide.exampleLinks.find((entry) => entry.path === docPath)
+                ?.title ??
+              docPath}
+          </Link>
+        </span>
+      ))}
+    </li>
+  ))}
+</ul>
+
+## Public API at a glance
+
+{guide.apiMap.map((item) => (
+  <div key={item.name}>
+    <h3>{item.name}</h3>
+    <p>{item.purpose}</p>
+    <ul>
+      {item.notes.map((note) => (
+        <li key={`${item.name}-${note}`}>{note}</li>
+      ))}
+    </ul>
+  </div>
+))}
+
+## Core options
+
+{guide.coreOptions.map((item) => (
+  <div key={item.name}>
+    <h3>
+      {item.name} <small>(default: {item.default})</small>
+    </h3>
+    <ul>
+      {item.notes.map((note) => (
+        <li key={`${item.name}-${note}`}>{note}</li>
+      ))}
+    </ul>
+  </div>
+))}
+
+## Common mistakes agents make
+
+<ul>
+  {guide.constraints.map((item) => (
+    <li key={item}>{item}</li>
+  ))}
+</ul>
+
+## Platform caveats
+
+### Shared caveats
+
+<ul>
+  {guide.platformNotes.common.map((item) => (
+    <li key={item}>{item}</li>
+  ))}
+</ul>
+
+### iOS
+
+<ul>
+  {guide.platformNotes.ios.map((item) => (
+    <li key={item}>{item}</li>
+  ))}
+</ul>
+
+### Android
+
+<ul>
+  {guide.platformNotes.android.map((item) => (
+    <li key={item}>{item}</li>
+  ))}
+</ul>
+
+## Testing and release-mode validation
+
+<ul>
+  {guide.testingNotes.map((item) => (
+    <li key={item}>{item}</li>
+  ))}
+</ul>
+
+## Migration notes
+
+<ul>
+  {guide.migrationLinks.map((item) => (
+    <li key={item.path}>
+      <Link to={`/docs${item.path}`}>{item.title}</Link>
+    </li>
+  ))}
+</ul>
+
+## Example entry points
+
+<ul>
+  {guide.exampleLinks.map((item) => (
+    <li key={item.path}>
+      <Link to={`/docs${item.path}`}>{item.title}</Link>
+    </li>
+  ))}
+</ul>

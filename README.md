@@ -57,6 +57,11 @@ This package helps by giving you one place to:
 - [Troubleshooting](https://geh.darshan09200.dev/docs/troubleshooting/) - Common setup and release issues
 - [Migration Guide](https://geh.darshan09200.dev/docs/migration/migrating-from-react-native-exception-handler/) - Move from `react-native-exception-handler`
 
+### For AI agents and code assistants
+
+- [Machine-readable guide](https://geh.darshan09200.dev/llms.txt) - canonical `llms.txt` entrypoint
+- [AI Agents docs page](https://geh.darshan09200.dev/docs/ai-agents/) - task map, caveats, and API-at-a-glance notes
+
 ## Installation
 
 ```sh

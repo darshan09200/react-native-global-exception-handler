@@ -119,6 +119,23 @@ The `package.json` file contains various scripts for common tasks:
 - `yarn example android`: run the example app on Android.
 - `yarn example ios`: run the example app on iOS.
 
+### Agent-facing docs sync
+
+This repo exposes agent-readable documentation through:
+
+- `website/static/llms.txt`
+- `website/docs/ai-agents.mdx`
+- `website/src/data/agentGuide.json`
+
+If you change installation steps, public API behavior, migration guidance, or release-mode caveats:
+
+- update `website/src/data/agentGuide.json`
+- regenerate `llms.txt` with `yarn workspace website llms:generate`
+- update the companion docs page if the rendered explanation needs to change
+- verify the result with `yarn workspace website agent:check`
+
+Keep the agent-facing docs factual and conservative. Do not add guarantees that are not already documented elsewhere in the repo.
+
 ### Sending a pull request
 
 > **Working on your first pull request?** You can learn how from this _free_ series: [How to Contribute to an Open Source Project on GitHub](https://app.egghead.io/playlists/how-to-contribute-to-an-open-source-project-on-github).
